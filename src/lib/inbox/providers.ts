@@ -3,10 +3,9 @@
 
 import { SignJWT, jwtVerify } from 'jose';
 import type { InboxProvider, OAuthTokenBundle } from './types';
+import { secretKey } from '@/lib/secrets';
 
-const STATE_SECRET = new TextEncoder().encode(
-  process.env.INBOX_OAUTH_STATE_SECRET || process.env.JWT_SECRET || 'change-this-jwt-secret',
-);
+const stateSecret = () => secretKey('INBOX_OAUTH_STATE_SECRET', 'JWT_SECRET');
 const STATE_ISSUER = 'mawadao-inbox-oauth';
 const STATE_MAX_AGE_SEC = 600;
 
@@ -22,12 +21,12 @@ export async function createInboxOAuthState(payload: InboxOAuthState): Promise<s
     .setIssuedAt()
     .setIssuer(STATE_ISSUER)
     .setExpirationTime(`${STATE_MAX_AGE_SEC}s`)
-    .sign(STATE_SECRET);
+    .sign(stateSecret());
 }
 
 export async function verifyInboxOAuthState(token: string): Promise<InboxOAuthState | null> {
   try {
-    const { payload } = await jwtVerify(token, STATE_SECRET, {
+    const { payload } = await jwtVerify(token, stateSecret(), {
       issuer: STATE_ISSUER,
       algorithms: ['HS256'],
     });

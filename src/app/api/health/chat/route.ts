@@ -60,21 +60,14 @@ function checkJWT(): CheckResult {
   if (!JWT_SECRET) {
     return {
       status: 'fail',
-      message: 'JWT_SECRET not set — using insecure fallback. Auth will fail if Go auth service uses a different secret.',
-      details: { jwt_secret_set: false, fallback_used: true },
-    };
-  }
-  if (JWT_SECRET === 'change-this-jwt-secret') {
-    return {
-      status: 'warn',
-      message: 'JWT_SECRET is the default placeholder. Make sure it matches the Go auth service.',
-      details: { jwt_secret_set: true, is_default: true },
+      message: 'JWT_SECRET is not set, so sign-in is disabled. Set it to the same value as the auth service.',
+      details: { jwt_secret_set: false },
     };
   }
   return {
     status: 'ok',
     message: 'JWT_SECRET is configured',
-    details: { jwt_secret_set: true, is_default: false },
+    details: { jwt_secret_set: true },
   };
 }
 

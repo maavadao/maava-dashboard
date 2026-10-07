@@ -7,8 +7,8 @@
  */
 import { jwtVerify, SignJWT } from 'jose';
 import type { NextRequest } from 'next/server';
+import { secretKey } from '@/lib/secrets';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'change-this-jwt-secret';
 const JWT_ISSUER = 'mawadao-auth';
 
 export interface JWTPayload {
@@ -30,7 +30,7 @@ export interface AuthResolution {
  */
 export async function validateJWT(token: string): Promise<JWTPayload | null> {
   try {
-    const secret = new TextEncoder().encode(JWT_SECRET);
+    const secret = secretKey('JWT_SECRET');
     const { payload } = await jwtVerify(token, secret, {
       issuer: JWT_ISSUER,
       algorithms: ['HS256'],
@@ -79,7 +79,7 @@ export async function authenticateRequest(request: NextRequest): Promise<JWTPayl
  */
 export async function validateTransferToken(token: string): Promise<JWTPayload | null> {
   try {
-    const secret = new TextEncoder().encode(JWT_SECRET);
+    const secret = secretKey('JWT_SECRET');
     const { payload } = await jwtVerify(token, secret, {
       issuer: JWT_ISSUER,
       algorithms: ['HS256'],
@@ -106,7 +106,7 @@ export async function validateTransferToken(token: string): Promise<JWTPayload |
  * Create a JWT token.
  */
 export async function createJWT(payload: JWTPayload, expiresIn = '7d'): Promise<string> {
-  const secret = new TextEncoder().encode(JWT_SECRET);
+  const secret = secretKey('JWT_SECRET');
   return new SignJWT({
     userId: payload.userId,
     email: payload.email,

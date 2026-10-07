@@ -3,6 +3,7 @@
 import { SignJWT, jwtVerify } from 'jose';
 import pool from '@/lib/db';
 import type { SlackOAuthV2Response, SlackConnection, SlackOAuthState } from '@/types/slack';
+import { secretKey } from '@/lib/secrets';
 
 // ── Environment ──
 
@@ -15,9 +16,7 @@ const SLACK_BOT_SCOPES =
   'app_mentions:read,channels:history,groups:history,im:history,chat:write,commands,reactions:write,files:write';
 const SLACK_USER_SCOPES = process.env.SLACK_USER_SCOPES || '';
 
-const STATE_SECRET = new TextEncoder().encode(
-  process.env.SLACK_OAUTH_STATE_SECRET || process.env.JWT_SECRET || 'change-this-jwt-secret',
-);
+const stateSecret = () => secretKey('SLACK_OAUTH_STATE_SECRET', 'JWT_SECRET');
 const STATE_ISSUER = 'mawadao-slack-oauth';
 const STATE_MAX_AGE_SEC = 600; // 10 minutes
 
@@ -45,12 +44,12 @@ export async function createOAuthState(userId: string): Promise<string> {
     .setIssuedAt()
     .setExpirationTime(`${STATE_MAX_AGE_SEC}s`)
     .setIssuer(STATE_ISSUER)
-    .sign(STATE_SECRET);
+    .sign(stateSecret());
 }
 
 export async function verifyOAuthState(token: string): Promise<SlackOAuthState | null> {
   try {
-    const { payload } = await jwtVerify(token, STATE_SECRET, {
+    const { payload } = await jwtVerify(token, stateSecret(), {
       issuer: STATE_ISSUER,
       algorithms: ['HS256'],
     });

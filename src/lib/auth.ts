@@ -2,15 +2,11 @@ import { createHash } from 'crypto';
 import { jwtVerify, SignJWT } from 'jose';
 import type { NextRequest } from 'next/server';
 import pool from '@/lib/db';
+import { secretKey } from '@/lib/secrets';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'change-this-jwt-secret';
 const JWT_ISSUER = 'mawadao-auth';
 const AUTH_DEBUG = process.env.AUTH_DEBUG === 'true';
 
-if (!process.env.JWT_SECRET) {
-  // eslint-disable-next-line no-console
-  console.warn('[auth] JWT_SECRET not set — using insecure default. Auth will fail in production.');
-}
 
 export interface JWTPayload {
   userId: string;
@@ -31,7 +27,7 @@ export interface AuthResolution {
  */
 export async function validateJWT(token: string): Promise<JWTPayload | null> {
   try {
-    const secret = new TextEncoder().encode(JWT_SECRET);
+    const secret = secretKey('JWT_SECRET');
     const { payload } = await jwtVerify(token, secret, {
       issuer: JWT_ISSUER,
       algorithms: ['HS256'],
@@ -168,7 +164,7 @@ export async function authenticateRequestOrApiKey(
  */
 export async function validateTransferToken(token: string): Promise<JWTPayload | null> {
   try {
-    const secret = new TextEncoder().encode(JWT_SECRET);
+    const secret = secretKey('JWT_SECRET');
     const { payload } = await jwtVerify(token, secret, {
       issuer: JWT_ISSUER,
       algorithms: ['HS256'],
@@ -212,7 +208,7 @@ export async function getRequestUserId(request: NextRequest): Promise<string | n
 }
 
 export async function createJWT(payload: JWTPayload, expiresIn = '7d'): Promise<string> {
-  const secret = new TextEncoder().encode(JWT_SECRET);
+  const secret = secretKey('JWT_SECRET');
   return new SignJWT({
     userId: payload.userId,
     email: payload.email,
