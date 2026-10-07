@@ -325,7 +325,7 @@ export default function IntegrationSetupPage() {
 
   const steps: SetupStep[] = [
     { number: 1, title: 'Enter Credentials', description: `Provide your ${channelName} bot credentials`, state: hasCredentials ? 'completed' : 'active' },
-    { number: 2, title: 'Deploy Channel', description: `Connect ${channelName} to your OpenClaw gateway`, state: deployed ? 'completed' : hasCredentials ? 'active' : 'pending' },
+    { number: 2, title: 'Deploy Channel', description: `Connect ${channelName} to your mawaDao Agent gateway`, state: deployed ? 'completed' : hasCredentials ? 'active' : 'pending' },
     { number: 3, title: 'Verify Connection', description: 'Confirm your channel is live', state: deployed ? 'completed' : 'pending' },
   ];
 
@@ -355,7 +355,7 @@ export default function IntegrationSetupPage() {
         channelType: channelId, credentials: credsTrimmed, channelName,
         agentId: agent?.id, metadata: { deployedAt: new Date().toISOString() },
       });
-      // Push to local OpenClaw gateway for live reload — silently skip if unreachable
+      // Push to local mawaDao Agent gateway for live reload — silently skip if unreachable
       try {
         const currentConfig = await configApi.configGet();
         const baseHash = (currentConfig as unknown as Record<string, unknown>)?.hash as string | undefined;
@@ -550,7 +550,7 @@ export default function IntegrationSetupPage() {
                             secret={field.secret} helpUrl={field.helpUrl} />
                         ))}
                         <p className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Shield className="h-3 w-3" /> Credentials are sent directly to your OpenClaw gateway
+                          <Shield className="h-3 w-3" /> Credentials are sent directly to your mawaDao Agent gateway
                         </p>
                       </div>
                     )}

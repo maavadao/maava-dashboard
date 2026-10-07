@@ -11,18 +11,18 @@
  */
 
 import pool from '@/lib/db';
-import { readUserConfig, writeUserConfig, DEFAULT_OPENCLAW_CONFIG } from '@/lib/gcs';
+import { readUserConfig, writeUserConfig, DEFAULT_GATEWAY_CONFIG } from '@/lib/gcs';
 
 // Strip trailing /api/v1 if already included in the env var
 const _deployerBase = (
-  process.env.CLOUD_RUN_DEPLOYER_URL ||
+  process.env.DEPLOYER_URL ||
   'http://localhost:3002'
 ).replace(/\/api\/v1\/?$/, '');
-const CLOUD_RUN_DEPLOYER_URL = _deployerBase;
+const DEPLOYER_URL = _deployerBase;
 // Support both secret env var names
-const CLOUD_RUN_DEPLOYER_SECRET =
+const DEPLOYER_API_SECRET =
   process.env.DEPLOYER_API_SECRET ||
-  process.env.CLOUD_RUN_DEPLOYER_SECRET ||
+  process.env.DEPLOYER_API_SECRET ||
   '';
 
 /** Channel types we manage in openclaw.json (token/credential-based only). */
@@ -222,13 +222,13 @@ function extractServiceName(runtimeEndpoint: string): string | null {
 }
 
 /**
- * Trigger a Cloud Run service restart via the cloud-run-deployer API.
+ * Trigger a Cloud Run service restart via the mawadao-agent-deployer API.
  * This ensures the container re-reads the updated GCS config on startup.
  * Non-fatal — logs on failure.
  */
 async function restartCloudRunService(runtimeEndpoint: string): Promise<void> {
-  if (!CLOUD_RUN_DEPLOYER_SECRET) {
-    console.warn('[syncChannelsToGcs] Service restart skipped — CLOUD_RUN_DEPLOYER_SECRET not set');
+  if (!DEPLOYER_API_SECRET) {
+    console.warn('[syncChannelsToGcs] Service restart skipped — DEPLOYER_API_SECRET not set');
     return;
   }
   const serviceName = extractServiceName(runtimeEndpoint);
@@ -237,10 +237,10 @@ async function restartCloudRunService(runtimeEndpoint: string): Promise<void> {
     return;
   }
   try {
-    const url = `${CLOUD_RUN_DEPLOYER_URL}/api/v1/cloud-run/services/${encodeURIComponent(serviceName)}/restart?region=europe-west1`;
+    const url = `${DEPLOYER_URL}/api/v1/cloud-run/services/${encodeURIComponent(serviceName)}/restart?region=europe-west1`;
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 'x-deployer-secret': CLOUD_RUN_DEPLOYER_SECRET },
+      headers: { 'x-deployer-secret': DEPLOYER_API_SECRET },
       signal: AbortSignal.timeout(15000),
     });
     if (!res.ok) {
@@ -283,18 +283,18 @@ export async function syncChannelsToGcs(
   }
 
   // 2. Read current openclaw.json (best-effort — missing file falls back to safe defaults).
-  // Using DEFAULT_OPENCLAW_CONFIG instead of {} prevents data loss: if the file doesn't
-  // exist yet (or BUCKET_MANAGER_URL is temporarily unavailable), any subsequent write
+  // Using DEFAULT_GATEWAY_CONFIG instead of {} prevents data loss: if the file doesn't
+  // exist yet (or STORAGE_URL is temporarily unavailable), any subsequent write
   // will not wipe gateway auth, agents, skills, etc.
-  let config: Record<string, unknown> = JSON.parse(JSON.stringify(DEFAULT_OPENCLAW_CONFIG));
+  let config: Record<string, unknown> = JSON.parse(JSON.stringify(DEFAULT_GATEWAY_CONFIG));
   try {
     const existing = await readUserConfig(userId);
     if (existing && typeof existing === 'object' && !Array.isArray(existing)) {
       config = { ...(existing as Record<string, unknown>) };
     }
-    // If existing === null the file doesn't exist yet — DEFAULT_OPENCLAW_CONFIG is the right base.
+    // If existing === null the file doesn't exist yet — DEFAULT_GATEWAY_CONFIG is the right base.
   } catch {
-    // readUserConfig threw — DEFAULT_OPENCLAW_CONFIG already set above
+    // readUserConfig threw — DEFAULT_GATEWAY_CONFIG already set above
   }
 
   // 3. Rebuild channels section — clear all managed-channel keys, add active ones back

@@ -3,7 +3,7 @@ import { validateJWT } from "@/lib/auth";
 import pool from "@/lib/db";
 
 const API_BASE = process.env.MAWADAO_API_URL;
-const DEPLOYER_URL = process.env.CLOUD_RUN_DEPLOYER_URL || "";
+const DEPLOYER_URL = process.env.DEPLOYER_URL || "";
 const DEPLOYER_API_SECRET = process.env.DEPLOYER_API_SECRET || "";
 
 export async function GET(request: NextRequest) {
@@ -84,7 +84,7 @@ export async function DELETE(request: NextRequest) {
       }
     }
 
-    // 2. Clean up tenant-dashboard tables (TEXT user_id — no FK cascades)
+    // 2. Clean up mawadao-agent-dashboard tables (TEXT user_id — no FK cascades)
     await pool.query(
       `DELETE FROM messages
        WHERE conversation_id IN (SELECT id FROM conversations WHERE user_id = $1)`,

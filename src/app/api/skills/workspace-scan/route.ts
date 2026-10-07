@@ -19,18 +19,18 @@ import { readUserConfig, SHARED_BUCKET } from '@/lib/gcs';
  * Returns the list of workspace-created skills.
  */
 
-const BUCKET_MANAGER_URL = process.env.BUCKET_MANAGER_URL || '';
-const BUCKET_MANAGER_API_SECRET = process.env.BUCKET_MANAGER_API_SECRET || '';
+const STORAGE_URL = process.env.STORAGE_URL || '';
+const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || '';
 
 async function bmHeaders(): Promise<Record<string, string>> {
   const h: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (BUCKET_MANAGER_API_SECRET) h['X-Bucket-Manager-Secret'] = BUCKET_MANAGER_API_SECRET;
+  if (STORAGE_API_SECRET) h['X-Storage-Secret'] = STORAGE_API_SECRET;
   // OIDC token for Cloud Run IAM auth
   if (process.env.K_SERVICE) {
     try {
       const metaUrl =
         `http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity` +
-        `?audience=${encodeURIComponent(BUCKET_MANAGER_URL)}`;
+        `?audience=${encodeURIComponent(STORAGE_URL)}`;
       const res = await fetch(metaUrl, {
         headers: { 'Metadata-Flavor': 'Google' },
         signal: AbortSignal.timeout(3000),
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
 
-  if (!BUCKET_MANAGER_URL) {
+  if (!STORAGE_URL) {
     return NextResponse.json({ error: 'Bucket manager not configured' }, { status: 503 });
   }
 
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
     const basePath = `${userId}/mountfolder/workspace`;
 
     // 1. List all folders in workspace/
-    const listUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/folders?path=${encodeURIComponent(basePath)}`;
+    const listUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/folders?path=${encodeURIComponent(basePath)}`;
     const listRes = await fetch(listUrl, { headers, signal: AbortSignal.timeout(10_000) });
     if (!listRes.ok) {
       return NextResponse.json({ skills: [], message: 'Could not list workspace folders' });
@@ -155,7 +155,7 @@ export async function POST(request: NextRequest) {
       if (agentSet.has(folder)) continue; // skip agent workspaces
 
       // List folder contents to check for INDEX.md and agent markers
-      const folderUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/folders?path=${encodeURIComponent(basePath + '/' + folder)}`;
+      const folderUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/folders?path=${encodeURIComponent(basePath + '/' + folder)}`;
       let folderData: { files?: { name: string }[]; folders?: string[] };
       try {
         const fRes = await fetch(folderUrl, { headers, signal: AbortSignal.timeout(8000) });
@@ -178,11 +178,11 @@ export async function POST(request: NextRequest) {
       // 4. Read INDEX.md (or README.md) to get skill metadata
       const metaFile = hasIndex ? 'INDEX.md' : 'README.md';
       const filePath = `${basePath}/${folder}/${metaFile}`;
-      const fileUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${encodeURIComponent(filePath)}`;
+      const fileUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${encodeURIComponent(filePath)}`;
       let content = '';
       try {
         const fRes = await fetch(fileUrl, {
-          headers: { 'X-Bucket-Manager-Secret': BUCKET_MANAGER_API_SECRET },
+          headers: { 'X-Storage-Secret': STORAGE_API_SECRET },
           signal: AbortSignal.timeout(8000),
         });
         if (fRes.ok) content = await fRes.text();
@@ -229,7 +229,7 @@ export async function POST(request: NextRequest) {
       // 7. Write SKILL.md to skills/ directory (for gateway discovery)
       const skillMd = buildSkillMd(skillId, name, description);
       const skillMdPath = `${userId}/mountfolder/skills/${skillId}/SKILL.md`;
-      const skillMdUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${encodeURIComponent(skillMdPath)}`;
+      const skillMdUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${encodeURIComponent(skillMdPath)}`;
       try {
         await fetch(skillMdUrl, {
           method: 'PUT',

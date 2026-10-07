@@ -141,13 +141,13 @@ async function deliverToSlack(userId: string, text: string, targetChannelId?: st
   }
 }
 
-// ─── Send to Telegram (via channel-router outbound API) ────────────────
+// ─── Send to Telegram (via mawadao-agent-channels outbound API) ────────────────
 
 async function deliverToTelegram(userId: string, text: string): Promise<DeliveryResult> {
   return deliverViaChannelRouter(userId, 'telegram', text);
 }
 
-// ─── Generic delivery via channel-router outbound API ──────────────────
+// ─── Generic delivery via mawadao-agent-channels outbound API ──────────────────
 
 async function deliverViaChannelRouter(userId: string, platform: ChannelPlatform, text: string): Promise<DeliveryResult> {
   // Check if the user actually has this platform linked
@@ -183,12 +183,12 @@ async function deliverViaChannelRouter(userId: string, platform: ChannelPlatform
     return { platform, status: 'skipped', reason: 'not linked' };
   }
 
-  // Call the channel-router outbound API
-  const channelRouterUrl = process.env.CHANNEL_ROUTER_URL || 'http://localhost:8090';
+  // Call the mawadao-agent-channels outbound API
+  const channelsUrl = process.env.CHANNELS_URL || 'http://localhost:8090';
   const outboundSecret = process.env.OUTBOUND_SECRET || '';
 
   try {
-    const res = await fetch(`${channelRouterUrl}/api/outbound/send`, {
+    const res = await fetch(`${channelsUrl}/api/outbound/send`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

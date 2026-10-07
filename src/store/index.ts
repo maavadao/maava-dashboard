@@ -271,14 +271,14 @@ interface FeedStore {
   posts: Post[];
   sort: PostSort;
   timeRange: TimeRange;
-  submolt: string | null;
+  community: string | null;
   isLoading: boolean;
   hasMore: boolean;
   offset: number;
 
   setSort: (sort: PostSort) => void;
   setTimeRange: (timeRange: TimeRange) => void;
-  setSubmolt: (submolt: string | null) => void;
+  setCommunity: (community: string | null) => void;
   loadPosts: (reset?: boolean) => Promise<void>;
   loadMore: () => Promise<void>;
   updatePostVote: (
@@ -292,7 +292,7 @@ export const useFeedStore = create<FeedStore>((set, get) => ({
   posts: [],
   sort: "hot",
   timeRange: "day",
-  submolt: null,
+  community: null,
   isLoading: false,
   hasMore: true,
   offset: 0,
@@ -307,20 +307,20 @@ export const useFeedStore = create<FeedStore>((set, get) => ({
     get().loadPosts(true);
   },
 
-  setSubmolt: (submolt) => {
-    set({ submolt, posts: [], offset: 0, hasMore: true });
+  setCommunity: (community) => {
+    set({ community, posts: [], offset: 0, hasMore: true });
     get().loadPosts(true);
   },
 
   loadPosts: async (reset = false) => {
-    const { sort, timeRange, submolt, isLoading } = get();
+    const { sort, timeRange, community, isLoading } = get();
     if (isLoading) return;
 
     set({ isLoading: true });
     try {
       const offset = reset ? 0 : get().offset;
-      const response = submolt
-        ? await api.getSubmoltFeed(submolt, { sort, limit: 25, offset })
+      const response = community
+        ? await api.getCommunityFeed(community, { sort, limit: 25, offset })
         : await api.getPosts({ sort, timeRange, limit: 25, offset });
 
       set({
@@ -424,8 +424,8 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
   clear: () => set({ notifications: [], unreadCount: 0 }),
 }));
 
-// OpenClaw Chat Store (gateway URL, token, config API URL, and optional AI key overrides)
-interface OpenClawChatStore {
+// mawaDao Agent Chat Store (gateway URL, token, config API URL, and optional AI key overrides)
+interface GatewayChatStore {
   // Chat gateway (WebSocket + completions, port 19001)
   gatewayToken: string | null;
   gatewayUrl: string | null;
@@ -445,9 +445,9 @@ interface OpenClawChatStore {
 }
 
 const initialGatewayToken =
-  process.env.NEXT_PUBLIC_OPENCLAW_GATEWAY_TOKEN?.trim() || null;
+  process.env.NEXT_PUBLIC_GATEWAY_TOKEN?.trim() || null;
 
-export const useOpenClawChatStore = create<OpenClawChatStore>()(
+export const useGatewayChatStore = create<GatewayChatStore>()(
   persist(
     (set) => ({
       gatewayToken: initialGatewayToken,
@@ -467,7 +467,7 @@ export const useOpenClawChatStore = create<OpenClawChatStore>()(
       setAnthropicKey: (anthropicKey) => set({ anthropicKey }),
     }),
     {
-      name: "mawadao-openclaw-chat",
+      name: "mawadao-gateway-chat",
       partialize: (s) => ({
         gatewayToken: s.gatewayToken,
         gatewayUrl: s.gatewayUrl,
@@ -477,7 +477,7 @@ export const useOpenClawChatStore = create<OpenClawChatStore>()(
       }),
       // On rehydration, sync config-api base URL and prefer env token when persisted is null
       merge: (persisted, current) => {
-        const p = persisted as Partial<OpenClawChatStore> | undefined;
+        const p = persisted as Partial<GatewayChatStore> | undefined;
         if (p?.configApiUrl) configApi.setBaseUrl(p.configApiUrl);
         return {
           ...current,
@@ -556,7 +556,7 @@ export const useInstalledAgentsStore = create<InstalledAgentsStore>((set, get) =
 
 // Subscriptions Store
 interface SubscriptionStore {
-  subscribedSubmolts: string[];
+  subscribedCommunities: string[];
   addSubscription: (name: string) => void;
   removeSubscription: (name: string) => void;
   isSubscribed: (name: string) => boolean;
@@ -565,23 +565,23 @@ interface SubscriptionStore {
 export const useSubscriptionStore = create<SubscriptionStore>()(
   persist(
     (set, get) => ({
-      subscribedSubmolts: [],
+      subscribedCommunities: [],
 
       addSubscription: (name) => {
-        if (!get().subscribedSubmolts.includes(name)) {
-          set({ subscribedSubmolts: [...get().subscribedSubmolts, name] });
+        if (!get().subscribedCommunities.includes(name)) {
+          set({ subscribedCommunities: [...get().subscribedCommunities, name] });
         }
       },
 
       removeSubscription: (name) => {
         set({
-          subscribedSubmolts: get().subscribedSubmolts.filter(
+          subscribedCommunities: get().subscribedCommunities.filter(
             (s) => s !== name
           ),
         });
       },
 
-      isSubscribed: (name) => get().subscribedSubmolts.includes(name),
+      isSubscribed: (name) => get().subscribedCommunities.includes(name),
     }),
     { name: "mawadao-subscriptions" }
   )

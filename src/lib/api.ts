@@ -4,7 +4,7 @@ import type {
   Agent,
   Post,
   Comment,
-  Submolt,
+  Community,
   Notification,
   SearchResults,
   PaginatedResponse,
@@ -79,7 +79,7 @@ class ApiClient {
   /**
    * Call a Next.js API proxy route (e.g. /api/channels) using a relative path.
    * Must be used for routes that are proxied by Next.js to internal services
-   * (configuration-api etc.) because API_BASE_URL points to the OpenClaw gateway.
+   * (mawadao-agent-api etc.) because API_BASE_URL points to the mawaDao Agent gateway.
    */
   private async requestProxy<T>(
     method: string,
@@ -369,7 +369,7 @@ class ApiClient {
       timeRange?: TimeRange;
       limit?: number;
       offset?: number;
-      submolt?: string;
+      community?: string;
     } = {}
   ) {
     return this.request<PaginatedResponse<Post>>("GET", "/posts", undefined, {
@@ -377,15 +377,15 @@ class ApiClient {
       t: options.timeRange,
       limit: options.limit || 25,
       offset: options.offset || 0,
-      submolt: options.submolt,
+      community: options.community,
     });
   }
 
-  async getSubmoltFeed(
-    submolt: string,
+  async getCommunityFeed(
+    community: string,
     options: { sort?: PostSort; limit?: number; offset?: number } = {}
   ) {
-    return this.getPosts({ ...options, submolt });
+    return this.getPosts({ ...options, community });
   }
 
   async getPost(id: string) {
@@ -513,37 +513,37 @@ class ApiClient {
   // (User auth methods are defined above with matching backend response shapes)
 
   // -----------------------------
-  // Submolt endpoints
+  // Community endpoints
   // -----------------------------
 
-  async getSubmolt(name: string) {
-    return this.request<Submolt>("GET", `/submolts/${encodeURIComponent(name)}`);
+  async getCommunity(name: string) {
+    return this.request<Community>("GET", `/communities/${encodeURIComponent(name)}`);
   }
 
-  async getSubmolts(
+  async getCommunities(
     options: {
       limit?: number;
       offset?: number;
       sort?: string;
     } = {}
   ) {
-    return this.request<{ data: Submolt[] }>("GET", "/submolts", undefined, {
+    return this.request<{ data: Community[] }>("GET", "/communities", undefined, {
       limit: options.limit ?? 25,
       offset: options.offset ?? 0,
       sort: options.sort,
     });
   }
 
-  async createSubmolt(data: { name: string; displayName?: string; description?: string }) {
-    return this.request<Submolt>("POST", "/submolts", data);
+  async createCommunity(data: { name: string; displayName?: string; description?: string }) {
+    return this.request<Community>("POST", "/communities", data);
   }
 
-  async subscribeSubmolt(name: string) {
-    return this.request<{ success: boolean }>("POST", `/submolts/${encodeURIComponent(name)}/subscribe`);
+  async subscribeCommunity(name: string) {
+    return this.request<{ success: boolean }>("POST", `/communities/${encodeURIComponent(name)}/subscribe`);
   }
 
-  async unsubscribeSubmolt(name: string) {
-    return this.request<{ success: boolean }>("DELETE", `/submolts/${encodeURIComponent(name)}/subscribe`);
+  async unsubscribeCommunity(name: string) {
+    return this.request<{ success: boolean }>("DELETE", `/communities/${encodeURIComponent(name)}/subscribe`);
   }
 
   // -----------------------------

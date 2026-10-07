@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const CONFIGURATION_API = (process.env.MAWADAO_API_URL || 'https://mawadao.com/api/v1').replace(/\/+$/, '');
 
 /**
- * POST /api/users/register → proxies to configuration-api POST /users/register
+ * POST /api/users/register → proxies to mawadao-agent-api POST /users/register
  * Returns: { success: true, user: { id, username, email, displayName, api_key }, important }
  */
 export async function POST(request: NextRequest) {
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    console.log('[/api/users/register] Forwarding registration to configuration-api');
+    console.log('[/api/users/register] Forwarding registration to mawadao-agent-api');
     const res = await fetch(`${CONFIGURATION_API}/users/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

@@ -1218,7 +1218,7 @@ export function SettingsSidebar() {
     { href: '/settings?tab=account', icon: Shield, label: 'Account', match: 'account' },
     { href: '/settings?tab=notifications', icon: Bell, label: 'Notifications', match: 'notifications' },
     { href: '/settings?tab=appearance', icon: Palette, label: 'Appearance', match: 'appearance' },
-    { href: '/settings?tab=openclaw', icon: MessageSquare, label: 'Moonshot', match: 'openclaw' },
+    { href: '/settings?tab=agent', icon: MessageSquare, label: 'Moonshot', match: 'agent' },
     { href: '/settings?tab=data', icon: HardDrive, label: 'Data', match: 'data' },
   ];
 
@@ -1474,7 +1474,7 @@ function SidebarUserCard({
                 )}
               >
                 <MessageSquare className="h-4 w-4 shrink-0" />
-                OpenClaw
+                mawaDao Agent
               </Link>
               <Link
                 href="/mission-control"

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pool, { getUserId } from '@/lib/db';
 
-const OPENCLAW_GATEWAY_URL =
-  process.env.OPENCLAW_GATEWAY_URL ||
-  process.env.NEXT_PUBLIC_OPENCLAW_GATEWAY_URL ||
+const GATEWAY_URL =
+  process.env.GATEWAY_URL ||
+  process.env.NEXT_PUBLIC_GATEWAY_URL ||
   '';
 
 /**
@@ -97,8 +97,8 @@ Rules:
     let aiHeaders: Record<string, string>;
     let aiModel: string;
 
-    if (OPENCLAW_GATEWAY_URL) {
-      const base = OPENCLAW_GATEWAY_URL.replace(/\/+$/, '');
+    if (GATEWAY_URL) {
+      const base = GATEWAY_URL.replace(/\/+$/, '');
       aiEndpoint = `${base}/v1/chat/completions`;
       aiHeaders = { 'Content-Type': 'application/json', Authorization: authHeader };
       aiModel = 'openclaw';
@@ -118,7 +118,7 @@ Rules:
       aiModel = 'kimi-k2.5';
     } else {
       return NextResponse.json(
-        { error: 'No AI provider configured. Set OPENCLAW_GATEWAY_URL, OPENAI_API_KEY, or MOONSHOT_API_KEY.' },
+        { error: 'No AI provider configured. Set GATEWAY_URL, OPENAI_API_KEY, or MOONSHOT_API_KEY.' },
         { status: 503 },
       );
     }

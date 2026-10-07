@@ -6,14 +6,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useUIStore } from '@/store';
-import { useAuth, useSubmolts } from '@/hooks';
+import { useAuth, useCommunities } from '@/hooks';
 import { api } from '@/lib/api';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Button, Input, Textarea, Card } from '@/components/ui';
 import { FileText, Link as LinkIcon, X, Image, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const postSchema = z.object({
-  submolt: z.string().min(1, 'Please select a community'),
+  community: z.string().min(1, 'Please select a community'),
   title: z.string().min(1, 'Title is required').max(300, 'Title too long'),
   content: z.string().max(40000, 'Content too long').optional(),
   url: z.string().url('Invalid URL').optional().or(z.literal('')),
@@ -28,17 +28,17 @@ export function CreatePostModal() {
   const router = useRouter();
   const { createPostOpen, closeCreatePost } = useUIStore();
   const { isAuthenticated } = useAuth();
-  const { data: submoltsData } = useSubmolts();
+  const { data: communitiesData } = useCommunities();
   const [postType, setPostType] = React.useState<'text' | 'link'>('text');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [showSubmoltDropdown, setShowSubmoltDropdown] = React.useState(false);
+  const [showCommunityDropdown, setShowCommunityDropdown] = React.useState(false);
 
   const { register, handleSubmit, setValue, watch, reset, formState: { errors } } = useForm<PostForm>({
     resolver: zodResolver(postSchema),
-    defaultValues: { submolt: '', title: '', content: '', url: '' },
+    defaultValues: { community: '', title: '', content: '', url: '' },
   });
 
-  const selectedSubmolt = watch('submolt');
+  const selectedCommunity = watch('community');
 
   const onSubmit = async (data: PostForm) => {
     if (!isAuthenticated || isSubmitting) return;
@@ -46,7 +46,7 @@ export function CreatePostModal() {
     setIsSubmitting(true);
     try {
       const post = await api.createPost({
-        submolt: data.submolt,
+        community: data.community,
         title: data.title,
         content: postType === 'text' ? data.content : undefined,
         url: postType === 'link' ? data.url : undefined,
@@ -73,38 +73,38 @@ export function CreatePostModal() {
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Submolt selector */}
+          {/* Community selector */}
           <div className="relative">
             <button
               type="button"
-              onClick={() => setShowSubmoltDropdown(!showSubmoltDropdown)}
+              onClick={() => setShowCommunityDropdown(!showCommunityDropdown)}
               className="w-full flex items-center justify-between px-3 py-2 border rounded-md hover:bg-muted transition-colors"
             >
-              <span className={selectedSubmolt ? 'text-foreground' : 'text-muted-foreground'}>
-                {selectedSubmolt ? `m/${selectedSubmolt}` : 'Choose a community'}
+              <span className={selectedCommunity ? 'text-foreground' : 'text-muted-foreground'}>
+                {selectedCommunity ? `m/${selectedCommunity}` : 'Choose a community'}
               </span>
               <ChevronDown className="h-4 w-4" />
             </button>
             
-            {showSubmoltDropdown && (
+            {showCommunityDropdown && (
               <div className="absolute z-10 w-full mt-1 max-h-60 overflow-y-auto rounded-md border bg-popover shadow-lg">
-                {submoltsData?.data.map(submolt => (
+                {communitiesData?.data.map(community => (
                   <button
-                    key={submolt.id}
+                    key={community.id}
                     type="button"
                     onClick={() => {
-                      setValue('submolt', submolt.name);
-                      setShowSubmoltDropdown(false);
+                      setValue('community', community.name);
+                      setShowCommunityDropdown(false);
                     }}
                     className="w-full px-3 py-2 text-left hover:bg-muted transition-colors"
                   >
-                    <span className="font-medium">m/{submolt.name}</span>
-                    {submolt.displayName && <span className="text-muted-foreground ml-2">{submolt.displayName}</span>}
+                    <span className="font-medium">m/{community.name}</span>
+                    {community.displayName && <span className="text-muted-foreground ml-2">{community.displayName}</span>}
                   </button>
                 ))}
               </div>
             )}
-            {errors.submolt && <p className="text-xs text-destructive mt-1">{errors.submolt.message}</p>}
+            {errors.community && <p className="text-xs text-destructive mt-1">{errors.community.message}</p>}
           </div>
 
           {/* Post type tabs */}

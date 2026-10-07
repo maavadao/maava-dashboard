@@ -57,11 +57,11 @@ export async function POST(request: NextRequest) {
   let importedItems = 0;
 
   // Import openclaw.json → GCS
-  const openclawEntry = zip.getEntry('openclaw.json');
-  if (openclawEntry) {
+  const gatewayEntry = zip.getEntry('openclaw.json');
+  if (gatewayEntry) {
     let config: unknown;
     try {
-      config = JSON.parse(openclawEntry.getData().toString('utf-8'));
+      config = JSON.parse(gatewayEntry.getData().toString('utf-8'));
     } catch {
       return NextResponse.json(
         { error: 'Invalid JSON in openclaw.json inside ZIP' },

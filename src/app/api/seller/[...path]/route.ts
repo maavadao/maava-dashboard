@@ -6,11 +6,11 @@ const CONFIGURATION_API = (
 ).replace(/\/+$/, "");
 
 /**
- * Catch-all proxy for /api/seller/* → configuration-api /api/v1/seller/*
+ * Catch-all proxy for /api/seller/* → mawadao-agent-api /api/v1/seller/*
  *
  * Authenticates the request, then forwards the ORIGINAL bearer token
- * so the configuration-api can validate it natively (supports both
- * moltbook_ API keys and Go-auth JWTs).
+ * so the mawadao-agent-api can validate it natively (supports both
+ * mawadao_ API keys and Go-auth JWTs).
  */
 
 function buildHeaders(
@@ -25,7 +25,7 @@ function buildHeaders(
   );
   headers.set("X-User-ID", userId);
 
-  // Forward the original token so configuration-api can authenticate natively
+  // Forward the original token so mawadao-agent-api can authenticate natively
   if (rawToken) {
     headers.set("Authorization", `Bearer ${rawToken}`);
   }
@@ -64,9 +64,9 @@ async function handleRequest(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     userId = auth.user.userId;
-    // Prefer the explicit Authorization header (moltbook_ API key or manual JWT).
+    // Prefer the explicit Authorization header (mawadao_ API key or manual JWT).
     // Fall back to auth.authToken which covers cookie-authenticated sessions
-    // (the JWT from the auth-token cookie, forwarded so configuration-api can
+    // (the JWT from the auth-token cookie, forwarded so mawadao-agent-api can
     // authenticate natively without needing to read cookies itself).
     const authHeader = request.headers.get("authorization");
     rawToken = authHeader?.startsWith("Bearer ")

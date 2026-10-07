@@ -1,5 +1,5 @@
 /**
- * OpenClaw prompt templates for the Marketplace Product Import Agent.
+ * mawaDao Agent prompt templates for the Marketplace Product Import Agent.
  *
  * These are the system and user prompts sent to the gateway when importing
  * products from public marketplace links.

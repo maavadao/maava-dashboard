@@ -1,7 +1,7 @@
 /**
  * POST /api/whatsapp/qr
  *
- * Resolves the tenant's OpenClaw gateway endpoint via DB (tenants.backend_url),
+ * Resolves the tenant's mawaDao Agent gateway endpoint via DB (tenants.backend_url),
  * then calls the gateway's /api/v1/channels/login to obtain the WhatsApp QR code.
  * Forwards the user's auth-token JWT to the gateway for authentication.
  *

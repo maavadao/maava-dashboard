@@ -97,9 +97,9 @@ function SettingsContent() {
               <AppearanceSettings theme={theme} setTheme={setTheme} />
             </motion.div>
           )}
-          {activeTab === 'openclaw' && (
-            <motion.div key="openclaw" variants={cardVariants} initial="hidden" animate="visible" exit="hidden" transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}>
-              <OpenClawChatSettings />
+          {activeTab === 'agent' && (
+            <motion.div key="agent" variants={cardVariants} initial="hidden" animate="visible" exit="hidden" transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}>
+              <GatewayChatSettings />
             </motion.div>
           )}
           {activeTab === 'account' && (
@@ -344,7 +344,7 @@ const PROVIDER_META: Record<string, { label: string; placeholder: string; hint: 
 
 const ALL_PROVIDERS = ['moonshot', 'openai', 'anthropic', 'google'];
 
-function OpenClawChatSettings() {
+function GatewayChatSettings() {
   const [savedKeys, setSavedKeys] = useState<SavedProviderKey[]>([]);
   const [keysLoading, setKeysLoading] = useState(true);
 
@@ -722,7 +722,7 @@ function OpenClawChatSettings() {
                 <button onClick={() => setRefreshKey(k => k + 1)} className="text-[11px] text-muted-foreground hover:text-foreground flex items-center gap-1">
                   <RefreshCw className="h-3 w-3" /> Refresh
                 </button>
-                <Link href="/health/openclaw" className="text-[11px] text-primary hover:underline">Full Dashboard</Link>
+                <Link href="/health/gateway" className="text-[11px] text-primary hover:underline">Full Dashboard</Link>
               </div>
             }
           />

@@ -4,25 +4,25 @@ import { authenticateRequest } from '@/lib/auth';
 /**
  * GET /api/media/workspace/:path*
  *
- * Proxy that serves workspace files (images, media) from the bucket-manager.
+ * Proxy that serves workspace files (images, media) from the mawadao-agent-storage.
  * Maps: /api/media/workspace/filename.png
- *   →  BUCKET_MANAGER/api/v1/buckets/{SHARED_BUCKET}/files/{tenantId}/mountfolder/workspace/filename.png
+ *   →  STORAGE/api/v1/buckets/{SHARED_BUCKET}/files/{tenantId}/mountfolder/workspace/filename.png
  *
  * Authenticates the user and resolves their tenant before proxying.
  */
 
-const BUCKET_MANAGER_URL = process.env.BUCKET_MANAGER_URL || '';
-const BUCKET_MANAGER_API_SECRET = process.env.BUCKET_MANAGER_API_SECRET || '';
+const STORAGE_URL = process.env.STORAGE_URL || '';
+const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || '';
 const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || 'mawadao-agent-data';
 
 async function bmHeaders(): Promise<Record<string, string>> {
   const h: Record<string, string> = {};
-  if (BUCKET_MANAGER_API_SECRET) h['X-Bucket-Manager-Secret'] = BUCKET_MANAGER_API_SECRET;
+  if (STORAGE_API_SECRET) h['X-Storage-Secret'] = STORAGE_API_SECRET;
   if (process.env.K_SERVICE) {
     try {
       const metaUrl =
         `http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity` +
-        `?audience=${encodeURIComponent(BUCKET_MANAGER_URL)}`;
+        `?audience=${encodeURIComponent(STORAGE_URL)}`;
       const res = await fetch(metaUrl, {
         headers: { 'Metadata-Flavor': 'Google' },
         signal: AbortSignal.timeout(3000),
@@ -50,7 +50,7 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ path: string[] }> },
 ) {
-  if (!BUCKET_MANAGER_URL) {
+  if (!STORAGE_URL) {
     return NextResponse.json({ error: 'Media service unavailable' }, { status: 503 });
   }
 
@@ -73,10 +73,10 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid path' }, { status: 400 });
   }
 
-  // Build bucket-manager URL:
+  // Build mawadao-agent-storage URL:
   // {tenantId}/mountfolder/workspace/{filePath}
   const gcsPath = `${userId}/mountfolder/workspace/${filePath}`;
-  const bmUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${gcsPath}`;
+  const bmUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${gcsPath}`;
 
   try {
     const headers = await bmHeaders();

@@ -57,8 +57,8 @@ export function isValidAgentName(name: string): boolean {
   return /^[a-z0-9_]{2,32}$/i.test(name);
 }
 
-// Validate submolt name
-export function isValidSubmoltName(name: string): boolean {
+// Validate community name
+export function isValidCommunityName(name: string): boolean {
   return /^[a-z0-9_]{2,24}$/i.test(name);
 }
 
@@ -158,11 +158,11 @@ export function removeFromStorage(key: string): void {
 }
 
 // URL helpers
-export function getPostUrl(postId: string, submolt?: string): string {
-  return submolt ? `/m/${submolt}/post/${postId}` : `/post/${postId}`;
+export function getPostUrl(postId: string, community?: string): string {
+  return community ? `/m/${community}/post/${postId}` : `/post/${postId}`;
 }
 
-export function getSubmoltUrl(name: string): string {
+export function getCommunityUrl(name: string): string {
   return `/m/${name}`;
 }
 

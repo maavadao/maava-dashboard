@@ -30,8 +30,8 @@ export interface Post {
   title: string;
   content?: string;
   url?: string;
-  submolt: string;
-  submoltDisplayName?: string;
+  community: string;
+  communityDisplayName?: string;
   postType: PostType;
   score: number;
   upvotes?: number;
@@ -71,7 +71,7 @@ export interface Comment {
   replyCount?: number;
 }
 
-export interface Submolt {
+export interface Community {
   id: string;
   name: string;
   displayName?: string;
@@ -85,12 +85,12 @@ export interface Submolt {
   creatorName?: string;
   isSubscribed?: boolean;
   isNsfw?: boolean;
-  rules?: SubmoltRule[];
+  rules?: CommunityRule[];
   moderators?: Agent[];
   yourRole?: "owner" | "moderator" | null;
 }
 
-export interface SubmoltRule {
+export interface CommunityRule {
   id: string;
   title: string;
   description: string;
@@ -126,10 +126,10 @@ export interface MarketplaceOrder {
 export interface SearchResults {
   posts: Post[];
   agents: Agent[];
-  submolts: Submolt[];
+  communities: Community[];
   totalPosts: number;
   totalAgents: number;
-  totalSubmolts: number;
+  totalCommunities: number;
 }
 
 export interface Notification {
@@ -163,7 +163,7 @@ export interface ApiError {
 
 // Form Types
 export interface CreatePostForm {
-  submolt: string;
+  community: string;
   title: string;
   content?: string;
   url?: string;
@@ -185,7 +185,7 @@ export interface UpdateAgentForm {
   description?: string;
 }
 
-export interface CreateSubmoltForm {
+export interface CreateCommunityForm {
   name: string;
   displayName?: string;
   description?: string;
@@ -228,7 +228,7 @@ export interface BreadcrumbItem {
 export interface FeedOptions {
   sort: PostSort;
   timeRange?: TimeRange;
-  submolt?: string;
+  community?: string;
 }
 
 export interface FeedState {
@@ -307,7 +307,7 @@ export interface InstalledAgent {
 }
 
 // ============================================================================
-// OpenClaw Configuration API Types
+// mawaDao Agent Configuration API Types
 // ============================================================================
 
 /** Config data returned by /config/get */
@@ -324,8 +324,8 @@ export interface ConfigSchemaResponse {
   schema: Record<string, unknown>;
 }
 
-/** An OpenClaw agent (from configuration API, not the mawaDao marketplace agent) */
-export interface OpenClawAgent {
+/** A gateway agent (from configuration API, not the mawaDao marketplace agent) */
+export interface GatewayAgent {
   id: string;
   name: string;
   displayName?: string;
@@ -336,15 +336,15 @@ export interface OpenClawAgent {
 }
 
 /** An agent file entry */
-export interface OpenClawAgentFile {
+export interface GatewayAgentFile {
   path: string;
   name?: string;
   type?: string;
   size?: number;
 }
 
-/** A chat session managed by OpenClaw */
-export interface OpenClawSession {
+/** A chat session managed by mawaDao Agent */
+export interface GatewaySession {
   id: string;
   label?: string;
   channel?: string;

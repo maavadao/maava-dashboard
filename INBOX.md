@@ -77,4 +77,4 @@ Tables (created idempotently on app boot via `src/lib/db.ts`; also packaged as
 - Message sync + listing (`/inbox/messages`).
 - Approval queue (`/inbox/approvals`).
 - Activity log (`/inbox/activity`).
-- OpenClaw gateway action handlers (draft, reply, send, label).
+- mawaDao Agent gateway action handlers (draft, reply, send, label).

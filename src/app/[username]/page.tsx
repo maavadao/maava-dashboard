@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { useRouter } from '@/lib/member-path';
 import { useAuth } from '@/hooks';
-import { useAuthStore, useOpenClawChatStore } from '@/store';
+import { useAuthStore, useGatewayChatStore } from '@/store';
 import { ChatPanel } from '@/components/chat';
 import { Button } from '@/components/ui';
 import { ChatSidebar, SidebarLayout } from '@/components/layout/sidebar';
@@ -34,7 +34,7 @@ function getTimeLabel(dateStr: string | undefined): string {
 
 export default function HomePage() {
   const { isAuthenticated, apiKey, user, agent } = useAuth();
-  const { gatewayToken } = useOpenClawChatStore();
+  const { gatewayToken } = useGatewayChatStore();
   const router = useRouter();
   const [exchangingToken, setExchangingToken] = useState(false);
   const exchangeAttempted = useRef(false);

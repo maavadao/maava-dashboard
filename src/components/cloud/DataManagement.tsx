@@ -126,7 +126,7 @@ export function DataManagement({ hasWorkspace }: DataManagementProps) {
         <div>
           <h3 className="text-[13px] font-semibold text-foreground/80">Import Data</h3>
           <p className="text-[12px] text-muted-foreground mt-0.5">
-            Upload a ZIP file from your local OpenClaw installation to migrate your
+            Upload a ZIP file from your local mawaDao Agent installation to migrate your
             configuration, agents, and conversations to the cloud.
           </p>
         </div>

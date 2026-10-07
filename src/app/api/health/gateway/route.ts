@@ -3,9 +3,9 @@ import pool from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
-const OPENCLAW_GATEWAY_URL = (
-  process.env.OPENCLAW_GATEWAY_URL ||
-  process.env.NEXT_PUBLIC_OPENCLAW_GATEWAY_URL ||
+const GATEWAY_URL = (
+  process.env.GATEWAY_URL ||
+  process.env.NEXT_PUBLIC_GATEWAY_URL ||
   ''
 ).replace(/\/+$/, '');
 
@@ -39,7 +39,7 @@ export async function GET() {
   }
 
   // 2. Gateway check (local mode only) / Providers check (cloud mode)
-  const gateway: HealthComponent = { status: 'down', details: { url: OPENCLAW_GATEWAY_URL } };
+  const gateway: HealthComponent = { status: 'down', details: { url: GATEWAY_URL } };
   const providers: HealthComponent = { status: 'down' };
 
   if (CLOUD_MODE) {
@@ -55,10 +55,10 @@ export async function GET() {
       providers.error = 'No AI provider keys configured';
     }
   } else {
-    if (OPENCLAW_GATEWAY_URL) {
+    if (GATEWAY_URL) {
       const gT0 = Date.now();
       try {
-        const res = await fetch(`${OPENCLAW_GATEWAY_URL}/v1/models`, {
+        const res = await fetch(`${GATEWAY_URL}/v1/models`, {
           signal: AbortSignal.timeout(5000),
         });
         gateway.latency_ms = Date.now() - gT0;
@@ -100,7 +100,7 @@ export async function GET() {
   // 4. Environment summary
   const env = {
     cloud_mode: process.env.NEXT_PUBLIC_CLOUD_MODE === 'true',
-    gateway_url: OPENCLAW_GATEWAY_URL || null,
+    gateway_url: GATEWAY_URL || null,
     openai_key_set: !!process.env.OPENAI_API_KEY,
     anthropic_key_set: !!process.env.ANTHROPIC_API_KEY,
     database_url_set: !!process.env.DATABASE_URL,
@@ -121,7 +121,7 @@ export async function GET() {
       : 'down';
 
   const body = {
-    service: 'mawaDao Tenant Dashboard — OpenClaw Health',
+    service: 'mawaDao Tenant Dashboard — mawaDao Agent Health',
     status: overall,
     timestamp,
     components,

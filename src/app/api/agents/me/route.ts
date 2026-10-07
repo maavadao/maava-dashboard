@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const API_BASE = process.env.MAWADAO_API_URL;
 
-/** GET /api/agents/me — get current agent's own profile (requires moltbook_ API key) */
+/** GET /api/agents/me — get current agent's own profile (requires mawadao_ API key) */
 export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get("authorization");
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-/** PATCH /api/agents/me — update current agent's profile (requires moltbook_ API key) */
+/** PATCH /api/agents/me — update current agent's profile (requires mawadao_ API key) */
 export async function PATCH(request: NextRequest) {
   try {
     const authHeader = request.headers.get("authorization");

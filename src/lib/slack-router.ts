@@ -1,6 +1,6 @@
 // ─── Slack event router ───
 // Parses inbound Slack events, resolves the target mawaDao tenant,
-// forwards to OpenClaw, and sends the reply back to Slack.
+// forwards to mawaDao Agent, and sends the reply back to Slack.
 
 import type {
   SlackEventCallback,
@@ -14,7 +14,7 @@ import {
   markEventProcessed,
 } from '@/lib/slack-oauth';
 import { sendSlackReply, addSlackReaction, removeSlackReaction } from '@/lib/slack-client';
-import { forwardToOpenClaw, buildSessionKey } from '@/lib/openclaw-proxy';
+import { forwardToGateway, buildSessionKey } from '@/lib/gateway-proxy';
 
 const config = DEFAULT_MAWADAO_SLACK_CONFIG;
 
@@ -156,8 +156,8 @@ async function handleEventAsync(ctx: SlackRoutingContext): Promise<void> {
   await addSlackReaction(botToken, channelId, messageTs, typingEmoji).catch(() => {});
 
   try {
-    // Resolve the tenant's OpenClaw backend URL
-    let openclawUrl: string | null = null;
+    // Resolve the tenant's mawaDao Agent backend URL
+    let gatewayUrl: string | null = null;
 
     // Direct lookup by userId
     const pool = (await import('@/lib/db')).default;
@@ -170,15 +170,15 @@ async function handleEventAsync(ctx: SlackRoutingContext): Promise<void> {
 
     const tenantRow = tenantResult.rows[0];
     if (tenantRow?.backend_url) {
-      openclawUrl = tenantRow.backend_url;
+      gatewayUrl = tenantRow.backend_url;
     }
 
-    // Forward to OpenClaw
-    const response = await forwardToOpenClaw({
+    // Forward to mawaDao Agent
+    const response = await forwardToGateway({
       mawadaoUserId: connection.mawadaoUserId,
       tenantId: tenantRow?.id ?? null,
       tenantSubdomain: tenantRow?.subdomain ?? null,
-      openclawInstanceUrl: openclawUrl,
+      gatewayInstanceUrl: gatewayUrl,
       authToken: tenantRow?.gateway_token ?? null,
       message: stripBotMention(text, connection.slackBotUserId),
       sessionKey,

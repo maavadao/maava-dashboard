@@ -66,7 +66,7 @@ export default function HealthDashboard() {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch('/api/health/openclaw');
+      const res = await fetch('/api/health/gateway');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setData(json);
@@ -105,7 +105,7 @@ export default function HealthDashboard() {
       <div className="max-w-4xl mx-auto px-6 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Button variant="ghost" size="sm" onClick={() => router.push('/settings?tab=openclaw')} className="gap-1.5">
+          <Button variant="ghost" size="sm" onClick={() => router.push('/settings?tab=agent')} className="gap-1.5">
             <ArrowLeft className="h-4 w-4" /> Back to Settings
           </Button>
         </div>
@@ -113,7 +113,7 @@ export default function HealthDashboard() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-foreground">System Health</h1>
-            <p className="text-[15px] text-muted-foreground mt-1">Real-time monitoring of OpenClaw platform services.</p>
+            <p className="text-[15px] text-muted-foreground mt-1">Real-time monitoring of mawaDao Agent platform services.</p>
           </div>
           <div className="flex items-center gap-3">
             <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
@@ -178,7 +178,7 @@ export default function HealthDashboard() {
             {data.components.gateway ? (
               <ComponentCard
                 icon={Wifi}
-                label="OpenClaw Gateway"
+                label="mawaDao Agent Gateway"
                 component={data.components.gateway}
                 details={[
                   { label: 'URL', value: data.env.gateway_url || 'Not configured' },

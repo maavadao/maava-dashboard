@@ -15,9 +15,9 @@ export const runtime = 'nodejs';
 
 const execFileAsync = promisify(execFile);
 
-const BUCKET_MANAGER_URL = process.env.BUCKET_MANAGER_URL || '';
+const STORAGE_URL = process.env.STORAGE_URL || '';
 const LIGHTPANDA_BIN = process.env.LIGHTPANDA_BIN || `${process.env.HOME || '/root'}/.local/bin/lightpanda`;
-const BUCKET_MANAGER_API_SECRET = process.env.BUCKET_MANAGER_API_SECRET || '';
+const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || '';
 const INTERNAL_API_SECRET = process.env.INTERNAL_API_SECRET || '';
 
 // Valid pricing_model values in the DB
@@ -38,13 +38,13 @@ function mapPricingModel(raw: string | null | undefined): string {
 
 async function bmHeaders(): Promise<Record<string, string>> {
   const h: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (BUCKET_MANAGER_API_SECRET) h['X-Bucket-Manager-Secret'] = BUCKET_MANAGER_API_SECRET;
+  if (STORAGE_API_SECRET) h['X-Storage-Secret'] = STORAGE_API_SECRET;
   // Attach OIDC identity token for Cloud Run IAM
   if (process.env.K_SERVICE) {
     try {
       const metaUrl =
         `http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity` +
-        `?audience=${encodeURIComponent(BUCKET_MANAGER_URL)}`;
+        `?audience=${encodeURIComponent(STORAGE_URL)}`;
       const res = await fetch(metaUrl, {
         headers: { 'Metadata-Flavor': 'Google' },
         signal: AbortSignal.timeout(3000),
@@ -292,9 +292,9 @@ async function updateJobStatus(
  * POST /api/products/import-job/[jobId]/run
  *
  * Internal-only endpoint that executes the import pipeline:
- * 1. Resolve tenant backend for OpenClaw gateway
+ * 1. Resolve tenant backend for mawaDao Agent gateway
  * 1.5. Pre-scrape submitted links (Lightpanda → HTTP fallback)
- * 2. Call OpenClaw gateway (non-streaming) with scraped content + prompt
+ * 2. Call mawaDao Agent gateway (non-streaming) with scraped content + prompt
  * 3. Parse structured JSON response
  * 4. Save raw JSON to bucket
  * 5. Ingest products into the products table
@@ -335,7 +335,7 @@ export async function POST(
   await updateJobStatus(jobId, 'running', { started_at: new Date().toISOString() });
 
   try {
-    // ── Step 1: Resolve tenant backend for OpenClaw gateway ──
+    // ── Step 1: Resolve tenant backend for mawaDao Agent gateway ──
     const userRow = await pool.query(
       `SELECT t.subdomain FROM tenants t WHERE t.user_id = $1 AND t.status = 'active' LIMIT 1`,
       [job.user_id],
@@ -381,7 +381,7 @@ export async function POST(
       );
     }
 
-    // ── Step 2: Call OpenClaw gateway (non-streaming) ──
+    // ── Step 2: Call mawaDao Agent gateway (non-streaming) ──
     const gatewayUrl = `${tenant.backendUrl.replace(/\/+$/, '')}/v1/chat/completions`;
     const messages = [
       { role: 'system', content: IMPORT_AGENT_SYSTEM_PROMPT },
@@ -459,13 +459,13 @@ export async function POST(
     const rawFileName = `market-imports/${jobId}.json`;
     const bucketPath = `${job.user_id}/mountfolder/${rawFileName}`;
 
-    if (BUCKET_MANAGER_URL) {
+    if (STORAGE_URL) {
       await updateJobStatus(jobId, 'uploading_to_bucket', {
         raw_workspace_path: rawFileName,
       });
 
       const putRes = await fetch(
-        `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${bucketPath}`,
+        `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${bucketPath}`,
         {
           method: 'PUT',
           headers: await bmHeaders(),

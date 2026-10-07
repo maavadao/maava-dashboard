@@ -12,8 +12,8 @@ import { consumeOAuthState, upsertInboxAccount } from '@/lib/inbox/db';
 // Always send users back to the member space, never to the
 // origin that handled the callback (which would be localhost in dev).
 const INBOX_APP_BASE_URL = (
-  process.env.TENANT_DASHBOARD_URL ||
-  process.env.NEXT_PUBLIC_TENANT_DASHBOARD_URL ||
+  process.env.MEMBER_SPACE_URL ||
+  process.env.NEXT_PUBLIC_MEMBER_SPACE_URL ||
   process.env.NEXT_PUBLIC_MEMBER_SPACE_URL ||
   'https://agent.mawadao.com'
 ).replace(/\/+$/, '');

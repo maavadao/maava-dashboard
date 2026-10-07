@@ -21,7 +21,7 @@ import { syncSkillEnvToGcs } from "@/lib/sync-skills";
 import { RESERVED_USERNAMES } from "@/lib/constants";
 
 const DEPLOYER_URL =
-  process.env.CLOUD_RUN_DEPLOYER_URL || "";
+  process.env.DEPLOYER_URL || "";
 const DEPLOYER_API_SECRET = process.env.DEPLOYER_API_SECRET || "";
 
 

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // Server-side only — never exposed to the browser bundle
-const OPENCLAW_CONFIG_API = (
-  process.env.OPENCLAW_CONFIG_API_URL || ""
+const GATEWAY_CONFIG_API = (
+  process.env.GATEWAY_CONFIG_API_URL || ""
 ).replace(/\/+$/, "");
 
 function fwdHeaders(req: NextRequest): Record<string, string> {
@@ -29,7 +29,7 @@ export async function POST(
   }
 
   try {
-    const res = await fetch(`${OPENCLAW_CONFIG_API}/${targetPath}`, {
+    const res = await fetch(`${GATEWAY_CONFIG_API}/${targetPath}`, {
       method: "POST",
       headers: fwdHeaders(request),
       body,
@@ -39,7 +39,7 @@ export async function POST(
   } catch {
     // Config API not running — return structured 503 instead of ERR_CONNECTION_REFUSED
     return NextResponse.json(
-      { success: false, message: "OpenClaw config API unreachable", error: "connection_refused" },
+      { success: false, message: "mawaDao Agent config API unreachable", error: "connection_refused" },
       { status: 503 }
     );
   }
@@ -53,7 +53,7 @@ export async function GET(
   const targetPath = path.join("/");
 
   // Return a graceful empty payload for status/health endpoints when the
-  // local OpenClaw gateway is not running (cloud mode).
+  // local mawaDao Agent gateway is not running (cloud mode).
   const GRACEFUL_FALLBACKS: Record<string, unknown> = {
     "channels/status": { success: true, data: [], message: "Gateway not running" },
     "health": { success: true, status: "degraded", message: "Gateway not running" },
@@ -61,7 +61,7 @@ export async function GET(
   };
 
   try {
-    const res = await fetch(`${OPENCLAW_CONFIG_API}/${targetPath}`, {
+    const res = await fetch(`${GATEWAY_CONFIG_API}/${targetPath}`, {
       method: "GET",
       headers: fwdHeaders(request),
       signal: AbortSignal.timeout(3000),
@@ -75,7 +75,7 @@ export async function GET(
       return NextResponse.json(GRACEFUL_FALLBACKS[targetPath]);
     }
     return NextResponse.json(
-      { success: false, message: "OpenClaw config API unreachable", error: "connection_refused" },
+      { success: false, message: "mawaDao Agent config API unreachable", error: "connection_refused" },
       { status: 503 }
     );
   }

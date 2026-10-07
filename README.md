@@ -50,7 +50,7 @@ Checks: `npm test`, `npm run type-check`, `npm run build`. ESLint isn't configur
 
 Every variable the code reads is listed in [`.env.example`](.env.example). At minimum set
 `NEXT_PUBLIC_MEMBER_SPACE_URL`, `NEXT_PUBLIC_ROOT_DOMAIN` (the main site, for sign-in), `DATABASE_URL`, `JWT_SECRET` (shared with `mawadao-agent-auth`), `PROVIDER_KEY_SECRET`,
-`CONFIG_API_URL` and `OPENCLAW_GATEWAY_URL`/`OPENCLAW_GATEWAY_TOKEN`.
+`CONFIG_API_URL` and `GATEWAY_URL`/`OPENCLAW_GATEWAY_TOKEN`.
 
 ## Contributing
 

@@ -100,8 +100,8 @@ export const LIMITS = {
   COMMENT_CONTENT_MAX: 10000,
   AGENT_NAME_MAX: 32,
   AGENT_NAME_MIN: 2,
-  SUBMOLT_NAME_MAX: 24,
-  SUBMOLT_NAME_MIN: 2,
+  COMMUNITY_NAME_MAX: 24,
+  COMMUNITY_NAME_MIN: 2,
   DESCRIPTION_MAX: 500,
   DEFAULT_PAGE_SIZE: 25,
   MAX_PAGE_SIZE: 100,
@@ -159,31 +159,31 @@ export const SHORTCUTS = {
 } as const;
 
 // External URLs
-export const OPENCLAW_URL =
-  process.env.NEXT_PUBLIC_OPENCLAW_URL || "";
+export const GATEWAY_UI_URL =
+  process.env.NEXT_PUBLIC_GATEWAY_UI_URL || "";
 
-/** OpenClaw redirect URL for user/agent: https://{name}.run.app */
-export const OPENCLAW_REDIRECT_BASE = "https://{name}.run.app";
+/** mawaDao Agent redirect URL for user/agent: https://{name}.run.app */
+export const GATEWAY_REDIRECT_BASE = "https://{name}.run.app";
 
-export function getOpenClawRedirectUrl(name: string): string {
-  if (!name || typeof name !== "string") return OPENCLAW_URL;
+export function getGatewayRedirectUrl(name: string): string {
+  if (!name || typeof name !== "string") return GATEWAY_UI_URL;
   const safe = name.toLowerCase().trim().replace(/[^a-z0-9_-]/g, "");
-  if (!safe) return OPENCLAW_URL;
-  return OPENCLAW_REDIRECT_BASE.replace("{name}", safe);
+  if (!safe) return GATEWAY_UI_URL;
+  return GATEWAY_REDIRECT_BASE.replace("{name}", safe);
 }
 
-// OpenClaw gateway URL (for WebSocket chat; http/https auto-converted to ws/wss)
-export const OPENCLAW_GATEWAY_URL =
-  process.env.NEXT_PUBLIC_OPENCLAW_GATEWAY_URL ||
-  process.env.NEXT_PUBLIC_OPENCLAW_URL ||
+// mawaDao Agent gateway URL (for WebSocket chat; http/https auto-converted to ws/wss)
+export const GATEWAY_URL =
+  process.env.NEXT_PUBLIC_GATEWAY_URL ||
+  process.env.NEXT_PUBLIC_GATEWAY_UI_URL ||
   "";
 
-// OpenClaw Configuration API URL — proxied through Next.js to avoid browser ERR_CONNECTION_REFUSED
-// Browser always uses the relative proxy path; server-side uses OPENCLAW_CONFIG_API_URL directly
+// mawaDao Agent Configuration API URL — proxied through Next.js to avoid browser ERR_CONNECTION_REFUSED
+// Browser always uses the relative proxy path; server-side uses GATEWAY_CONFIG_API_URL directly
 export const CONFIG_API_URL =
   typeof window !== "undefined"
-    ? "/api/openclaw"
-    : process.env.OPENCLAW_CONFIG_API_URL || "";
+    ? "/api/gateway"
+    : process.env.GATEWAY_CONFIG_API_URL || "";
 
 /** Cloud mode flag — when true, enables JWT auth and the member space */
 export const CLOUD_MODE = process.env.NEXT_PUBLIC_CLOUD_MODE === "true";

@@ -25,8 +25,8 @@ import pool from '@/lib/db';
 import { readUserConfig, writeUserConfig, SHARED_BUCKET } from '@/lib/gcs';
 import { getSkillApiKeysForUser } from '@/app/api/skills/connections/route';
 
-const BUCKET_MANAGER_URL = process.env.BUCKET_MANAGER_URL || '';
-const BUCKET_MANAGER_API_SECRET = process.env.BUCKET_MANAGER_API_SECRET || '';
+const STORAGE_URL = process.env.STORAGE_URL || '';
+const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || '';
 
 /** Max size for fetched SKILL.md content (200KB) — reject oversized responses */
 const MAX_SKILL_MD_SIZE = 200 * 1024;
@@ -37,7 +37,7 @@ const ALLOWED_RAW_HOST = 'raw.githubusercontent.com';
 
 function bmHeaders(): Record<string, string> {
   const h: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (BUCKET_MANAGER_API_SECRET) h['X-Bucket-Manager-Secret'] = BUCKET_MANAGER_API_SECRET;
+  if (STORAGE_API_SECRET) h['X-Storage-Secret'] = STORAGE_API_SECRET;
   return h;
 }
 
@@ -99,7 +99,7 @@ function buildGitHubCandidateUrls(skill: ActiveSkillRow): string[] {
       const base = `https://${ALLOWED_RAW_HOST}/${ownerRepo}/${branch}`;
       // Most common: skills/{slug}/SKILL.md (multi-skill repos)
       urls.push(`${base}/skills/${slug}/SKILL.md`);
-      // OpenClaw convention: .openclaw/skills/{slug}/SKILL.md
+      // mawaDao Agent convention: .openclaw/skills/{slug}/SKILL.md
       urls.push(`${base}/.openclaw/skills/${slug}/SKILL.md`);
       // Flat: {slug}/SKILL.md
       urls.push(`${base}/${slug}/SKILL.md`);
@@ -215,11 +215,11 @@ async function getSkillMdContent(skill: ActiveSkillRow): Promise<string> {
 // ── GCS file operations ──────────────────────────────────────────────────────
 
 async function writeSkillFile(userId: string, skillSlug: string, content: string): Promise<boolean> {
-  if (!BUCKET_MANAGER_URL) return false;
+  if (!STORAGE_URL) return false;
   const filePath = `${userId}/mountfolder/skills/${skillSlug}/SKILL.md`;
   try {
     const res = await fetch(
-      `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${filePath}`,
+      `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${filePath}`,
       { method: 'PUT', headers: bmHeaders(), body: content },
     );
     return res.ok;
@@ -229,11 +229,11 @@ async function writeSkillFile(userId: string, skillSlug: string, content: string
 }
 
 async function deleteSkillFolder(userId: string, skillSlug: string): Promise<boolean> {
-  if (!BUCKET_MANAGER_URL) return false;
+  if (!STORAGE_URL) return false;
   const folderPath = `${userId}/mountfolder/skills/${skillSlug}`;
   try {
     const res = await fetch(
-      `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/folders/${folderPath}`,
+      `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/folders/${folderPath}`,
       { method: 'DELETE', headers: bmHeaders() },
     );
     return res.ok;
@@ -294,8 +294,8 @@ export async function syncSkillsToGcs(
   subdomain?: string | null,
   userJwt?: string | null,
 ): Promise<void> {
-  if (!BUCKET_MANAGER_URL) {
-    console.warn('[syncSkillsToGcs] BUCKET_MANAGER_URL not set — skipping');
+  if (!STORAGE_URL) {
+    console.warn('[syncSkillsToGcs] STORAGE_URL not set — skipping');
     return;
   }
 
@@ -320,7 +320,7 @@ export async function syncSkillsToGcs(
   try {
     const listPath = `${userId}/mountfolder/skills`;
     const res = await fetch(
-      `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/folders/${listPath}`,
+      `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/folders/${listPath}`,
       { headers: bmHeaders() },
     );
     if (res.ok) {
@@ -426,7 +426,7 @@ export async function syncSkillEnvToGcs(
   subdomain?: string | null,
   userJwt?: string | null,
 ): Promise<void> {
-  if (!BUCKET_MANAGER_URL) return;
+  if (!STORAGE_URL) return;
 
   // Fetch active skills
   let activeSlugs: string[];
@@ -511,8 +511,8 @@ export async function installSingleSkillToGcs(
   subdomain?: string | null,
   userJwt?: string | null,
 ): Promise<{ ok: boolean; fetched: boolean }> {
-  if (!BUCKET_MANAGER_URL) {
-    console.warn('[installSingleSkill] BUCKET_MANAGER_URL not set — skipping');
+  if (!STORAGE_URL) {
+    console.warn('[installSingleSkill] STORAGE_URL not set — skipping');
     return { ok: false, fetched: false };
   }
 

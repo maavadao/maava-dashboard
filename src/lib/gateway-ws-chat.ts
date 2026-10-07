@@ -1,9 +1,9 @@
 /**
- * OpenClaw chat via Gateway WebSocket.
+ * mawaDao Agent chat via Gateway WebSocket.
  * Uses chat.send / chat events (same protocol as Control UI).
  */
 
-// Must match OpenClaw gateway PROTOCOL_VERSION (src/gateway/protocol/schema/protocol-schemas.ts)
+// Must match mawaDao Agent gateway PROTOCOL_VERSION (src/gateway/protocol/schema/protocol-schemas.ts)
 const PROTOCOL_VERSION = 3;
 
 function httpToWs(url: string): string {
@@ -42,22 +42,22 @@ type ChatEventPayload = {
   errorMessage?: string;
 };
 
-export type OpenClawWsChatOptions = {
+export type GatewayWsChatOptions = {
   wsUrl: string;
   apiKey: string;
   sessionKey?: string;
 };
 
-export class OpenClawWsChat {
+export class GatewayWsChat {
   private ws: WebSocket | null = null;
   private pending = new Map<
     string,
     { resolve: (v: unknown) => void; reject: (e: Error) => void }
   >();
   private connected = false;
-  private opts: OpenClawWsChatOptions;
+  private opts: GatewayWsChatOptions;
 
-  constructor(opts: OpenClawWsChatOptions) {
+  constructor(opts: GatewayWsChatOptions) {
     this.opts = { sessionKey: "main", ...opts };
   }
 
@@ -218,7 +218,7 @@ export class OpenClawWsChat {
     onError: (err: string) => void
   ): Promise<void> {
     if (!this.isConnected) {
-      throw new Error("Not connected to OpenClaw");
+      throw new Error("Not connected to mawaDao Agent");
     }
 
     const runId = crypto.randomUUID();
@@ -337,10 +337,10 @@ export class OpenClawWsChat {
   }
 }
 
-export function resolveOpenClawWsUrl(): string {
+export function resolveGatewayWsUrl(): string {
   const url =
-    process.env.NEXT_PUBLIC_OPENCLAW_GATEWAY_URL ||
-    process.env.NEXT_PUBLIC_OPENCLAW_URL ||
+    process.env.NEXT_PUBLIC_GATEWAY_URL ||
+    process.env.NEXT_PUBLIC_GATEWAY_UI_URL ||
     process.env.NEXT_PUBLIC_CONFIG_API_URL?.replace(/\/api\/v1\/?$/, '') ||
     "";
   return url.replace(/\/+$/, "");

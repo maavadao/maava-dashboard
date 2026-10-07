@@ -2,7 +2,7 @@
   "name": "mawadao-agent-dashboard",
   "version": "0.1.0",
   "private": true,
-  "description": "OpenClaw Tenant Chat Dashboard - Available at username.mawadao.com",
+  "description": "mawaDao Agent member space at agent.mawadao.com/<username>",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",

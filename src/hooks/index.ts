@@ -6,14 +6,14 @@ import { useAuthStore } from "@/store";
 import type {
   ConfigData,
   ConfigSchemaResponse,
-  OpenClawSession,
+  GatewaySession,
   ModelInfo,
   SkillStatus,
   ChannelStatus,
   CronJob,
   HealthStatus,
   SystemStatus,
-  OpenClawAgentFile,
+  GatewayAgentFile,
 } from "@/types";
 
 // SWR fetcher
@@ -204,21 +204,21 @@ export function isValidAgentName(name: string): boolean {
 }
 
 // ============================================================================
-// OpenClaw Configuration API hooks
+// mawaDao Agent Configuration API hooks
 // ============================================================================
 
 /**
  * Returns a SWR key only when the config API has a reachable (non-localhost) URL.
  * Passing `null` as key tells SWR to skip the request entirely.
  */
-function openclawKey(segments: string[]): string[] | null {
+function gatewayKey(segments: string[]): string[] | null {
   return configApi.isUnavailable() ? null : segments;
 }
 
-/** Fetch the current OpenClaw config (raw YAML + parsed + baseHash). */
+/** Fetch the current mawaDao Agent config (raw YAML + parsed + baseHash). */
 export function useConfig(config?: SWRConfiguration) {
   return useSWR<ConfigData>(
-    openclawKey(["openclaw", "config"]),
+    gatewayKey(["openclaw", "config"]),
     () => configApi.configGet(),
     { revalidateOnFocus: false, ...config }
   );
@@ -227,7 +227,7 @@ export function useConfig(config?: SWRConfiguration) {
 /** Fetch the JSON schema for the config. */
 export function useConfigSchema(config?: SWRConfiguration) {
   return useSWR<ConfigSchemaResponse>(
-    openclawKey(["openclaw", "config-schema"]),
+    gatewayKey(["openclaw", "config-schema"]),
     () => configApi.configSchema(),
     { revalidateOnFocus: false, ...config }
   );
@@ -236,7 +236,7 @@ export function useConfigSchema(config?: SWRConfiguration) {
 /** Gateway health check. */
 export function useGatewayHealth(config?: SWRConfiguration) {
   return useSWR<HealthStatus>(
-    openclawKey(["openclaw", "health"]),
+    gatewayKey(["openclaw", "health"]),
     () => configApi.health(),
     { refreshInterval: 30_000, ...config }
   );
@@ -245,7 +245,7 @@ export function useGatewayHealth(config?: SWRConfiguration) {
 /** Gateway system status. */
 export function useGatewayStatus(config?: SWRConfiguration) {
   return useSWR<SystemStatus>(
-    openclawKey(["openclaw", "status"]),
+    gatewayKey(["openclaw", "status"]),
     () => configApi.status(),
     { refreshInterval: 30_000, ...config }
   );
@@ -254,7 +254,7 @@ export function useGatewayStatus(config?: SWRConfiguration) {
 /** List available models. */
 export function useModels(config?: SWRConfiguration) {
   return useSWR<ModelInfo[]>(
-    openclawKey(["openclaw", "models"]),
+    gatewayKey(["openclaw", "models"]),
     () => configApi.modelsList(),
     { revalidateOnFocus: false, ...config }
   );
@@ -262,8 +262,8 @@ export function useModels(config?: SWRConfiguration) {
 
 /** List chat sessions. */
 export function useSessions(config?: SWRConfiguration) {
-  return useSWR<OpenClawSession[]>(
-    openclawKey(["openclaw", "sessions"]),
+  return useSWR<GatewaySession[]>(
+    gatewayKey(["openclaw", "sessions"]),
     () => configApi.sessionsList(),
     config
   );
@@ -272,16 +272,16 @@ export function useSessions(config?: SWRConfiguration) {
 /** Get skills status. */
 export function useSkills(config?: SWRConfiguration) {
   return useSWR<SkillStatus>(
-    openclawKey(["openclaw", "skills"]),
+    gatewayKey(["openclaw", "skills"]),
     () => configApi.skillsStatus(),
     { revalidateOnFocus: false, ...config }
   );
 }
 
-/** Get channel statuses from OpenClaw gateway. */
+/** Get channel statuses from mawaDao Agent gateway. */
 export function useChannels(config?: SWRConfiguration) {
   return useSWR<ChannelStatus[]>(
-    openclawKey(["openclaw", "channels"]),
+    gatewayKey(["openclaw", "channels"]),
     () => configApi.channelsStatus(),
     { refreshInterval: 30_000, onErrorRetry: () => {}, ...config }
   );
@@ -325,7 +325,7 @@ export function useSlackStatus(config?: SWRConfiguration) {
 /** List cron jobs. */
 export function useCronJobs(config?: SWRConfiguration) {
   return useSWR<CronJob[]>(
-    openclawKey(["openclaw", "cron"]),
+    gatewayKey(["openclaw", "cron"]),
     () => configApi.cronList(),
     config
   );
@@ -333,14 +333,14 @@ export function useCronJobs(config?: SWRConfiguration) {
 
 /** List agent files. */
 export function useAgentFiles(config?: SWRConfiguration) {
-  return useSWR<OpenClawAgentFile[]>(
-    openclawKey(["openclaw", "agent-files"]),
+  return useSWR<GatewayAgentFile[]>(
+    gatewayKey(["openclaw", "agent-files"]),
     async () => {
       try {
         return await configApi.agentFilesList();
       } catch {
         // Endpoint may not exist on this gateway – return empty list silently
-        return [] as OpenClawAgentFile[];
+        return [] as GatewayAgentFile[];
       }
     },
     {

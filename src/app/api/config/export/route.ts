@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authenticateRequest } from '@/lib/auth';
 import pool from '@/lib/db';
-import { readUserConfig, DEFAULT_OPENCLAW_CONFIG } from '@/lib/gcs';
+import { readUserConfig, DEFAULT_GATEWAY_CONFIG } from '@/lib/gcs';
 import AdmZip from 'adm-zip';
 
 /** GET /api/config/export — download user's workspace as a ZIP archive */
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // 1. Read openclaw.json from GCS (fall back to default on miss)
-    const openclawConfig = (await readUserConfig(user.userId)) ?? DEFAULT_OPENCLAW_CONFIG;
+    const gatewayConfig = (await readUserConfig(user.userId)) ?? DEFAULT_GATEWAY_CONFIG;
 
     // 2. Fetch channel metadata from DB (credentials are NOT exported)
     const channelsResult = await pool.query(
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
 
     zip.addFile(
       'openclaw.json',
-      Buffer.from(JSON.stringify(openclawConfig, null, 2), 'utf-8'),
+      Buffer.from(JSON.stringify(gatewayConfig, null, 2), 'utf-8'),
     );
 
     zip.addFile(

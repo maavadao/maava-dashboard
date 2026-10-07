@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useAuth } from '@/hooks';
-import { useOpenClawChatStore } from '@/store';
+import { useGatewayChatStore } from '@/store';
 import { ChatPanel } from '@/components/chat';
 import { Button, Avatar, AvatarImage, AvatarFallback, Skeleton } from '@/components/ui';
 import Link from '@/components/member-link';
@@ -27,7 +27,7 @@ export default function AgentChatPage() {
   const params = useParams<{ agent: string }>();
   const username = params.agent;
   const { isAuthenticated, apiKey } = useAuth();
-  const { gatewayToken } = useOpenClawChatStore();
+  const { gatewayToken } = useGatewayChatStore();
 
   const [agent, setAgent] = useState<AgentProfile | null>(null);
   const [agentLoading, setAgentLoading] = useState(true);

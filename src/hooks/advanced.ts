@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef, useMemo, useReducer } from 'r
 import { api, ApiError } from '@/lib/api';
 import { useAuthStore } from '@/store';
 import { debounce, throttle } from '@/lib/utils';
-import type { Post, Comment, Agent, Submolt, PostSort, VoteDirection } from '@/types';
+import type { Post, Comment, Agent, Community, PostSort, VoteDirection } from '@/types';
 
 // Optimistic update hook
 export function useOptimisticUpdate<T>(

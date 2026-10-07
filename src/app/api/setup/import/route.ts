@@ -1,5 +1,5 @@
 /**
- * POST /api/setup/import — Upload local OpenClaw data to the user's cloud backend.
+ * POST /api/setup/import — Upload local mawaDao Agent data to the user's cloud backend.
  *
  * Accepts a multipart/form-data request with a ZIP file containing:
  *   - openclaw.json (main config)

@@ -3,15 +3,15 @@ import pool from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
-const OPENCLAW_GATEWAY_URL = (
-  process.env.OPENCLAW_GATEWAY_URL ||
-  process.env.NEXT_PUBLIC_OPENCLAW_GATEWAY_URL ||
+const GATEWAY_URL = (
+  process.env.GATEWAY_URL ||
+  process.env.NEXT_PUBLIC_GATEWAY_URL ||
   ''
 ).replace(/\/+$/, '');
 
 const OPENCLAW_GATEWAY_TOKEN =
   process.env.OPENCLAW_GATEWAY_TOKEN ||
-  process.env.NEXT_PUBLIC_OPENCLAW_GATEWAY_TOKEN ||
+  process.env.NEXT_PUBLIC_GATEWAY_TOKEN ||
   '';
 
 const CLOUD_MODE = process.env.NEXT_PUBLIC_CLOUD_MODE === 'true';
@@ -80,7 +80,7 @@ function checkJWT(): CheckResult {
 
 function checkProviders(): CheckResult {
   const providers: string[] = [];
-  if (OPENCLAW_GATEWAY_URL) providers.push(`Gateway (${OPENCLAW_GATEWAY_URL})`);
+  if (GATEWAY_URL) providers.push(`Gateway (${GATEWAY_URL})`);
   if (OPENAI_API_KEY) providers.push('OpenAI');
   if (ANTHROPIC_API_KEY) providers.push('Anthropic');
 
@@ -96,8 +96,8 @@ function checkProviders(): CheckResult {
     status: 'ok',
     message: `Available providers: ${providers.join(', ')}`,
     details: {
-      gateway: !!OPENCLAW_GATEWAY_URL,
-      gateway_url: OPENCLAW_GATEWAY_URL || null,
+      gateway: !!GATEWAY_URL,
+      gateway_url: GATEWAY_URL || null,
       openai: !!OPENAI_API_KEY,
       anthropic: !!ANTHROPIC_API_KEY,
     },
@@ -105,12 +105,12 @@ function checkProviders(): CheckResult {
 }
 
 async function checkGateway(): Promise<CheckResult> {
-  if (!OPENCLAW_GATEWAY_URL) {
+  if (!GATEWAY_URL) {
     return { status: 'warn', message: 'No gateway URL configured — will use direct AI providers' };
   }
   const t0 = Date.now();
   try {
-    const res = await fetch(`${OPENCLAW_GATEWAY_URL}/v1/models`, {
+    const res = await fetch(`${GATEWAY_URL}/v1/models`, {
       headers: { Authorization: `Bearer ${OPENCLAW_GATEWAY_TOKEN}` },
       signal: AbortSignal.timeout(5000),
     });
@@ -121,21 +121,21 @@ async function checkGateway(): Promise<CheckResult> {
         status: 'ok',
         latency_ms: latency,
         message: `Gateway reachable (${data?.data?.length ?? '?'} models)`,
-        details: { url: OPENCLAW_GATEWAY_URL, models_count: data?.data?.length },
+        details: { url: GATEWAY_URL, models_count: data?.data?.length },
       };
     }
     return {
       status: 'warn',
       latency_ms: latency,
       message: `Gateway returned HTTP ${res.status}`,
-      details: { url: OPENCLAW_GATEWAY_URL },
+      details: { url: GATEWAY_URL },
     };
   } catch (err) {
     return {
       status: 'fail',
       latency_ms: Date.now() - t0,
       message: `Gateway unreachable: ${err instanceof Error ? err.message : String(err)}`,
-      details: { url: OPENCLAW_GATEWAY_URL },
+      details: { url: GATEWAY_URL },
     };
   }
 }
@@ -145,7 +145,7 @@ async function checkChatEndpoint(): Promise<CheckResult> {
   // (This is a self-check — we just validate the route exists and
   // the provider selection logic would succeed)
   const providers: string[] = [];
-  if (OPENCLAW_GATEWAY_URL) providers.push('gateway');
+  if (GATEWAY_URL) providers.push('gateway');
   if (OPENAI_API_KEY) providers.push('openai');
   if (ANTHROPIC_API_KEY) providers.push('anthropic');
 
@@ -196,7 +196,7 @@ export async function GET() {
     jwt_secret_set: !!JWT_SECRET,
     openai_key_set: !!OPENAI_API_KEY,
     anthropic_key_set: !!ANTHROPIC_API_KEY,
-    gateway_url: OPENCLAW_GATEWAY_URL || null,
+    gateway_url: GATEWAY_URL || null,
     auth_url: process.env.NEXT_PUBLIC_AUTH_URL || null,
   };
 

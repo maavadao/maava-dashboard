@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authenticateRequest } from '@/lib/auth';
-import { readUserConfig, writeUserConfig, DEFAULT_OPENCLAW_CONFIG } from '@/lib/gcs';
+import { readUserConfig, writeUserConfig, DEFAULT_GATEWAY_CONFIG } from '@/lib/gcs';
 
 /** GET /api/config — fetch user's openclaw.json from GCS */
 export async function GET(request: NextRequest) {
@@ -11,10 +11,10 @@ export async function GET(request: NextRequest) {
 
   try {
     const config = await readUserConfig(user.userId);
-    return NextResponse.json({ success: true, config: config ?? DEFAULT_OPENCLAW_CONFIG });
+    return NextResponse.json({ success: true, config: config ?? DEFAULT_GATEWAY_CONFIG });
   } catch (err) {
     console.error('[api/config GET]', err);
-    return NextResponse.json({ success: true, config: DEFAULT_OPENCLAW_CONFIG });
+    return NextResponse.json({ success: true, config: DEFAULT_GATEWAY_CONFIG });
   }
 }
 

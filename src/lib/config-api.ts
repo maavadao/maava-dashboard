@@ -1,4 +1,4 @@
-// OpenClaw Configuration API Client
+// mawaDao Agent Configuration API Client
 // All endpoints are POST-based RPC calls via the gateway bridge.
 // Auth uses X-Tenant-ID header (mapped from the logged-in agent's ID).
 // Response envelope: { success: boolean; data: T | null; message: string; error?: unknown }
@@ -7,9 +7,9 @@ import { CONFIG_API_URL } from "@/lib/constants";
 import type {
   ConfigData,
   ConfigSchemaResponse,
-  OpenClawAgent,
-  OpenClawAgentFile,
-  OpenClawSession,
+  GatewayAgent,
+  GatewayAgentFile,
+  GatewaySession,
   ModelInfo,
   SkillStatus,
   ChannelStatus,
@@ -21,7 +21,7 @@ import type {
 /** Returns true when the URL targets localhost — unusable from a production browser. */
 function isLocalhostUrl(url: string | undefined | null): boolean {
   if (!url) return true;
-  // Relative URLs (like /api/openclaw) are same-origin proxies — never localhost
+  // Relative URLs (like /api/gateway) are same-origin proxies — never localhost
   if (url.startsWith("/")) return false;
   try {
     const u = new URL(url);
@@ -136,7 +136,7 @@ class ConfigApiClient {
     // In browser context, route localhost URLs through the Next.js proxy
     // so the browser never gets ERR_CONNECTION_REFUSED on port 19002
     if (typeof window !== "undefined" && isLocalhostUrl(normalised)) {
-      this.baseUrl = "/api/openclaw";
+      this.baseUrl = "/api/gateway";
     } else {
       this.baseUrl = normalised;
     }
@@ -179,7 +179,7 @@ class ConfigApiClient {
       if (winHost !== 'localhost' && winHost !== '127.0.0.1') {
         throw new ConfigApiError(
           0,
-          "OpenClaw gateway URL is not configured. Go to Settings → OpenClaw Gateway to set it."
+          "mawaDao Agent gateway URL is not configured. Go to Settings → mawaDao Agent Gateway to set it."
         );
       }
     }
@@ -210,7 +210,7 @@ class ConfigApiClient {
     } catch (networkErr) {
       // Network-level error (ERR_CONNECTION_REFUSED, offline, etc.) — mark as down
       this.markNetworkDown();
-      throw new ConfigApiError(0, "OpenClaw gateway is unreachable");
+      throw new ConfigApiError(0, "mawaDao Agent gateway is unreachable");
     }
 
     if (!response.ok) {
@@ -299,12 +299,12 @@ class ConfigApiClient {
     return this.request<unknown>("/agent/identity");
   }
 
-  async agentsList(): Promise<OpenClawAgent[]> {
-    return this.request<OpenClawAgent[]>("/agents/list");
+  async agentsList(): Promise<GatewayAgent[]> {
+    return this.request<GatewayAgent[]>("/agents/list");
   }
 
-  async agentFilesList(): Promise<OpenClawAgentFile[]> {
-    return this.request<OpenClawAgentFile[]>("/agents/files/list");
+  async agentFilesList(): Promise<GatewayAgentFile[]> {
+    return this.request<GatewayAgentFile[]>("/agents/files/list");
   }
 
   async agentFilesGet(
@@ -356,7 +356,7 @@ class ConfigApiClient {
   // Sessions
   // -------------------------------------------------------------------------
 
-  async sessionsList(): Promise<OpenClawSession[]> {
+  async sessionsList(): Promise<GatewaySession[]> {
     const data = await this.request<{ sessions?: Record<string, unknown>[] } | Record<string, unknown>[]>("/sessions/list");
     const raw: Record<string, unknown>[] = Array.isArray(data)
       ? data
@@ -371,13 +371,13 @@ class ConfigApiClient {
       channel: (s.chatType as string) || (s.channel as string) || (s.kind as string) || undefined,
       createdAt: typeof s.createdAt === 'number' ? new Date(s.createdAt as number).toISOString() : (s.createdAt as string | undefined),
       updatedAt: typeof s.updatedAt === 'number' ? new Date(s.updatedAt as number).toISOString() : (s.updatedAt as string | undefined),
-    } as OpenClawSession));
+    } as GatewaySession));
   }
 
   async sessionsPreview(
     id: string
-  ): Promise<{ session: OpenClawSession; messages: unknown[] }> {
-    return this.request<{ session: OpenClawSession; messages: unknown[] }>(
+  ): Promise<{ session: GatewaySession; messages: unknown[] }> {
+    return this.request<{ session: GatewaySession; messages: unknown[] }>(
       "/sessions/preview",
       { id }
     );

@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/db';
 import { getRequestUserId } from '@/lib/auth';
 
-const OPENCLAW_GATEWAY_URL =
-  process.env.OPENCLAW_GATEWAY_URL ||
-  process.env.NEXT_PUBLIC_OPENCLAW_GATEWAY_URL ||
+const GATEWAY_URL =
+  process.env.GATEWAY_URL ||
+  process.env.NEXT_PUBLIC_GATEWAY_URL ||
   '';
 
 /** POST /api/conversations/[id]/generate-title — AI-generate a short title */
@@ -52,8 +52,8 @@ export async function POST(
     let aiHeaders: Record<string, string>;
     let aiModel: string;
 
-    if (OPENCLAW_GATEWAY_URL) {
-      const base = OPENCLAW_GATEWAY_URL.replace(/\/+$/, '');
+    if (GATEWAY_URL) {
+      const base = GATEWAY_URL.replace(/\/+$/, '');
       aiEndpoint = `${base}/v1/chat/completions`;
       aiHeaders = { 'Content-Type': 'application/json', ...(authHeader ? { Authorization: authHeader } : {}) };
       aiModel = 'openclaw';

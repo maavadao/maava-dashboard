@@ -847,7 +847,7 @@ function getSeedSkills() {
   return [
     // ai-ml
     { skill_id: 'weather', name: 'Weather', description: 'Get real-time weather conditions, temperature, humidity, wind, and forecasts for any city worldwide.', category: 'ai-ml', installs: 48000, source: 'wttr.in', source_url: 'https://wttr.in' },
-    { skill_id: 'browser_use', name: 'Browser Use', description: 'Browse the web, search for information, and extract live data from websites in real-time.', category: 'ai-ml', installs: 46000, source: 'OpenClaw', source_url: 'https://github.com/nicepkg/openclaw' },
+    { skill_id: 'browser_use', name: 'Browser Use', description: 'Browse the web, search for information, and extract live data from websites in real-time.', category: 'ai-ml', installs: 46000, source: 'mawaDao Agent', source_url: 'https://github.com/nicepkg/openclaw' },
     { skill_id: 'web_search', name: 'Web Search', description: 'Search the internet in real-time for current information and news.', category: 'ai-ml', installs: 50000, source: 'openai_official', source_url: 'https://platform.openai.com/docs/plugins/getting-started' },
     { skill_id: 'code_interpreter', name: 'Code Interpreter', description: 'Execute Python code, analyze data, and run computations securely.', category: 'ai-ml', installs: 45000, source: 'openai_official', source_url: 'https://platform.openai.com/docs/assistants/tools/code-interpreter' },
     { skill_id: 'image_analysis', name: 'Image Analysis', description: 'Analyze, describe, and extract information from images using vision AI.', category: 'ai-ml', installs: 32000, source: 'Meta Community', source_url: 'https://ai.meta.com' },

@@ -4,7 +4,7 @@ import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { useRouter } from '@/lib/member-path';
 import { useAuth } from '@/hooks';
-import { useAuthStore, useOpenClawChatStore } from '@/store';
+import { useAuthStore, useGatewayChatStore } from '@/store';
 import { ChatPanel } from '@/components/chat';
 import { Button } from '@/components/ui';
 import { ChatSidebar, SidebarLayout } from '@/components/layout/sidebar';
@@ -39,7 +39,7 @@ export default function ChatSessionPage() {
   const conversationId = params.id as string;
 
   const { isAuthenticated, apiKey, user, agent } = useAuth();
-  const { gatewayToken } = useOpenClawChatStore();
+  const { gatewayToken } = useGatewayChatStore();
   const [exchangingToken, setExchangingToken] = useState(false);
   const exchangeAttempted = useRef(false);
   const canChat = isAuthenticated && (apiKey || gatewayToken) && !exchangingToken;

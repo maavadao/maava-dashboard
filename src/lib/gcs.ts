@@ -1,15 +1,15 @@
 /**
- * Config access via the bucket-manager HTTP service.
+ * Config access via the mawadao-agent-storage HTTP service.
  *
  * All user configs live in a single shared GCS bucket:
  *   {SHARED_BUCKET}/{userId}/mountfolder/openclaw.json
  *
- * The bucket-manager service holds the GCS credentials and exposes a simple
+ * The mawadao-agent-storage service holds the GCS credentials and exposes a simple
  * REST API so the dashboard never needs direct GCS SDK access.
  */
 
-const BUCKET_MANAGER_URL = process.env.BUCKET_MANAGER_URL || "";
-const BUCKET_MANAGER_API_SECRET = process.env.BUCKET_MANAGER_API_SECRET || "";
+const STORAGE_URL = process.env.STORAGE_URL || "";
+const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || "";
 export const SHARED_BUCKET =
   process.env.GCS_SHARED_BUCKET || "mawadao-agent-data";
 
@@ -38,15 +38,15 @@ async function getCloudRunIdentityToken(audience: string): Promise<string | null
 
 async function bmHeaders(): Promise<Record<string, string>> {
   const h: Record<string, string> = { "Content-Type": "application/json" };
-  if (BUCKET_MANAGER_API_SECRET) h["X-Bucket-Manager-Secret"] = BUCKET_MANAGER_API_SECRET;
+  if (STORAGE_API_SECRET) h["X-Storage-Secret"] = STORAGE_API_SECRET;
   // Attach OIDC identity token so Cloud Run IAM auth is satisfied
-  const token = await getCloudRunIdentityToken(BUCKET_MANAGER_URL);
+  const token = await getCloudRunIdentityToken(STORAGE_URL);
   if (token) h["Authorization"] = `Bearer ${token}`;
   return h;
 }
 
 /** Default openclaw.json template used as a fallback when config is unreachable. */
-export const DEFAULT_OPENCLAW_CONFIG = {
+export const DEFAULT_GATEWAY_CONFIG = {
   meta: {
     version: '1.0.0',
     createdAt: '',
@@ -100,14 +100,14 @@ export const DEFAULT_OPENCLAW_CONFIG = {
 
 /**
  * Read a user's openclaw.json from the shared GCS bucket.
- * Returns null when bucket-manager is unreachable or the file does not exist.
+ * Returns null when mawadao-agent-storage is unreachable or the file does not exist.
  */
 export async function readUserConfig(userId: string): Promise<unknown | null> {
-  if (!BUCKET_MANAGER_URL) return null;
+  if (!STORAGE_URL) return null;
   const filePath = `${userId}/mountfolder/openclaw.json`;
   try {
     const res = await fetch(
-      `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${filePath}`,
+      `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${filePath}`,
       { headers: await bmHeaders(), signal: AbortSignal.timeout(10_000) }
     );
     if (!res.ok) return null;
@@ -122,12 +122,12 @@ export async function readUserConfig(userId: string): Promise<unknown | null> {
  * Throws on failure so callers can surface the error.
  */
 export async function writeUserConfig(userId: string, data: unknown): Promise<void> {
-  if (!BUCKET_MANAGER_URL) {
-    throw new Error("BUCKET_MANAGER_URL is not configured");
+  if (!STORAGE_URL) {
+    throw new Error("STORAGE_URL is not configured");
   }
   const filePath = `${userId}/mountfolder/openclaw.json`;
   const res = await fetch(
-    `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${filePath}`,
+    `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${filePath}`,
     {
       method: "PUT",
       headers: await bmHeaders(),
@@ -137,15 +137,15 @@ export async function writeUserConfig(userId: string, data: unknown): Promise<vo
   );
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`bucket-manager write failed (HTTP ${res.status}): ${body}`);
+    throw new Error(`mawadao-agent-storage write failed (HTTP ${res.status}): ${body}`);
   }
 }
 
 /**
- * No-op — config seeding is done by cloud-run-deployer at provisioning time.
+ * No-op — config seeding is done by mawadao-agent-deployer at provisioning time.
  * Kept for backward compatibility with token-exchange route.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function initUserConfig(_username: string): Promise<void> {
-  // Intentional no-op: openclaw.json is seeded by cloud-run-deployer/seedTenantBucketConfig
+  // Intentional no-op: openclaw.json is seeded by mawadao-agent-deployer/seedTenantBucketConfig
 }

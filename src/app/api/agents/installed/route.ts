@@ -4,8 +4,8 @@ import { createJWT, getRequestUserId } from '@/lib/auth';
 
 // ── Tenant platform provisioning ─────────────────────────────────────────────
 
-const BUCKET_MANAGER_URL = process.env.BUCKET_MANAGER_URL || '';
-const BUCKET_MANAGER_API_SECRET = process.env.BUCKET_MANAGER_API_SECRET || '';
+const STORAGE_URL = process.env.STORAGE_URL || '';
+const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || '';
 const GCS_BUCKET =
   process.env.GCS_SHARED_BUCKET || process.env.GCS_BUCKET || 'mawadao-agent-data';
 
@@ -88,22 +88,22 @@ function buildMemoryMd(): string {
 
 /**
  * When the REST API is unavailable (older backend), add the agent directly
- * to the gateway config (openclaw.json) via the GCS bucket-manager.
+ * to the gateway config (openclaw.json) via the GCS mawadao-agent-storage.
  */
 async function addAgentToGcsConfig(
   userId: string,
   agentSlug: string,
   agentName: string,
 ): Promise<boolean> {
-  if (!BUCKET_MANAGER_URL) {
-    console.warn('[gcs-config] skip — BUCKET_MANAGER_URL is empty');
+  if (!STORAGE_URL) {
+    console.warn('[gcs-config] skip — STORAGE_URL is empty');
     return false;
   }
   const gcsHeaders: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (BUCKET_MANAGER_API_SECRET) gcsHeaders['X-Bucket-Manager-Secret'] = BUCKET_MANAGER_API_SECRET;
+  if (STORAGE_API_SECRET) gcsHeaders['X-Storage-Secret'] = STORAGE_API_SECRET;
 
   const configGcsPath = `${userId}/mountfolder/openclaw.json`;
-  const configUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/files/${configGcsPath}`;
+  const configUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/files/${configGcsPath}`;
 
   // Read current config
   let config: Record<string, unknown>;
@@ -176,8 +176,8 @@ async function seedAgentWorkspaceFiles(
   restApiAvailable = true,
 ): Promise<void> {
   console.log('[seed] START — agent:', agent.slug, 'base:', base, 'userId:', userId);
-  console.log('[seed] ENV check — BUCKET_MANAGER_URL:', BUCKET_MANAGER_URL || '(empty)',
-    'BUCKET_MANAGER_API_SECRET:', BUCKET_MANAGER_API_SECRET ? '(set)' : '(empty)',
+  console.log('[seed] ENV check — STORAGE_URL:', STORAGE_URL || '(empty)',
+    'STORAGE_API_SECRET:', STORAGE_API_SECRET ? '(set)' : '(empty)',
     'GCS_BUCKET:', GCS_BUCKET);
 
   const workspaceFiles = [
@@ -189,7 +189,7 @@ async function seedAgentWorkspaceFiles(
   ];
 
   const gcsHeaders: Record<string, string> = { 'Content-Type': 'text/plain; charset=utf-8' };
-  if (BUCKET_MANAGER_API_SECRET) gcsHeaders['X-Bucket-Manager-Secret'] = BUCKET_MANAGER_API_SECRET;
+  if (STORAGE_API_SECRET) gcsHeaders['X-Storage-Secret'] = STORAGE_API_SECRET;
 
   for (const file of workspaceFiles) {
     // Write to tenant-platform local disk via REST (only when available)
@@ -213,10 +213,10 @@ async function seedAgentWorkspaceFiles(
       console.log('[seed] files.set SKIP —', file.name, '(REST API unavailable)');
     }
 
-    // Mirror to GCS via bucket-manager (fallback if GCSFuse is not mounted)
-    if (BUCKET_MANAGER_URL) {
+    // Mirror to GCS via mawadao-agent-storage (fallback if GCSFuse is not mounted)
+    if (STORAGE_URL) {
       const gcsPath = `${userId}/mountfolder/workspace-${agent.slug}/${file.name}`;
-      const gcsUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/files/${gcsPath}`;
+      const gcsUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/files/${gcsPath}`;
       console.log('[seed] GCS PUT:', gcsUrl);
       try {
         const gcsResp = await fetch(gcsUrl, {
@@ -228,7 +228,7 @@ async function seedAgentWorkspaceFiles(
         console.error('[seed] GCS', file.name, 'THREW:', (err as Error)?.message);
       }
     } else {
-      console.warn('[seed] GCS skip — BUCKET_MANAGER_URL is empty');
+      console.warn('[seed] GCS skip — STORAGE_URL is empty');
     }
   }
 
@@ -240,9 +240,9 @@ async function seedAgentWorkspaceFiles(
       console.log('[seed] skip skill — missing slug or content:', JSON.stringify(skill)?.slice(0, 200));
       continue;
     }
-    if (BUCKET_MANAGER_URL) {
+    if (STORAGE_URL) {
       const gcsPath = `${userId}/mountfolder/skills/${skill.slug}/SKILL.md`;
-      const gcsUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/files/${gcsPath}`;
+      const gcsUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/files/${gcsPath}`;
       console.log('[seed] GCS skill PUT:', gcsUrl);
       try {
         const resp = await fetch(gcsUrl, {
@@ -361,7 +361,7 @@ async function provisionAgentInTenantPlatform(
 
   // 5b. Register agent in openclaw.json via GCS (always — this is the source of truth
   //     the gateway reads; the REST agents.create/update endpoints may not exist yet)
-  if (BUCKET_MANAGER_URL) {
+  if (STORAGE_URL) {
     console.log('[provision] 5b/6 adding agent to openclaw.json via GCS…');
     const configOk = await addAgentToGcsConfig(userId, agent.slug, agent.name);
     if (!configOk) {
@@ -421,12 +421,12 @@ async function deprovisionAgentFromTenantPlatform(
   }
 
   // Remove agent from openclaw.json config via GCS
-  if (BUCKET_MANAGER_URL) {
+  if (STORAGE_URL) {
     const gcsHeaders: Record<string, string> = { 'Content-Type': 'application/json' };
-    if (BUCKET_MANAGER_API_SECRET) gcsHeaders['X-Bucket-Manager-Secret'] = BUCKET_MANAGER_API_SECRET;
+    if (STORAGE_API_SECRET) gcsHeaders['X-Storage-Secret'] = STORAGE_API_SECRET;
 
     const configGcsPath = `${userId}/mountfolder/openclaw.json`;
-    const configUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/files/${configGcsPath}`;
+    const configUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/files/${configGcsPath}`;
     try {
       const getResp = await fetch(configUrl, { headers: gcsHeaders, signal: AbortSignal.timeout(10_000) });
       if (getResp.ok) {
@@ -456,9 +456,9 @@ async function deprovisionAgentFromTenantPlatform(
 
     // Delete GCS workspace folder
     const gcsFolder = `${userId}/mountfolder/workspace-${agent.slug}`;
-    const gcsUrl = `${BUCKET_MANAGER_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/folders/${gcsFolder}`;
+    const gcsUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/folders/${gcsFolder}`;
     const delHeaders: Record<string, string> = {};
-    if (BUCKET_MANAGER_API_SECRET) delHeaders['X-Bucket-Manager-Secret'] = BUCKET_MANAGER_API_SECRET;
+    if (STORAGE_API_SECRET) delHeaders['X-Storage-Secret'] = STORAGE_API_SECRET;
     await fetch(gcsUrl, {
       method: 'DELETE',
       headers: delHeaders,

@@ -8,7 +8,7 @@ const CONFIGURATION_API = (
  * GET /api/v1/seller/social-accounts/callback
  *
  * Zernio redirects the user's browser here after OAuth.
- * We proxy the request to configuration-api which saves the connection and
+ * We proxy the request to mawadao-agent-api which saves the connection and
  * returns an HTML page that postMessages the result back to the opener popup.
  *
  * No auth required — the user identity is resolved server-side via profileId.

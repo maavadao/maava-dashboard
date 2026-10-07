@@ -1,11 +1,11 @@
-// ─── OpenClaw proxy — forward Slack messages to per-user OpenClaw instances ───
+// ─── mawaDao Agent proxy — forward Slack messages to per-user mawaDao Agent instances ───
 
 
-interface OpenClawProxyInput {
+interface GatewayProxyInput {
   mawadaoUserId: string;
   tenantId?: string | null;
   tenantSubdomain?: string | null;
-  openclawInstanceUrl?: string | null;
+  gatewayInstanceUrl?: string | null;
   authToken?: string | null;
   message: string;
   sessionKey: string;
@@ -21,31 +21,31 @@ interface OpenClawProxyInput {
   };
 }
 
-interface OpenClawProxyOutput {
+interface GatewayProxyOutput {
   text: string;
   metadata?: Record<string, unknown>;
 }
 
 /**
- * Resolve the OpenClaw runtime URL for a given mawaDao user.
+ * Resolve the mawaDao Agent runtime URL for a given mawaDao user.
  * Uses the tenant's runtime URL (tenants.backend_url); throws if there is none.
  */
-function resolveOpenClawUrl(input: OpenClawProxyInput): string {
-  if (input.openclawInstanceUrl) {
-    return input.openclawInstanceUrl.replace(/\/+$/, '') + '/v1/chat/completions';
+function resolveGatewayUrl(input: GatewayProxyInput): string {
+  if (input.gatewayInstanceUrl) {
+    return input.gatewayInstanceUrl.replace(/\/+$/, '') + '/v1/chat/completions';
   }
 
   throw new Error(
-    `Cannot resolve OpenClaw URL for user ${input.mawadaoUserId}: no runtime URL for the tenant`,
+    `Cannot resolve mawaDao Agent URL for user ${input.mawadaoUserId}: no runtime URL for the tenant`,
   );
 }
 
 /**
- * Forward a Slack message to the user's OpenClaw instance and return the response.
+ * Forward a Slack message to the user's mawaDao Agent instance and return the response.
  * Uses POST /v1/chat/completions (OpenAI-compatible API).
  */
-export async function forwardToOpenClaw(input: OpenClawProxyInput): Promise<OpenClawProxyOutput> {
-  const url = resolveOpenClawUrl(input);
+export async function forwardToGateway(input: GatewayProxyInput): Promise<GatewayProxyOutput> {
+  const url = resolveGatewayUrl(input);
 
   const body = {
     model: 'openclaw',
@@ -55,7 +55,7 @@ export async function forwardToOpenClaw(input: OpenClawProxyInput): Promise<Open
         content: input.message,
       },
     ],
-    // Pass Slack context as metadata so OpenClaw skills can use it
+    // Pass Slack context as metadata so mawaDao Agent skills can use it
     metadata: {
       session_key: input.sessionKey,
       channel: {
@@ -71,7 +71,7 @@ export async function forwardToOpenClaw(input: OpenClawProxyInput): Promise<Open
     },
   };
 
-  console.log(`[openclaw-proxy] Forwarding to ${url} for user ${input.mawadaoUserId} (auth=${!!input.authToken}, tenant=${input.tenantId ?? 'none'})`);
+  console.log(`[gateway-proxy] Forwarding to ${url} for user ${input.mawadaoUserId} (auth=${!!input.authToken}, tenant=${input.tenantId ?? 'none'})`);
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -95,14 +95,14 @@ export async function forwardToOpenClaw(input: OpenClawProxyInput): Promise<Open
       signal: AbortSignal.timeout(300_000), // 5min timeout – backend can take 80-300s
     });
   } catch (fetchErr: any) {
-    console.error(`[openclaw-proxy] fetch failed for ${url}:`, fetchErr?.message, fetchErr?.cause);
+    console.error(`[gateway-proxy] fetch failed for ${url}:`, fetchErr?.message, fetchErr?.cause);
     throw fetchErr;
   }
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => 'unknown');
-    console.error(`[openclaw-proxy] HTTP ${response.status} from OpenClaw: ${errorText}`);
-    throw new Error(`OpenClaw returned HTTP ${response.status}`);
+    console.error(`[gateway-proxy] HTTP ${response.status} from mawaDao Agent: ${errorText}`);
+    throw new Error(`mawaDao Agent returned HTTP ${response.status}`);
   }
 
   const data = await response.json();
