@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/lib/member-path';
 
 /* ── Sidebar state context ─────────────────────────────────────────────────── */
 

@@ -1,8 +1,8 @@
 ﻿'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from '@/components/member-link';
+import { usePathname } from '@/lib/member-path';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks';
 import { ROUTES, APP_NAME } from '@/lib/constants';

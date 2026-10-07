@@ -17,6 +17,7 @@ import { useAdaptivePoll } from '@/hooks/use-adaptive-poll';
 import { useOpenClawChatStore, useSkillsStore, useInstalledAgentsStore } from '@/store';
 import { useCloudStore } from '@/store/cloud';
 import { useAuth } from '@/hooks';
+import { toMemberPath } from '@/lib/member-path';
 import {
   Send, Loader2, Bot, Sparkles, StopCircle, RotateCcw,
   Paperclip, X, ChevronDown, ChevronLeft, ChevronRight, Check, ImageIcon, FileText,
@@ -3162,7 +3163,7 @@ function ChatPanelInner({ apiKey, conversationId, initialMessages, userId, onCon
                         <div className="border-t border-border/40 p-2">
                           <button
                             type="button"
-                            onClick={() => { setModelDropdownOpen(false); window.location.href = '/settings?tab=openclaw'; }}
+                            onClick={() => { setModelDropdownOpen(false); window.location.href = toMemberPath('/settings?tab=openclaw'); }}
                             className="flex items-center gap-2 w-full px-3 py-2 rounded-xl text-xs text-primary hover:bg-primary/5 dark:hover:bg-primary/10 transition-all duration-200 font-medium"
                           >
                             <Plus className="h-3.5 w-3.5" />

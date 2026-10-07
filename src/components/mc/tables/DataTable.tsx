@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import Link from 'next/link';
+import Link from '@/components/member-link';
 import { type Row, type Table, flexRender } from '@tanstack/react-table';
 import { TableEmptyStateRow, TableLoadingRow } from '@/components/mc/ui/table-state';
 import { Button, buttonVariants } from '@/components/mc/ui/button';

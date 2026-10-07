@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import Link from 'next/link';
+import Link from '@/components/member-link';
 import { buttonVariants } from '@/components/mc/ui/button';
 
 type TableLoadingRowProps = {

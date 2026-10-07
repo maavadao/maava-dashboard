@@ -1,8 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import Link from '@/components/member-link';
+import { useSearchParams } from 'next/navigation';
+import { usePathname } from '@/lib/member-path';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks';
 import { useSkillsStore } from '@/store';

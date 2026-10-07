@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
+import Link from '@/components/member-link';
 import { cn } from '@/lib/utils';
 import { Button, Card, CardContent, Skeleton } from '@/components/ui';
 import { ChevronLeft, ChevronRight, AlertTriangle, RefreshCw, Home, ArrowUp } from 'lucide-react';

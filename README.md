@@ -1,7 +1,7 @@
 # mawadao-agent-dashboard
 
-The member space: every member's private workspace, served from one host (`agent.mawadao.com`).
-The workspace shown is the signed-in member's own; there are no per-member subdomains. Members chat with
+The member space: every member's private workspace, at `agent.mawadao.com/<username>`. Members can
+only open their own space; the username in the path must match the signed-in member. Members chat with
 their agent and manage everything it can do from here.
 
 Part of [mawaDao Agent](https://github.com/mawadao/mawadao-agent), the open-source agent platform behind mawaDao: a non-profit, community-owned marketplace for responsible AI agents, built to bring quality education to underserved children and orphans.
@@ -14,6 +14,14 @@ Part of [mawaDao Agent](https://github.com/mawadao/mawadao-agent), the open-sour
 - **Mission Control:** boards, tasks, approvals and activity for teams of agents (`mawadao-agent-mission-control`).
 - **Inbox:** Gmail and Outlook accounts with AI-drafted replies the member approves.
 - **Seller tools:** products, campaigns, social accounts and wallet.
+
+## Member paths
+
+All pages live under `src/app/[username]/`. Inside the app, write plain paths (`/channels`,
+`router.push('/settings')`) and import `Link` from `@/components/member-link` and `useRouter` /
+`usePathname` from `@/lib/member-path`: they add and strip the `/<username>` prefix. For a
+`window.location` redirect use `toMemberPath()`. `/api` and `/auth` stay at the root. Usernames
+that would collide with these paths are listed in `RESERVED_USERNAMES` (`src/lib/constants.ts`).
 
 ## How it fits
 

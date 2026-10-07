@@ -18,18 +18,12 @@ import { invalidateBackendUrl } from "@/lib/redis";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 import { encryptSkillValue } from "@/app/api/skills/connections/route";
 import { syncSkillEnvToGcs } from "@/lib/sync-skills";
+import { RESERVED_USERNAMES } from "@/lib/constants";
 
 const DEPLOYER_URL =
   process.env.CLOUD_RUN_DEPLOYER_URL || "";
 const DEPLOYER_API_SECRET = process.env.DEPLOYER_API_SECRET || "";
 
-/** Reserved subdomains that cannot be claimed */
-const RESERVED = new Set([
-  "www", "api", "auth", "admin", "app", "mail", "ftp",
-  "blog", "docs", "help", "support", "status", "cdn",
-  "static", "assets", "media", "images", "test", "staging",
-  "dev", "demo", "beta", "dashboard", "console", "panel",
-]);
 
 /**
  * GET /api/setup/provision — Redirects browser navigation to the onboarding page.
@@ -82,9 +76,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (RESERVED.has(subdomain)) {
+  if (RESERVED_USERNAMES.has(subdomain)) {
     return NextResponse.json(
-      { error: "This subdomain is reserved" },
+      { error: "This name is reserved" },
       { status: 400 }
     );
   }

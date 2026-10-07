@@ -1,14 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isSubdomainAvailable } from "@/lib/tenant-lookup";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
+import { RESERVED_USERNAMES } from "@/lib/constants";
 
-/** Reserved subdomains that cannot be claimed */
-const RESERVED = new Set([
-  "www", "api", "auth", "admin", "app", "mail", "ftp",
-  "blog", "docs", "help", "support", "status", "cdn",
-  "static", "assets", "media", "images", "test", "staging",
-  "dev", "demo", "beta", "dashboard", "console", "panel",
-]);
 
 const SUBDOMAIN_REGEX = /^[a-z][a-z0-9-]{1,61}[a-z0-9]$/;
 
@@ -33,7 +27,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  if (RESERVED.has(subdomain)) {
+  if (RESERVED_USERNAMES.has(subdomain)) {
     return NextResponse.json(
       { available: false, reason: "Reserved" },
       { status: 200 }
