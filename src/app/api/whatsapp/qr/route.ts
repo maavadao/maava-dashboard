@@ -11,22 +11,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authenticateRequestOrApiKey } from '@/lib/auth';
 import { resolveTenantBackend } from '@/lib/tenant-lookup';
 
-const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
 const GCP_PROJECT_NUMBER = process.env.GCP_PROJECT_NUMBER || '';
 const GCP_REGION = process.env.GCP_REGION || 'europe-west1';
-
-/** Extract subdomain from Host / X-Forwarded-Host header */
-function extractSubdomain(request: NextRequest): string | null {
-  const raw = (
-    request.headers.get('x-forwarded-host') ||
-    request.headers.get('host') ||
-    ''
-  ).split(',')[0].trim().replace(/:\d+$/, '');
-  if (raw.endsWith('.' + ROOT_DOMAIN)) {
-    return raw.slice(0, raw.length - ROOT_DOMAIN.length - 1) || null;
-  }
-  return null;
-}
 
 interface GatewayInfo { url: string; tenantId: string; }
 
@@ -65,11 +51,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 2. Resolve tenant from Host header
-  const subdomain = extractSubdomain(request);
+  // 2. The member's workspace comes from their session
+  const subdomain = auth.user.subdomain;
   if (!subdomain) {
     return NextResponse.json(
-      { success: false, error: 'Cannot determine tenant subdomain from host' },
+      { success: false, error: 'No workspace for this account' },
       { status: 400 },
     );
   }

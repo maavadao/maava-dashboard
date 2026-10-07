@@ -140,7 +140,7 @@ export const CONFIG_API_URL =
     ? "/api/openclaw"
     : process.env.OPENCLAW_CONFIG_API_URL || "";
 
-/** Cloud mode flag — when true, enables multi-tenant subdomain routing */
+/** Cloud mode flag — when true, enables JWT auth and the member space */
 export const CLOUD_MODE = process.env.NEXT_PUBLIC_CLOUD_MODE === "true";
 
 /** GCP project for Cloud Run deployments */
@@ -152,7 +152,7 @@ export const GCP_REGION = process.env.GCP_REGION || "europe-west1";
 /** Proxy API prefix — all backend requests route through this in cloud mode */
 export const PROXY_API_URL = "/api/proxy/v1";
 
-// Routes — Login lives on the main domain (not on tenant subdomains)
+// Routes — Login lives on the main domain, not the member space
 const _ROOT = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
 
 export const ROUTES = {
