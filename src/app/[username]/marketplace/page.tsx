@@ -21,7 +21,7 @@ import { useAuthStore } from '@/store';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from '@/components/member-link';
 import { toMemberPath } from '@/lib/member-path';
-import { pricingSummary, type Pricing } from '@/lib/pricing';
+import type { Pricing } from '@/lib/pricing';
 
 interface MarketplaceAgent {
   id: string;
@@ -739,7 +739,7 @@ function AgentCard({
             </p>
           </div>
           <span className="shrink-0 text-[12px] font-semibold text-foreground text-right max-w-[45%]">
-            {agent.pricing ? pricingSummary(agent.pricing) : agent.price > 0 ? agent.price_label : 'Free'}
+            Free for education
           </span>
         </div>
       </div>
