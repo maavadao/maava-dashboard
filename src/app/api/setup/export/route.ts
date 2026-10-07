@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
     const disposition = backendRes.headers.get("Content-Disposition");
     headers.set(
       "Content-Disposition",
-      disposition || `attachment; filename="barrsa-export-${Date.now()}.zip"`
+      disposition || `attachment; filename="mawadao-export-${Date.now()}.zip"`
     );
     const contentLength = backendRes.headers.get("Content-Length");
     if (contentLength) {

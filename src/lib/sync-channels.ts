@@ -16,7 +16,7 @@ import { readUserConfig, writeUserConfig, DEFAULT_OPENCLAW_CONFIG } from '@/lib/
 // Strip trailing /api/v1 if already included in the env var
 const _deployerBase = (
   process.env.CLOUD_RUN_DEPLOYER_URL ||
-  'https://cloud-run-deployer-375390721933.europe-west1.run.app'
+  'http://localhost:3002'
 ).replace(/\/api\/v1\/?$/, '');
 const CLOUD_RUN_DEPLOYER_URL = _deployerBase;
 // Support both secret env var names

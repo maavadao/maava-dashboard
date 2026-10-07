@@ -11,7 +11,7 @@
 const BUCKET_MANAGER_URL = process.env.BUCKET_MANAGER_URL || "";
 const BUCKET_MANAGER_API_SECRET = process.env.BUCKET_MANAGER_API_SECRET || "";
 export const SHARED_BUCKET =
-  process.env.GCS_SHARED_BUCKET || "barrsa-prod-tentant-platform-data";
+  process.env.GCS_SHARED_BUCKET || "mawadao-agent-data";
 
 /**
  * On Cloud Run, fetch a short-lived OIDC identity token from the metadata server.

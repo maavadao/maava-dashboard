@@ -49,7 +49,7 @@ function NavItem({
         'flex items-center rounded-lg text-sm font-medium transition-colors w-full',
         collapsed ? 'justify-center px-2 py-2.5' : 'gap-3 px-3 py-2.5',
         isActive
-          ? 'bg-barrsa-50 dark:bg-primary/10 text-primary'
+          ? 'bg-mawadao-50 dark:bg-primary/10 text-primary'
           : 'text-muted-foreground hover:text-foreground hover:bg-muted',
       )}
       title={collapsed ? label : undefined}
@@ -108,7 +108,7 @@ function UserCard({ compact }: { compact?: boolean }) {
       >
         <Avatar className="h-8 w-8 shrink-0">
           <AvatarImage src={avatarUrl} />
-          <AvatarFallback className="bg-barrsa-100 text-barrsa-700 text-xs font-medium">
+          <AvatarFallback className="bg-mawadao-100 text-mawadao-700 text-xs font-medium">
             {initials}
           </AvatarFallback>
         </Avatar>

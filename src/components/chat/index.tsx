@@ -696,7 +696,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: E-Commerce Automation Agent — Guided Onboarding',
       '',
-      'You are Barrsa\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
+      'You are mawaDao\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
       'Your job is to turn the user\'s e-commerce automation idea into a safe, fully configured, ready-to-run OpenClaw workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
@@ -850,7 +850,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: Social Media Content & Publishing Agent — Guided Onboarding',
       '',
-      'You are Barrsa\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
+      'You are mawaDao\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
       'Your job is to turn the user\'s idea into a safe, fully configured, ready-to-run OpenClaw workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
@@ -884,9 +884,9 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       'Ask only what is missing. Typical questions:',
       '1. What is the topic, content idea, or source material?',
       '2. Which platforms? (X, LinkedIn, both, others)',
-      '3. Do you want Barrsa to: only draft, draft and wait for approval, or draft and post after approval?',
+      '3. Do you want mawaDao to: only draft, draft and wait for approval, or draft and post after approval?',
       '4. Writing style: use my previous style, professional, thought leadership, casual, bold/opinionated, technical, founder-style, or custom?',
-      '5. Should Barrsa research the internet first and pull supporting sources? What kind of sources?',
+      '5. Should mawaDao research the internet first and pull supporting sources? What kind of sources?',
       '6. Should the post include: a CTA, hashtags, links, emojis, a thread, a strong hook, a soft professional tone?',
       '7. Run once or on a schedule?',
       '8. If scheduled: one-time or recurring? What time? Timezone? Which days? Approval every time or auto-post approved formats?',
@@ -1029,7 +1029,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       '2. Which platforms? (X, LinkedIn, both, others)',
       '3. Draft only, draft + approval, or draft + approval + publish?',
       '4. Writing style (professional, casual, founder-style, custom, etc.)',
-      '5. Should Barrsa research the internet first?',
+      '5. Should mawaDao research the internet first?',
       '6. Post elements: CTA, hashtags, links, emojis, thread, hook?',
       '7. One-time or scheduled? If scheduled: time, timezone, days, approval policy',
       '8. Which social account(s) to use?',
@@ -1080,7 +1080,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: Lead Qualification & Sales Agent — Guided Onboarding',
       '',
-      'You are Barrsa\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
+      'You are mawaDao\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
       'Your job is to turn the user\'s lead qualification or sales automation idea into a safe, fully configured, ready-to-run OpenClaw workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
@@ -1228,7 +1228,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: Appointment & Scheduling Agent — Guided Onboarding',
       '',
-      'You are Barrsa\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
+      'You are mawaDao\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
       'Your job is to turn the user\'s scheduling and appointment automation idea into a safe, fully configured, ready-to-run OpenClaw workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
@@ -1374,7 +1374,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: Automated Analytics & Reporting Agent — Guided Onboarding',
       '',
-      'You are Barrsa\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
+      'You are mawaDao\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
       'Your job is to turn the user\'s reporting and analytics automation idea into a safe, fully configured, ready-to-run OpenClaw workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
@@ -1519,7 +1519,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: 24/7 Monitoring & Alerts Agent — Guided Onboarding',
       '',
-      'You are Barrsa\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
+      'You are mawaDao\'s Use-Case Setup Assistant for OpenClaw-powered user workspaces.',
       'Your job is to turn the user\'s monitoring and alerting idea into a safe, fully configured, ready-to-run OpenClaw workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
@@ -2853,7 +2853,7 @@ function ChatPanelInner({ apiKey, conversationId, initialMessages, userId, onCon
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-semibold text-sm text-foreground leading-tight">
-              {selectedAgent ? selectedAgent.name : 'Barrsa Assistant'}
+              {selectedAgent ? selectedAgent.name : 'mawaDao Assistant'}
             </p>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className={cn('h-1.5 w-1.5 rounded-full', isLoading ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400')} />

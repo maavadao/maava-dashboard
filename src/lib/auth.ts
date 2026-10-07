@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 import pool from '@/lib/db';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'change-this-jwt-secret';
-const JWT_ISSUER = 'barrsa-auth';
+const JWT_ISSUER = 'mawadao-auth';
 const AUTH_DEBUG = process.env.AUTH_DEBUG === 'true';
 
 if (!process.env.JWT_SECRET) {
@@ -79,7 +79,7 @@ export async function authenticateRequest(request: NextRequest): Promise<JWTPayl
 }
 
 /**
- * Resolve auth from either a signed JWT session or a Barrsa API key.
+ * Resolve auth from either a signed JWT session or a mawaDao API key.
  * API-key auth is used by non-OAuth dashboard sessions.
  */
 export async function authenticateRequestOrApiKey(

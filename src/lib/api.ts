@@ -1,4 +1,4 @@
-// Barrsa API Client
+// mawaDao API Client
 
 import type {
   Agent,
@@ -57,14 +57,14 @@ class ApiClient {
   setApiKey(key: string | null) {
     this.apiKey = key;
     if (key && typeof window !== "undefined") {
-      localStorage.setItem("barrsa_api_key", key);
+      localStorage.setItem("mawadao_api_key", key);
     }
   }
 
   getApiKey(): string | null {
     if (this.apiKey) return this.apiKey;
     if (typeof window !== "undefined") {
-      this.apiKey = localStorage.getItem("barrsa_api_key");
+      this.apiKey = localStorage.getItem("mawadao_api_key");
     }
     return this.apiKey;
   }
@@ -72,7 +72,7 @@ class ApiClient {
   clearApiKey() {
     this.apiKey = null;
     if (typeof window !== "undefined") {
-      localStorage.removeItem("barrsa_api_key");
+      localStorage.removeItem("mawadao_api_key");
     }
   }
 

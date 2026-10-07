@@ -86,7 +86,7 @@ export async function GET() {
   try {
     const { Storage } = await import('@google-cloud/storage');
     const storage = new Storage({
-      projectId: process.env.GOOGLE_CLOUD_PROJECT || process.env.GCP_PROJECT_ID || 'barrsaai',
+      projectId: process.env.GOOGLE_CLOUD_PROJECT || process.env.GCP_PROJECT_ID || 'mawadao',
     });
     const gcsT0 = Date.now();
     // Lightweight check — just list 1 bucket
@@ -104,7 +104,7 @@ export async function GET() {
     openai_key_set: !!process.env.OPENAI_API_KEY,
     anthropic_key_set: !!process.env.ANTHROPIC_API_KEY,
     database_url_set: !!process.env.DATABASE_URL,
-    gcs_project: process.env.GOOGLE_CLOUD_PROJECT || process.env.GCP_PROJECT_ID || 'barrsaai',
+    gcs_project: process.env.GOOGLE_CLOUD_PROJECT || process.env.GCP_PROJECT_ID || 'mawadao',
     node_version: process.version,
     commit: process.env.COMMIT_SHA ?? '(unknown)',
   };
@@ -121,7 +121,7 @@ export async function GET() {
       : 'down';
 
   const body = {
-    service: 'Barrsa Tenant Dashboard — OpenClaw Health',
+    service: 'mawaDao Tenant Dashboard — OpenClaw Health',
     status: overall,
     timestamp,
     components,

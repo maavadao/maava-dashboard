@@ -9,7 +9,7 @@ import type { SlackOAuthV2Response, SlackConnection, SlackOAuthState } from '@/t
 const SLACK_CLIENT_ID = process.env.SLACK_CLIENT_ID || '';
 const SLACK_CLIENT_SECRET = process.env.SLACK_CLIENT_SECRET || '';
 const SLACK_REDIRECT_URI =
-  process.env.SLACK_REDIRECT_URI || 'https://tenant-dashboard-375390721933.europe-west1.run.app/api/channels/slack/callback';
+  process.env.SLACK_REDIRECT_URI || 'http://localhost:3001/api/channels/slack/callback';
 const SLACK_BOT_SCOPES =
   process.env.SLACK_BOT_SCOPES ||
   'app_mentions:read,channels:history,groups:history,im:history,chat:write,commands,reactions:write,files:write';
@@ -18,7 +18,7 @@ const SLACK_USER_SCOPES = process.env.SLACK_USER_SCOPES || '';
 const STATE_SECRET = new TextEncoder().encode(
   process.env.SLACK_OAUTH_STATE_SECRET || process.env.JWT_SECRET || 'change-this-jwt-secret',
 );
-const STATE_ISSUER = 'barrsa-slack-oauth';
+const STATE_ISSUER = 'mawadao-slack-oauth';
 const STATE_MAX_AGE_SEC = 600; // 10 minutes
 
 // ── OAuth URL ──
@@ -97,12 +97,12 @@ export async function upsertSlackConnection(
 ): Promise<SlackConnection> {
   const result = await pool.query(
     `INSERT INTO slack_connections (
-      barrsa_user_id, slack_team_id, slack_team_name, slack_bot_token,
+      mawadao_user_id, slack_team_id, slack_team_name, slack_bot_token,
       slack_bot_user_id, slack_authed_user_id, slack_scope,
       slack_enterprise_id, slack_installed_by_user_id, slack_app_id,
       is_active, metadata
     ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, true, $11)
-    ON CONFLICT (slack_team_id, barrsa_user_id)
+    ON CONFLICT (slack_team_id, mawadao_user_id)
     DO UPDATE SET
       slack_team_name = EXCLUDED.slack_team_name,
       slack_bot_token = EXCLUDED.slack_bot_token,
@@ -144,7 +144,7 @@ export async function getSlackConnectionForUser(
 ): Promise<SlackConnection | null> {
   const result = await pool.query(
     `SELECT * FROM slack_connections
-     WHERE barrsa_user_id = $1 AND is_active = true
+     WHERE mawadao_user_id = $1 AND is_active = true
      ORDER BY updated_at DESC
      LIMIT 1`,
     [userId],
@@ -174,7 +174,7 @@ export async function getSlackConnectionByTeamAndUser(
   // Try identity link first (for shared workspaces)
   const identityResult = await pool.query(
     `SELECT sc.* FROM slack_connections sc
-     JOIN slack_identity_links sil ON sil.barrsa_user_id = sc.barrsa_user_id
+     JOIN slack_identity_links sil ON sil.mawadao_user_id = sc.mawadao_user_id
        AND sil.slack_team_id = sc.slack_team_id
      WHERE sil.slack_team_id = $1 AND sil.slack_user_id = $2
        AND sc.is_active = true
@@ -193,7 +193,7 @@ export async function deactivateSlackConnection(
   userId: string,
   teamId?: string,
 ): Promise<boolean> {
-  const conditions = ['barrsa_user_id = $1', 'is_active = true'];
+  const conditions = ['mawadao_user_id = $1', 'is_active = true'];
   const params: string[] = [userId];
 
   if (teamId) {
@@ -256,7 +256,7 @@ export async function cleanupEventLog(maxAgeHours = 24): Promise<number> {
 function formatConnection(row: Record<string, unknown>): SlackConnection {
   return {
     id: row.id as string,
-    barrsaUserId: row.barrsa_user_id as string,
+    mawadaoUserId: row.mawadao_user_id as string,
     slackTeamId: row.slack_team_id as string,
     slackTeamName: (row.slack_team_name as string) ?? null,
     slackBotToken: row.slack_bot_token as string,

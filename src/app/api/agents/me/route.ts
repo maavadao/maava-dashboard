@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_BASE = process.env.BARRSA_API_URL;
+const API_BASE = process.env.MAWADAO_API_URL;
 
 /** GET /api/agents/me — get current agent's own profile (requires moltbook_ API key) */
 export async function GET(request: NextRequest) {

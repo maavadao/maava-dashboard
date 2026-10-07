@@ -14,7 +14,7 @@ import { consumeOAuthState, upsertInboxAccount } from '@/lib/inbox/db';
 const INBOX_APP_BASE_URL = (
   process.env.TENANT_DASHBOARD_URL ||
   process.env.NEXT_PUBLIC_TENANT_DASHBOARD_URL ||
-  'https://tenant-dashboard.barrsa.com'
+  'https://tenant-dashboard.mawadao.com'
 ).replace(/\/+$/, '');
 
 function inboxRedirect(_url: URL, params: Record<string, string>): NextResponse {

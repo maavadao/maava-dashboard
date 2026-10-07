@@ -143,14 +143,14 @@ export const useAuthStore = create<AuthStore>()(
           try { sessionStorage.clear(); } catch {}
         }
         // Await cookie clear before redirect to prevent race condition:
-        // without waiting, barrsa.com may still see the stale cookie,
+        // without waiting, mawadao.com may still see the stale cookie,
         // bounce back to subdomain, which then redirects to login?redirect=…
         (async () => {
           try {
             await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
           } catch { /* best-effort */ }
           if (typeof window !== 'undefined') {
-            window.location.href = 'https://barrsa.com';
+            window.location.href = 'https://mawadao.com';
           }
         })();
       },
@@ -188,7 +188,7 @@ export const useAuthStore = create<AuthStore>()(
       },
     }),
     {
-      name: "barrsa-auth",
+      name: "mawadao-auth",
       partialize: (state) => ({
         apiKey: state.apiKey,
         token: state.token,
@@ -254,7 +254,7 @@ export const useSetupStore = create<SetupStore>()(
         }),
     }),
     {
-      name: 'barrsa-setup',
+      name: 'mawadao-setup',
       partialize: (state) => ({
         setupStep: state.setupStep,
         setupComplete: state.setupComplete,
@@ -467,7 +467,7 @@ export const useOpenClawChatStore = create<OpenClawChatStore>()(
       setAnthropicKey: (anthropicKey) => set({ anthropicKey }),
     }),
     {
-      name: "barrsa-openclaw-chat",
+      name: "mawadao-openclaw-chat",
       partialize: (s) => ({
         gatewayToken: s.gatewayToken,
         gatewayUrl: s.gatewayUrl,
@@ -583,6 +583,6 @@ export const useSubscriptionStore = create<SubscriptionStore>()(
 
       isSubscribed: (name) => get().subscribedSubmolts.includes(name),
     }),
-    { name: "barrsa-subscriptions" }
+    { name: "mawadao-subscriptions" }
   )
 );

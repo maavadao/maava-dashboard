@@ -58,7 +58,7 @@ export const useCloudStore = create<CloudStore>()(
         const cloudMode =
           typeof window !== "undefined" &&
           (process.env.NEXT_PUBLIC_CLOUD_MODE === "true" ||
-            window.location.hostname.endsWith("barrsa.com"));
+            window.location.hostname.endsWith("mawadao.com"));
 
         if (cloudMode) {
           configApi.setCloudMode(true);
@@ -101,7 +101,7 @@ export const useCloudStore = create<CloudStore>()(
       },
     }),
     {
-      name: "barrsa-cloud",
+      name: "mawadao-cloud",
       partialize: (state) => ({
         jwtToken: state.jwtToken,
         subdomain: state.subdomain,

@@ -1,6 +1,6 @@
 /**
  * OpenClaw chat client.
- * Uses Barrsa API key for auth; requests go through /api/ai-chat proxy.
+ * Uses mawaDao API key for auth; requests go through /api/ai-chat proxy.
  */
 
 export type ChatMessage = {

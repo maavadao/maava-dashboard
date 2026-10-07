@@ -1,9 +1,9 @@
 // ─── OpenClaw proxy — forward Slack messages to per-user OpenClaw instances ───
 
-import { BARRSA_DOMAIN } from '@/lib/constants';
+import { MAWADAO_DOMAIN } from '@/lib/constants';
 
 interface OpenClawProxyInput {
-  barrsaUserId: string;
+  mawadaoUserId: string;
   tenantId?: string | null;
   tenantSubdomain?: string | null;
   openclawInstanceUrl?: string | null;
@@ -28,10 +28,10 @@ interface OpenClawProxyOutput {
 }
 
 /**
- * Resolve the OpenClaw runtime URL for a given Barrsa user.
+ * Resolve the OpenClaw runtime URL for a given mawaDao user.
  * Priority:
  *   1. Explicit openclawInstanceUrl if provided
- *   2. Subdomain-based URL: https://{subdomain}.barrsa.com/api/proxy/v1/chat/completions
+ *   2. Subdomain-based URL: https://{subdomain}.mawadao.com/api/proxy/v1/chat/completions
  *   3. Throw if no resolvable URL
  */
 function resolveOpenClawUrl(input: OpenClawProxyInput): string {
@@ -40,11 +40,11 @@ function resolveOpenClawUrl(input: OpenClawProxyInput): string {
   }
 
   if (input.tenantSubdomain) {
-    return `https://${input.tenantSubdomain}.${BARRSA_DOMAIN}/api/proxy/v1/chat/completions`;
+    return `https://${input.tenantSubdomain}.${MAWADAO_DOMAIN}/api/proxy/v1/chat/completions`;
   }
 
   throw new Error(
-    `Cannot resolve OpenClaw URL for user ${input.barrsaUserId}: no subdomain or instance URL`,
+    `Cannot resolve OpenClaw URL for user ${input.mawadaoUserId}: no subdomain or instance URL`,
   );
 }
 
@@ -79,7 +79,7 @@ export async function forwardToOpenClaw(input: OpenClawProxyInput): Promise<Open
     },
   };
 
-  console.log(`[openclaw-proxy] Forwarding to ${url} for user ${input.barrsaUserId} (auth=${!!input.authToken}, tenant=${input.tenantId ?? 'none'})`);
+  console.log(`[openclaw-proxy] Forwarding to ${url} for user ${input.mawadaoUserId} (auth=${!!input.authToken}, tenant=${input.tenantId ?? 'none'})`);
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',

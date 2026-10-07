@@ -1,10 +1,10 @@
 // GET /api/channels/slack/callback
-// Handles the Slack OAuth redirect after user authorizes the Barrsa Slack app.
+// Handles the Slack OAuth redirect after user authorizes the mawaDao Slack app.
 
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyOAuthState, exchangeSlackCode, upsertSlackConnection } from '@/lib/slack-oauth';
 import pool from '@/lib/db';
-import { BARRSA_DOMAIN } from '@/lib/constants';
+import { MAWADAO_DOMAIN } from '@/lib/constants';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -67,6 +67,6 @@ async function getUserSubdomain(userId: string): Promise<string | null> {
 }
 
 function redirectToChannels(subdomain: string | null, queryString: string): NextResponse {
-  const host = subdomain ? `${subdomain}.${BARRSA_DOMAIN}` : BARRSA_DOMAIN;
+  const host = subdomain ? `${subdomain}.${MAWADAO_DOMAIN}` : MAWADAO_DOMAIN;
   return NextResponse.redirect(`https://${host}/channels?${queryString}`);
 }

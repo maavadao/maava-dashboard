@@ -84,7 +84,7 @@ export async function POST() {
         description TEXT,
         short_description TEXT,
         category TEXT NOT NULL,
-        developer TEXT NOT NULL DEFAULT 'Barrsa Labs',
+        developer TEXT NOT NULL DEFAULT 'mawaDao Labs',
         price NUMERIC(10,2) DEFAULT 0,
         price_label TEXT DEFAULT 'Free',
         rating NUMERIC(3,2) DEFAULT 0,
@@ -191,7 +191,7 @@ function getSeedAgents() {
       short_description: 'AI-powered customer support agent with multi-channel capabilities.',
       description: 'Customer Support Pro is an advanced AI agent designed to handle customer inquiries across multiple channels including email, chat, and social media. It uses natural language processing to understand customer intent, provides accurate responses, and seamlessly escalates complex issues to human agents.',
       category: 'customer-support',
-      developer: 'Barrsa Labs',
+      developer: 'mawaDao Labs',
       price: 29,
       price_label: '$29/mo',
       rating: 4.8,
@@ -394,7 +394,7 @@ function getSeedAgents() {
       short_description: 'Intelligent operations management and workflow automation.',
       description: 'Ops Commander monitors your infrastructure, automates workflows, manages incidents, and optimizes operational processes across your stack.',
       category: 'operations',
-      developer: 'Barrsa Labs',
+      developer: 'mawaDao Labs',
       price: 55,
       price_label: '$55/mo',
       rating: 4.7,
@@ -568,7 +568,7 @@ function getSeedAgents() {
       short_description: 'Intelligent project planning, task assignment, and deadline tracking.',
       description: 'Project Manager AI creates project plans, assigns tasks based on team capacity, tracks deadlines, identifies blockers, and sends intelligent status updates.',
       category: 'operations',
-      developer: 'Barrsa Labs',
+      developer: 'mawaDao Labs',
       price: 35,
       price_label: '$35/mo',
       rating: 4.5,
@@ -684,7 +684,7 @@ function getSeedAgents() {
       short_description: 'AI notetaker, action item tracker, and meeting summarizer.',
       description: 'Meeting Assistant joins your meetings to take notes, generate summaries, track action items, and distribute follow-ups automatically.',
       category: 'operations',
-      developer: 'Barrsa Labs',
+      developer: 'mawaDao Labs',
       price: 12,
       price_label: '$12/mo',
       rating: 4.7,
@@ -771,7 +771,7 @@ function getSeedAgents() {
       short_description: 'All-in-one seller and inbox intelligence — manage your storefront and email in one place.',
       description: 'Portdex is a built-in business assistant for sellers and entrepreneurs. It connects your seller data (products, listings, assets, analytics) with your email inbox, giving you a unified command center to manage your storefront operations and communications from a single AI interface.',
       category: 'sales',
-      developer: 'Barrsa Labs',
+      developer: 'mawaDao Labs',
       price: 0,
       price_label: 'Free',
       rating: 4.9,
@@ -788,9 +788,9 @@ function getSeedAgents() {
         { title: 'Unified Assistant', description: 'One AI handles both your storefront and your inbox, no context switching.' },
         { title: 'Built-in & Free', description: 'No setup required — seller and inbox skills are always active.' },
       ],
-      about: 'Portdex is the built-in AI companion for Barrsa sellers. It understands your store data and your inbox, letting you manage both through natural conversation.',
+      about: 'Portdex is the built-in AI companion for mawaDao sellers. It understands your store data and your inbox, letting you manage both through natural conversation.',
       model: 'openclaw',
-      system_prompt: `You are Portdex, a built-in business assistant for sellers and entrepreneurs on the Barrsa platform. You have two core skills that you must apply automatically based on what the user is asking about.
+      system_prompt: `You are Portdex, a built-in business assistant for sellers and entrepreneurs on the mawaDao platform. You have two core skills that you must apply automatically based on what the user is asking about.
 
 ## SKILL 1: Seller Data Manager [seller_data_manager]
 Use this skill when the user asks about anything related to their seller account or storefront data, including:
@@ -825,7 +825,7 @@ How to use it: Use the inbox messages and context provided in the conversation. 
 - Be concise, practical, and action-oriented — this is a business tool
 - If neither skill applies, answer from your general knowledge as a business assistant`,
       soul_config: {
-        identity: 'Portdex — the built-in seller and inbox intelligence agent for Barrsa',
+        identity: 'Portdex — the built-in seller and inbox intelligence agent for mawaDao',
         purpose: 'Give sellers a unified AI interface to manage their storefront data and email communications',
         communication_style: 'Practical, direct, business-focused — no fluff, just results',
         principles: [
@@ -913,8 +913,8 @@ function getSeedSkills() {
     { skill_id: 'regex_helper', name: 'Regex Helper', description: 'Write, test, explain, and debug regular expressions for any use case.', category: 'general', installs: 27000, source: 'Open Source', source_url: 'https://regex101.com' },
     { skill_id: 'code_snippet', name: 'Code Search', description: 'Find, explain, and adapt code examples and snippets for common programming tasks.', category: 'general', installs: 31000, source: 'Stack Overflow', source_url: 'https://stackoverflow.com' },
     // bundled
-    { skill_id: 'seller_data_manager', name: 'Seller Data Manager', description: 'Direct SQL access to seller tables — products, assets, listings, social accounts, publishing targets, and analytics. Use [SELLER_SQL] blocks for full CRUD on your storefront data.', category: 'productivity', installs: 5000, source: 'openclaw-bundled', source_url: 'https://barrsa.com' },
-    { skill_id: 'inbox_manager', name: 'Inbox Manager', description: 'Manage your Gmail inbox with AI — summarize unread emails, detect spam, identify emails needing a reply, search messages by sender or keyword, draft professional responses, and organize your inbox with smart labels and archiving.', category: 'productivity', installs: 6200, source: 'openclaw-bundled', source_url: 'https://barrsa.com' },
-    { skill_id: 'zernio_social', name: 'Zernio Social Media', description: 'Manage social media accounts and publish content via Zernio — list accounts, create posts, check status, and delete posts on Instagram, Facebook, LinkedIn, Twitter, and TikTok.', category: 'productivity', installs: 4000, source: 'openclaw-bundled', source_url: 'https://barrsa.com' },
+    { skill_id: 'seller_data_manager', name: 'Seller Data Manager', description: 'Direct SQL access to seller tables — products, assets, listings, social accounts, publishing targets, and analytics. Use [SELLER_SQL] blocks for full CRUD on your storefront data.', category: 'productivity', installs: 5000, source: 'openclaw-bundled', source_url: 'https://mawadao.com' },
+    { skill_id: 'inbox_manager', name: 'Inbox Manager', description: 'Manage your Gmail inbox with AI — summarize unread emails, detect spam, identify emails needing a reply, search messages by sender or keyword, draft professional responses, and organize your inbox with smart labels and archiving.', category: 'productivity', installs: 6200, source: 'openclaw-bundled', source_url: 'https://mawadao.com' },
+    { skill_id: 'zernio_social', name: 'Zernio Social Media', description: 'Manage social media accounts and publish content via Zernio — list accounts, create posts, check status, and delete posts on Instagram, Facebook, LinkedIn, Twitter, and TikTok.', category: 'productivity', installs: 4000, source: 'openclaw-bundled', source_url: 'https://mawadao.com' },
   ];
 }

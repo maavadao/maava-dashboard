@@ -28,7 +28,7 @@ export interface SlackOAuthV2Response {
 /** Persisted Slack workspace installation */
 export interface SlackConnection {
   id: string;
-  barrsaUserId: string;
+  mawadaoUserId: string;
   slackTeamId: string;
   slackTeamName: string | null;
   slackBotToken: string;

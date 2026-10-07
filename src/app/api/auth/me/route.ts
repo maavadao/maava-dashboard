@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Use the Go auth service URL (not the configuration-api).
-const API_BASE = (process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.barrsa.com').replace(/\/+$/, '');
+const API_BASE = (process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.mawadao.com').replace(/\/+$/, '');
 
 /**
  * Proxy GET /api/auth/me → Go auth service GET /auth/me

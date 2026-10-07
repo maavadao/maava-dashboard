@@ -9,7 +9,7 @@ import { jwtVerify, SignJWT } from 'jose';
 import type { NextRequest } from 'next/server';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'change-this-jwt-secret';
-const JWT_ISSUER = 'barrsa-auth';
+const JWT_ISSUER = 'mawadao-auth';
 
 export interface JWTPayload {
   userId: string;

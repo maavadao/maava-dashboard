@@ -287,7 +287,7 @@ export function useChannels(config?: SWRConfiguration) {
   );
 }
 
-/** Get saved channel connections from the Barrsa DB (per-user). */
+/** Get saved channel connections from the mawaDao DB (per-user). */
 export function useSavedChannels(config?: SWRConfiguration) {
   const { isAuthenticated } = useAuth();
   return useSWR<SavedChannel[]>(

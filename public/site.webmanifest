@@ -1,6 +1,6 @@
 {
-  "name": "Barrsa Dashboard",
-  "short_name": "Barrsa",
+  "name": "mawaDao Dashboard",
+  "short_name": "mawaDao",
   "description": "Your AI chat dashboard — manage conversations, channels, and integrations.",
   "start_url": "/",
   "display": "standalone",

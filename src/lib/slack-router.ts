@@ -1,5 +1,5 @@
 // ─── Slack event router ───
-// Parses inbound Slack events, resolves the target Barrsa tenant,
+// Parses inbound Slack events, resolves the target mawaDao tenant,
 // forwards to OpenClaw, and sends the reply back to Slack.
 
 import type {
@@ -7,7 +7,7 @@ import type {
   SlackEvent,
   SlackRoutingContext,
 } from '@/types/slack';
-import { DEFAULT_BARRSA_SLACK_CONFIG } from '@/lib/slack-config';
+import { DEFAULT_MAWADAO_SLACK_CONFIG } from '@/lib/slack-config';
 import {
   getSlackConnectionByTeamAndUser,
   isEventProcessed,
@@ -16,7 +16,7 @@ import {
 import { sendSlackReply, addSlackReaction, removeSlackReaction } from '@/lib/slack-client';
 import { forwardToOpenClaw, buildSessionKey } from '@/lib/openclaw-proxy';
 
-const config = DEFAULT_BARRSA_SLACK_CONFIG;
+const config = DEFAULT_MAWADAO_SLACK_CONFIG;
 
 // Event subtypes to always ignore (system / bot-generated)
 const IGNORED_SUBTYPES = new Set([
@@ -71,7 +71,7 @@ export async function routeSlackEvent(payload: SlackEventCallback): Promise<bool
   const threadTs = event.thread_ts || null;
   const text = event.text || '';
 
-  // Resolve the owning Barrsa user via team_id (+ optional slack user)
+  // Resolve the owning mawaDao user via team_id (+ optional slack user)
   const connection = await getSlackConnectionByTeamAndUser(team_id, slackUserId);
   if (!connection) {
     console.warn(`[slack-router] No active connection for team=${team_id} user=${slackUserId}`);
@@ -165,7 +165,7 @@ async function handleEventAsync(ctx: SlackRoutingContext): Promise<void> {
       `SELECT id, subdomain, backend_url, gateway_token FROM tenants
        WHERE user_id = $1 AND status = 'active'
        LIMIT 1`,
-      [connection.barrsaUserId],
+      [connection.mawadaoUserId],
     );
 
     const tenantRow = tenantResult.rows[0];
@@ -175,7 +175,7 @@ async function handleEventAsync(ctx: SlackRoutingContext): Promise<void> {
 
     // Forward to OpenClaw
     const response = await forwardToOpenClaw({
-      barrsaUserId: connection.barrsaUserId,
+      mawadaoUserId: connection.mawadaoUserId,
       tenantId: tenantRow?.id ?? null,
       tenantSubdomain: tenantRow?.subdomain ?? null,
       openclawInstanceUrl: openclawUrl,

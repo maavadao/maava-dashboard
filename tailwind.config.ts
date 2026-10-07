@@ -6,8 +6,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Barrsa brand palette
-        barrsa: {
+        // mawaDao brand palette
+        mawadao: {
           50: "#eff6ff",
           100: "#dbeafe",
           200: "#bfdbfe",

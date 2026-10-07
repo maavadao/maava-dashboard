@@ -80,7 +80,7 @@ export default function HealthDashboard() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'barrsa.com';
+      const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
       window.location.href = `https://${rootDomain}/auth/login`;
       return;
     }

@@ -2,12 +2,12 @@
  * POST /api/auth/token-exchange
  *
  * Validates a short-lived transfer token (passed via URL when redirecting from
- * barrsa.com to {subdomain}.barrsa.com) and sets an httpOnly auth-token cookie
+ * mawadao.com to {subdomain}.mawadao.com) and sets an httpOnly auth-token cookie
  * for the subdomain.
  *
  * Flow:
- *   1. User logs in on barrsa.com → gets a transfer token
- *   2. Redirect: https://user.barrsa.com?auth_token=TRANSFER_TOKEN&state=RANDOM
+ *   1. User logs in on mawadao.com → gets a transfer token
+ *   2. Redirect: https://user.mawadao.com?auth_token=TRANSFER_TOKEN&state=RANDOM
  *   3. Subdomain JS calls POST /api/auth/token-exchange { token: TRANSFER_TOKEN }
  *   4. This route validates the transfer token and sets the session cookie
  */
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
     sameSite: 'lax',
     path: '/',
     maxAge: 7 * 24 * 60 * 60, // 7 days
-    domain: process.env.NODE_ENV === 'production' ? '.barrsa.com' : undefined,
+    domain: process.env.NODE_ENV === 'production' ? '.mawadao.com' : undefined,
   });
 
   return response;

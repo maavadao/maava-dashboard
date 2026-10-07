@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { validateJWT } from "@/lib/auth";
 import pool from "@/lib/db";
 
-const API_BASE = process.env.BARRSA_API_URL;
+const API_BASE = process.env.MAWADAO_API_URL;
 const DEPLOYER_URL = process.env.CLOUD_RUN_DEPLOYER_URL || "";
 const DEPLOYER_API_SECRET = process.env.DEPLOYER_API_SECRET || "";
 
@@ -120,7 +120,7 @@ export async function DELETE(request: NextRequest) {
     sameSite: "lax",
     path: "/",
     maxAge: 0,
-    domain: process.env.NODE_ENV === "production" ? ".barrsa.com" : undefined,
+    domain: process.env.NODE_ENV === "production" ? ".mawadao.com" : undefined,
   });
   return response;
 }

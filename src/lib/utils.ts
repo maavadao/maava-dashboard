@@ -64,7 +64,7 @@ export function isValidSubmoltName(name: string): boolean {
 
 // Validate API key
 export function isValidApiKey(key: string): boolean {
-  return /^barrsa_[a-zA-Z0-9]{20,}$/.test(key);
+  return /^mawadao_[a-zA-Z0-9]{20,}$/.test(key);
 }
 
 // Generate initials from name

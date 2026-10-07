@@ -44,7 +44,7 @@ export async function getLinkedChannels(userId: string): Promise<LinkedChannelIn
   const slackResult = await pool.query(
     `SELECT slack_team_name, slack_bot_token, is_active
      FROM slack_connections
-     WHERE barrsa_user_id = $1
+     WHERE mawadao_user_id = $1
      ORDER BY created_at DESC`,
     [userId],
   );
@@ -61,7 +61,7 @@ export async function getLinkedChannels(userId: string): Promise<LinkedChannelIn
     const tgResult = await pool.query(
       `SELECT telegram_username, telegram_first_name, is_active, last_seen_at
        FROM telegram_channel_links
-       WHERE barrsa_user_id = $1
+       WHERE mawadao_user_id = $1
        ORDER BY created_at DESC`,
       [userId],
     );
@@ -115,7 +115,7 @@ async function deliverToSlack(userId: string, text: string, targetChannelId?: st
   const result = await pool.query(
     `SELECT slack_bot_token, slack_authed_user_id, slack_bot_user_id, slack_team_name
      FROM slack_connections
-     WHERE barrsa_user_id = $1 AND is_active = true
+     WHERE mawadao_user_id = $1 AND is_active = true
      ORDER BY created_at DESC LIMIT 1`,
     [userId],
   );
@@ -158,7 +158,7 @@ async function deliverViaChannelRouter(userId: string, platform: ChannelPlatform
     try {
       const tgResult = await pool.query(
         `SELECT telegram_chat_id FROM telegram_channel_links
-         WHERE barrsa_user_id = $1 AND is_active = true
+         WHERE mawadao_user_id = $1 AND is_active = true
          LIMIT 1`,
         [userId],
       );
@@ -184,7 +184,7 @@ async function deliverViaChannelRouter(userId: string, platform: ChannelPlatform
   }
 
   // Call the channel-router outbound API
-  const channelRouterUrl = process.env.CHANNEL_ROUTER_URL || 'https://channel-router-375390721933.europe-west1.run.app';
+  const channelRouterUrl = process.env.CHANNEL_ROUTER_URL || 'http://localhost:8090';
   const outboundSecret = process.env.OUTBOUND_SECRET || '';
 
   try {

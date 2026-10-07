@@ -192,7 +192,7 @@ export function SearchModal() {
     <Dialog open={searchOpen} onOpenChange={closeSearch}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle>Search Barrsa</DialogTitle>
+          <DialogTitle>Search mawaDao</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSearch}>
           <Input

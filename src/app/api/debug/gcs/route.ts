@@ -11,7 +11,7 @@ import { authenticateRequest } from "@/lib/auth";
 
 const BUCKET_MANAGER_URL = process.env.BUCKET_MANAGER_URL || "";
 const BUCKET_MANAGER_API_SECRET = process.env.BUCKET_MANAGER_API_SECRET || "";
-const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || "barrsa-prod-tentant-platform-data";
+const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || "mawadao-agent-data";
 
 async function fetchOidcToken(audience: string): Promise<{ token: string | null; error: string | null }> {
   if (!process.env.K_SERVICE) return { token: null, error: "K_SERVICE not set (not on Cloud Run)" };

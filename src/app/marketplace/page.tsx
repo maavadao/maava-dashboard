@@ -439,7 +439,7 @@ function PromptToSellCTA() {
       // Seed a dedicated chat conversation with a structured "create marketplace
       // agent" instruction so OpenClaw produces the listing end-to-end.
       const seed =
-        `I want to create and sell a new AI agent on the Barrsa marketplace.\n\n` +
+        `I want to create and sell a new AI agent on the mawaDao marketplace.\n\n` +
         `Here's my idea:\n${prompt.trim()}\n\n` +
         `Please:\n` +
         `1. Generate a clear name, short description, full description, category, tags, capabilities and price.\n` +

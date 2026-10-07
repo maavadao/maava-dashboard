@@ -34,7 +34,7 @@ function loadKey(): Buffer {
   const seed = process.env.JWT_SECRET || 'change-this-jwt-secret';
   // eslint-disable-next-line no-console
   console.warn('[inbox/crypto] Using insecure derived dev key. Set INBOX_TOKEN_ENCRYPTION_KEY (32 bytes base64) in production.');
-  return createHash('sha256').update(`barrsa-inbox-token::${seed}`).digest();
+  return createHash('sha256').update(`mawadao-inbox-token::${seed}`).digest();
 }
 
 const KEY = loadKey();

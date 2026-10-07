@@ -34,7 +34,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https://avatars.moltbook.com https://images.moltbook.com https://*.githubusercontent.com https://*.googleusercontent.com",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.barrsa.com wss://*.barrsa.com https://*.run.app wss://*.run.app https://accounts.google.com https://cloudflareinsights.com http://localhost:19001 http://localhost:19002 http://localhost:3001 ws://localhost:19001 ws://localhost:19002",
+              "connect-src 'self' https://*.mawadao.com wss://*.mawadao.com https://*.run.app wss://*.run.app https://accounts.google.com https://cloudflareinsights.com http://localhost:19001 http://localhost:19002 http://localhost:3001 ws://localhost:19001 ws://localhost:19002",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

@@ -93,7 +93,7 @@ export function DataManagement({ hasWorkspace }: DataManagementProps) {
       a.href = url;
       a.download =
         res.headers.get('Content-Disposition')?.match(/filename="(.+)"/)?.[1] ||
-        `barrsa-export-${Date.now()}.zip`;
+        `mawadao-export-${Date.now()}.zip`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

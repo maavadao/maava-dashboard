@@ -1,17 +1,17 @@
 // Application constants
 
-export const APP_NAME = "Barrsa";
+export const APP_NAME = "mawaDao";
 export const APP_DESCRIPTION = "AI Agent Marketplace";
 
 // Domain
-export const BARRSA_DOMAIN = process.env.NEXT_PUBLIC_BARRSA_DOMAIN || "barrsa.com";
+export const MAWADAO_DOMAIN = process.env.NEXT_PUBLIC_MAWADAO_DOMAIN || "mawadao.com";
 
 /** Build a subdomain chat URL for a given username. */
 export function getUserChatUrl(username: string | undefined | null): string {
   if (!username) return "/chat";
   const safe = username.toLowerCase().replace(/[^a-z0-9-]/g, "");
   if (!safe) return "/chat";
-  return `https://${safe}.${BARRSA_DOMAIN}`;
+  return `https://${safe}.${MAWADAO_DOMAIN}`;
 }
 
 // API
@@ -21,19 +21,19 @@ export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
  * Auth microservice base URL.
  * In the browser the URL is derived entirely from window.location so that no
  * build-time env var or .env.local file can accidentally bake in localhost.
- * Convention: auth service lives at  auth.<frontend-host>  (e.g. auth.barrsa.com).
+ * Convention: auth service lives at  auth.<frontend-host>  (e.g. auth.mawadao.com).
  */
 export function getAuthApiBaseUrl(): string {
   if (typeof window !== 'undefined') {
     const { protocol, hostname } = window.location;
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
-      return process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.barrsa.com';
+      return process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.mawadao.com';
     }
     const authHost = hostname.startsWith('auth.') ? hostname : `auth.${hostname}`;
     return `${protocol}//${authHost}`;
   }
   // Server-side only (API routes, SSR) — fall back to env var
-  return (process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.barrsa.com').replace(/\/+$/, '');
+  return (process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.mawadao.com').replace(/\/+$/, '');
 }
 
 /** Build an auth URL pointing to the Go auth microservice. */
@@ -111,8 +111,8 @@ export const SHORTCUTS = {
 export const OPENCLAW_URL =
   process.env.NEXT_PUBLIC_OPENCLAW_URL || "";
 
-/** OpenClaw redirect URL for user/agent: https://{name}-70548103320.europe-west1.run.app */
-export const OPENCLAW_REDIRECT_BASE = "https://{name}-70548103320.europe-west1.run.app";
+/** OpenClaw redirect URL for user/agent: https://{name}.run.app */
+export const OPENCLAW_REDIRECT_BASE = "https://{name}.run.app";
 
 export function getOpenClawRedirectUrl(name: string): string {
   if (!name || typeof name !== "string") return OPENCLAW_URL;
@@ -138,7 +138,7 @@ export const CONFIG_API_URL =
 export const CLOUD_MODE = process.env.NEXT_PUBLIC_CLOUD_MODE === "true";
 
 /** GCP project for Cloud Run deployments */
-export const GCP_PROJECT = process.env.GCP_PROJECT || "barrsaai";
+export const GCP_PROJECT = process.env.GCP_PROJECT || "mawadao";
 
 /** Default region for Cloud Run services */
 export const GCP_REGION = process.env.GCP_REGION || "europe-west1";
@@ -147,7 +147,7 @@ export const GCP_REGION = process.env.GCP_REGION || "europe-west1";
 export const PROXY_API_URL = "/api/proxy/v1";
 
 // Routes — Login lives on the main domain (not on tenant subdomains)
-const _ROOT = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'barrsa.com';
+const _ROOT = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
 
 export const ROUTES = {
   HOME: "/",
@@ -171,11 +171,11 @@ export const ERRORS = {
 
 // Local storage keys
 export const STORAGE_KEYS = {
-  API_KEY: "barrsa_api_key",
-  THEME: "barrsa_theme",
-  ONBOARDING_COMPLETE: "barrsa_onboarding_complete",
-  INTERESTS: "barrsa_interests",
-  RECENT_SEARCHES: "barrsa_recent_searches",
+  API_KEY: "mawadao_api_key",
+  THEME: "mawadao_theme",
+  ONBOARDING_COMPLETE: "mawadao_onboarding_complete",
+  INTERESTS: "mawadao_interests",
+  RECENT_SEARCHES: "mawadao_recent_searches",
 } as const;
 
 // Channel types supported

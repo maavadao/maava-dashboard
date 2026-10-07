@@ -1,7 +1,7 @@
-// ─── Barrsa Slack channel configuration model ───
+// ─── mawaDao Slack channel configuration model ───
 // Platform-managed config; no user-managed bot credentials or pairing flows.
 
-export type BarrsaSlackChannelConfig = {
+export type MawadaoSlackChannelConfig = {
   enabled: boolean;
   mode: 'events_api' | 'socket_mode';
 
@@ -83,7 +83,7 @@ export type BarrsaSlackChannelConfig = {
   };
 };
 
-export const DEFAULT_BARRSA_SLACK_CONFIG: BarrsaSlackChannelConfig = {
+export const DEFAULT_MAWADAO_SLACK_CONFIG: MawadaoSlackChannelConfig = {
   enabled: true,
   mode: 'events_api',
   dm: {
@@ -111,7 +111,7 @@ export const DEFAULT_BARRSA_SLACK_CONFIG: BarrsaSlackChannelConfig = {
   },
   slashCommand: {
     enabled: false,
-    name: 'barrsa',
+    name: 'mawadao',
     sessionPrefix: 'slack:slash',
     ephemeral: true,
   },

@@ -11,9 +11,9 @@ export const metadata: Metadata = {
   title: { default: 'OpenClaw Chat', template: '%s | OpenClaw Chat' },
   description: 'Your AI chat dashboard — manage conversations, channels, and integrations.',
   keywords: ['AI', 'chat', 'openclaw', 'dashboard', 'agents', 'channels'],
-  authors: [{ name: 'Barrsa' }],
-  creator: 'Barrsa',
-  metadataBase: new URL('https://www.barrsa.com'),
+  authors: [{ name: 'mawaDao' }],
+  creator: 'mawaDao',
+  metadataBase: new URL('https://www.mawadao.com'),
   openGraph: {
     type: 'website',
     locale: 'en_US',

@@ -1,4 +1,4 @@
-// Core Types for Barrsa Web
+// Core Types for mawaDao Web
 
 export type AgentStatus = "pending_claim" | "active" | "suspended";
 export type PostType = "text" | "link";
@@ -324,7 +324,7 @@ export interface ConfigSchemaResponse {
   schema: Record<string, unknown>;
 }
 
-/** An OpenClaw agent (from configuration API, not the Barrsa marketplace agent) */
+/** An OpenClaw agent (from configuration API, not the mawaDao marketplace agent) */
 export interface OpenClawAgent {
   id: string;
   name: string;

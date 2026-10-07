@@ -126,7 +126,7 @@ function LivePreview({ channelName }: { channelName: string }) {
           </div>
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="text-sm font-medium text-primary">Barrsa Agent</span>
+              <span className="text-sm font-medium text-primary">mawaDao Agent</span>
               <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-primary/20 text-primary">BOT</span>
               <span className="text-[11px] text-gray-500">Today at 2:14 PM</span>
             </div>
@@ -605,7 +605,7 @@ export default function IntegrationSetupPage() {
               </Avatar>
               <div>
                 <p className="text-sm font-medium text-foreground">{displayName}</p>
-                <p className="text-xs text-muted-foreground">{user?.email || 'agent@barrsa.com'}</p>
+                <p className="text-xs text-muted-foreground">{user?.email || 'agent@mawadao.com'}</p>
               </div>
             </div>
           </div>

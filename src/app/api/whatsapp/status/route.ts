@@ -11,8 +11,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authenticateRequestOrApiKey } from '@/lib/auth';
 import { resolveTenantBackend } from '@/lib/tenant-lookup';
 
-const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'barrsa.com';
-const GCP_PROJECT_NUMBER = process.env.GCP_PROJECT_NUMBER || '70548103320';
+const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
+const GCP_PROJECT_NUMBER = process.env.GCP_PROJECT_NUMBER || '';
 const GCP_REGION = process.env.GCP_REGION || 'europe-west1';
 
 function extractSubdomain(request: NextRequest): string | null {
@@ -43,7 +43,7 @@ async function resolveGateway(subdomain: string): Promise<GatewayInfo | null> {
   const safe = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
   if (safe) {
     return {
-      url: `https://barrsa-${safe}-${GCP_PROJECT_NUMBER}.${GCP_REGION}.run.app`,
+      url: `https://mawadao-${safe}-${GCP_PROJECT_NUMBER}.${GCP_REGION}.run.app`,
       tenantId: '',
     };
   }
@@ -51,7 +51,7 @@ async function resolveGateway(subdomain: string): Promise<GatewayInfo | null> {
 }
 
 export async function POST(request: NextRequest) {
-  // 1. Resolve auth from session JWT or Barrsa API key
+  // 1. Resolve auth from session JWT or mawaDao API key
   const auth = await authenticateRequestOrApiKey(request);
   if (!auth) {
     return NextResponse.json(

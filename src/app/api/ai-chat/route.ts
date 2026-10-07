@@ -36,12 +36,12 @@ const MOONSHOT_API_KEY = process.env.MOONSHOT_API_KEY;
 const BRAVE_API_KEY = process.env.BRAVE_API_KEY;
 
 // Seller / Configuration API base URL (used by action block processors)
-const SELLER_API_BASE = (process.env.BARRSA_API_URL || 'https://barrsa.com/api/v1').replace(/\/+$/, '');
+const SELLER_API_BASE = (process.env.MAWADAO_API_URL || 'https://mawadao.com/api/v1').replace(/\/+$/, '');
 
 // ── Bucket-manager helpers (for workspace image discovery) ────────────────
 const BUCKET_MANAGER_URL = process.env.BUCKET_MANAGER_URL || '';
 const BUCKET_MANAGER_API_SECRET = process.env.BUCKET_MANAGER_API_SECRET || '';
-const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || 'barrsa-prod-tentant-platform-data';
+const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || 'mawadao-agent-data';
 const IMAGE_EXTENSIONS = new Set(['png', 'jpg', 'jpeg', 'gif', 'webp']);
 
 async function bmHeaders(): Promise<Record<string, string>> {
@@ -2416,7 +2416,7 @@ async function processCampaignPlanBlocks(
   console.log(`[campaign-plan] ─── processCampaignPlanBlocks END ───`);
 }
 
-// ── Inbox draft / send action blocks (barrsa-inbox skill) ─────────────────
+// ── Inbox draft / send action blocks (mawadao-inbox skill) ─────────────────
 
 function parseBlocks(fullText: string, tag: string): string[] {
   const re = new RegExp(`\\[${tag}\\]([\\s\\S]*?)\\[/${tag}\\]`, 'g');
@@ -3171,16 +3171,16 @@ export async function POST(request: NextRequest) {
 
           // ── CRITICAL: Inject base system prompt into proxy path ─────────
           // Detailed action-block specs live as built-in skills in the OpenClaw
-          // gateway (`skills/barrsa-seller/SKILL.md`, `skills/barrsa-inbox/SKILL.md`,
+          // gateway (`skills/mawadao-seller/SKILL.md`, `skills/mawadao-inbox/SKILL.md`,
           // …). The gateway loads the relevant SKILL on demand. Here we only
           // remind the model the skills exist and surface the absolute hard rules.
           {
             const proxyBasePrompt = [
-              'You are an AI assistant powered by OpenClaw — the personal AI platform on Barrsa.',
+              'You are an AI assistant powered by OpenClaw — the personal AI platform on mawaDao.',
               '',
-              '## Built-in Barrsa skills (loaded on demand by the gateway)',
-              '- **barrsa-seller** — products, publishing to social media (Zernio), marketing campaigns, channel delivery, seller-data SQL. Activate when the user mentions products, listings, publishing, posting, social media, sales, campaigns, marketing, channels, or seller data. Action blocks: [CREATE_PRODUCT], [UPDATE_PRODUCT], [PUBLISH_PRODUCT], [DELIVER], [SCHEDULE_DELIVERY], [SELLER_SQL], [ZERNIO_API], [CAMPAIGN_PLAN].',
-              '- **barrsa-inbox** — read / draft / send replies for connected Gmail or Outlook inboxes. Activate when the user mentions email, inbox, reply, draft. Action blocks: [INBOX_DRAFT], [INBOX_SEND_DRAFT].',
+              '## Built-in mawaDao skills (loaded on demand by the gateway)',
+              '- **mawadao-seller** — products, publishing to social media (Zernio), marketing campaigns, channel delivery, seller-data SQL. Activate when the user mentions products, listings, publishing, posting, social media, sales, campaigns, marketing, channels, or seller data. Action blocks: [CREATE_PRODUCT], [UPDATE_PRODUCT], [PUBLISH_PRODUCT], [DELIVER], [SCHEDULE_DELIVERY], [SELLER_SQL], [ZERNIO_API], [CAMPAIGN_PLAN].',
+              '- **mawadao-inbox** — read / draft / send replies for connected Gmail or Outlook inboxes. Activate when the user mentions email, inbox, reply, draft. Action blocks: [INBOX_DRAFT], [INBOX_SEND_DRAFT].',
               'Always rely on the skill for the full block specification — do NOT duplicate its instructions inline in this conversation.',
               '',
               '## Hard rules (always enforced — never override)',
@@ -3189,7 +3189,7 @@ export async function POST(request: NextRequest) {
               '- Sending an email is ONLY possible via `[INBOX_SEND_DRAFT]` after the user has approved a draft AND the account policy allows automated send.',
               '- `/channels` = chat bots (Telegram, Slack, Discord, WhatsApp). `/seller/social-accounts` = Zernio social media (Instagram, Facebook, LinkedIn, Twitter, TikTok, …). NEVER confuse the two.',
               '- `[SCHEDULE_DELIVERY]` only supports chat platforms. For social-media scheduling, use `[ZERNIO_API]` with `scheduledFor`.',
-              '- NEVER ask the user to create bots, fetch tokens, or visit developer portals — Barrsa handles all OAuth at /channels and /seller/social-accounts.',
+              '- NEVER ask the user to create bots, fetch tokens, or visit developer portals — mawaDao handles all OAuth at /channels and /seller/social-accounts.',
               '- The user does NOT see action blocks. Always write a friendly confirmation OUTSIDE the block.',
               '',
               '## Style',
@@ -3861,7 +3861,7 @@ export async function POST(request: NextRequest) {
 
   // ── Base system prompt: OpenClaw platform context ──────────────────────
   const baseSystemPrompt = [
-    'You are an AI assistant powered by OpenClaw — the personal AI platform on Barrsa.',
+    'You are an AI assistant powered by OpenClaw — the personal AI platform on mawaDao.',
     '',
     '## Platform Overview',
     'OpenClaw is a self-hosted, multi-channel AI assistant that bridges messaging channels to AI agents.',

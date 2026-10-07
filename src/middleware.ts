@@ -5,7 +5,7 @@ import { validateJWT } from '@/lib/jwt';
 // Routes that require authentication
 const protectedRoutes = ['/settings', '/channels', '/integrations', '/mission-control'];
 
-// Auth is handled on the main domain (barrsa.com) — no local auth routes
+// Auth is handled on the main domain (mawadao.com) — no local auth routes
 
 // Cloud mode: when true, enables JWT auth
 const CLOUD_MODE = process.env.NEXT_PUBLIC_CLOUD_MODE === 'true';
@@ -23,7 +23,7 @@ function resolveExternalProtocol(request: NextRequest): string {
   const proto = firstForwardedValue(request.headers.get('x-forwarded-proto')) || request.nextUrl.protocol.replace(':', '') || 'https';
   const host = stripPort(resolveExternalHost(request)).toLowerCase();
   // Reverse proxies can show internal http while the public domain is https.
-  if (host === 'barrsa.com' || host.endsWith('.barrsa.com')) {
+  if (host === 'mawadao.com' || host.endsWith('.mawadao.com')) {
     return 'https';
   }
   return proto;
@@ -57,7 +57,7 @@ export async function middleware(request: NextRequest) {
   const externalHost = resolveExternalHost(request);
 
   // --- Subdomain detection ---
-  const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'barrsa.com';
+  const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
   const currentHost = stripPort(externalHost);
   const rootBase = ROOT_DOMAIN.replace(/:\d+$/, '');
 
@@ -75,10 +75,10 @@ export async function middleware(request: NextRequest) {
     const token = request.cookies.get('auth-token')?.value;
     const user = token ? await validateJWT(token) : null;
 
-    // Subdomain request (e.g., username.barrsa.com)
+    // Subdomain request (e.g., username.mawadao.com)
     if (subdomain) {
       // --- Transfer token arrival ---
-      // When redirected from barrsa.com after login, the URL contains
+      // When redirected from mawadao.com after login, the URL contains
       // ?auth_token=TRANSFER_TOKEN&state=RANDOM.
       // We do NOT exchange the token in middleware because Set-Cookie on
       // a 307 redirect response is unreliable across browsers/proxies.

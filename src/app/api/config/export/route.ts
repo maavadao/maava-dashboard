@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
       'README.md',
       Buffer.from(
         [
-          '# Barrsa Config Export',
+          '# mawaDao Config Export',
           '',
           `Exported: ${new Date().toISOString()}`,
           `User: ${user.subdomain ?? user.userId}`,
@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
 
     const zipBuffer = zip.toBuffer();
     const slug = user.subdomain ?? user.userId;
-    const filename = `barrsa-${slug}-${Date.now()}.zip`;
+    const filename = `mawadao-${slug}-${Date.now()}.zip`;
 
     return new NextResponse(new Uint8Array(zipBuffer), {
       status: 200,

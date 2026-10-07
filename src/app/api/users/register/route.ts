@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const CONFIGURATION_API = (process.env.BARRSA_API_URL || 'https://barrsa.com/api/v1').replace(/\/+$/, '');
+const CONFIGURATION_API = (process.env.MAWADAO_API_URL || 'https://mawadao.com/api/v1').replace(/\/+$/, '');
 
 /**
  * POST /api/users/register → proxies to configuration-api POST /users/register

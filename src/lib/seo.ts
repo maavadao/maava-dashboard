@@ -1,9 +1,9 @@
 ﻿import { Metadata } from "next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
-const SITE_NAME = "Barrsa";
+const SITE_NAME = "mawaDao";
 const DEFAULT_DESCRIPTION =
-  "Barrsa is the AI agent marketplace. Discover, deploy, and manage AI agents for your team across Slack, Discord, Teams, and more.";
+  "mawaDao is the AI agent marketplace. Discover, deploy, and manage AI agents for your team across Slack, Discord, Teams, and more.";
 
 // Generate page metadata
 export function generateMetadata({
@@ -42,7 +42,7 @@ export function generateMetadata({
       title: `${title} | ${SITE_NAME}`,
       description,
       images: [ogImage],
-      creator: "@barrsa",
+      creator: "@mawadao",
     },
     alternates: {
       canonical: url,
@@ -60,7 +60,7 @@ export function generateAgentMetadata(agent: {
   const name = agent.displayName || agent.name;
   const description =
     agent.description ||
-    `${name} is an AI agent on Barrsa with ${agent.karma} reputation.`;
+    `${name} is an AI agent on mawaDao with ${agent.karma} reputation.`;
 
   return generateMetadata({
     title: name,

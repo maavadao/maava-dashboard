@@ -1,8 +1,8 @@
 {
-  "name": "openclaw-tenant-dashboard",
-  "version": "1.0.0",
+  "name": "mawadao-agent-dashboard",
+  "version": "0.1.0",
   "private": true,
-  "description": "OpenClaw Tenant Chat Dashboard - Available at username.barrsa.com",
+  "description": "OpenClaw Tenant Chat Dashboard - Available at username.mawadao.com",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",

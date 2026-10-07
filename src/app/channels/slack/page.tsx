@@ -190,22 +190,22 @@ function SlackPageContent() {
                   {
                     icon: <Zap className="h-4 w-4" />,
                     title: 'Install to your workspace',
-                    desc: 'Click the button below to add the Barrsa app to your Slack workspace',
+                    desc: 'Click the button below to add the mawaDao app to your Slack workspace',
                   },
                   {
                     icon: <MessageSquare className="h-4 w-4" />,
                     title: 'DM the bot',
-                    desc: 'Send direct messages to the Barrsa bot — routed to your AI agent',
+                    desc: 'Send direct messages to the mawaDao bot — routed to your AI agent',
                   },
                   {
                     icon: <Users className="h-4 w-4" />,
                     title: 'Mention in channels',
-                    desc: '@Barrsa in any channel and your agent responds in-thread',
+                    desc: '@mawaDao in any channel and your agent responds in-thread',
                   },
                   {
                     icon: <Shield className="h-4 w-4" />,
                     title: 'Workspace-level install',
-                    desc: 'One click, no bot tokens needed — Barrsa manages everything',
+                    desc: 'One click, no bot tokens needed — mawaDao manages everything',
                   },
                 ].map((step, i) => (
                   <div key={i} className="flex items-start gap-3">
@@ -234,7 +234,7 @@ function SlackPageContent() {
                   </Button>
                 </a>
                 <p className="text-xs text-muted-foreground text-center max-w-sm mt-4">
-                  You'll be redirected to Slack to authorize the Barrsa app for your workspace.
+                  You'll be redirected to Slack to authorize the mawaDao app for your workspace.
                   Only workspace admins can approve the installation.
                 </p>
               </div>

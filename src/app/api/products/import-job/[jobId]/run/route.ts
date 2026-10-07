@@ -224,7 +224,7 @@ async function preScrapeUrl(rawUrl: string): Promise<string | null> {
       `&fl=timestamp,statuscode&filter=statuscode:200&sort=reverse`;
     const cdxRes = await fetch(cdxUrl, {
       signal: AbortSignal.timeout(60_000),
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; BarrsaBot/1.0)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; MawadaoBot/1.0)' },
     });
     if (cdxRes.ok) {
       const cdxData = await cdxRes.json() as string[][];

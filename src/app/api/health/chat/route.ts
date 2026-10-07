@@ -201,7 +201,7 @@ export async function GET() {
   };
 
   const body = {
-    service: 'Barrsa Chat Health Check',
+    service: 'mawaDao Chat Health Check',
     status: overall,
     timestamp,
     checks,

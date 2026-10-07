@@ -10,12 +10,12 @@ export async function POST() {
   const res = NextResponse.json({ success: true });
 
   // Clear the httpOnly session cookie.
-  // Domain `.barrsa.com` covers both barrsa.com and *.barrsa.com subdomains.
+  // Domain `.mawadao.com` covers both mawadao.com and *.mawadao.com subdomains.
   res.cookies.set('auth-token', '', {
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
-    domain: '.barrsa.com',
+    domain: '.mawadao.com',
     path: '/',
     maxAge: 0,
   });

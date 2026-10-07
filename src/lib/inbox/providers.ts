@@ -7,7 +7,7 @@ import type { InboxProvider, OAuthTokenBundle } from './types';
 const STATE_SECRET = new TextEncoder().encode(
   process.env.INBOX_OAUTH_STATE_SECRET || process.env.JWT_SECRET || 'change-this-jwt-secret',
 );
-const STATE_ISSUER = 'barrsa-inbox-oauth';
+const STATE_ISSUER = 'mawadao-inbox-oauth';
 const STATE_MAX_AGE_SEC = 600;
 
 export interface InboxOAuthState {
@@ -64,7 +64,7 @@ export function getGmailConfig(): GmailConfig {
     clientSecret: process.env.GMAIL_OAUTH_CLIENT_SECRET || '',
     redirectUri:
       process.env.GMAIL_OAUTH_REDIRECT_URI ||
-      'https://tenant-dashboard.barrsa.com/api/inbox/oauth/gmail/callback',
+      'https://tenant-dashboard.mawadao.com/api/inbox/oauth/gmail/callback',
   };
 }
 
@@ -200,7 +200,7 @@ export function getOutlookConfig(): OutlookConfig {
     tenantId: process.env.MS_GRAPH_TENANT_ID || 'common',
     redirectUri:
       process.env.MS_GRAPH_REDIRECT_URI ||
-      'https://tenant-dashboard.barrsa.com/api/inbox/oauth/outlook/callback',
+      'https://tenant-dashboard.mawadao.com/api/inbox/oauth/outlook/callback',
   };
 }
 

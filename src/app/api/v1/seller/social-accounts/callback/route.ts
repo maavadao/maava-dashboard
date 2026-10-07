@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
 const CONFIGURATION_API = (
-  process.env.BARRSA_API_URL || 'https://barrsa.com/api/v1'
+  process.env.MAWADAO_API_URL || 'https://mawadao.com/api/v1'
 ).replace(/\/+$/, '');
 
 /**

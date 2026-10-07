@@ -36,7 +36,7 @@ const RESERVED = new Set([
  */
 export function GET() {
   return NextResponse.redirect(
-    new URL("/?step=subdomain", process.env.NEXT_PUBLIC_AUTH_URL || "https://barrsa.com"),
+    new URL("/?step=subdomain", process.env.NEXT_PUBLIC_AUTH_URL || "https://mawadao.com"),
     { status: 302 }
   );
 }
@@ -167,8 +167,8 @@ export async function POST(request: NextRequest) {
   }
 
   // Update tenant with backend URL and mark active
-  const serviceName = deployData?.serviceName || `barrsa-${subdomain}`;
-  const storageBucket = deployData?.gcsBucket || `barrsa-prod-tentant-platform-data`;
+  const serviceName = deployData?.serviceName || `mawadao-${subdomain}`;
+  const storageBucket = deployData?.gcsBucket || `mawadao-agent-data`;
   await pool.query(
     `UPDATE tenants SET
        backend_url = $1,
@@ -245,7 +245,7 @@ export async function POST(request: NextRequest) {
     sameSite: "lax",
     path: "/",
     maxAge: 7 * 24 * 60 * 60,
-    domain: process.env.NODE_ENV === "production" ? ".barrsa.com" : undefined,
+    domain: process.env.NODE_ENV === "production" ? ".mawadao.com" : undefined,
   });
 
   return response;
