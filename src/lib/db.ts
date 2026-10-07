@@ -140,6 +140,7 @@ pool.connect()
       await client.query(`ALTER TABLE marketplace_agents ADD COLUMN IF NOT EXISTS creator_id TEXT`);
       await client.query(`ALTER TABLE marketplace_agents ADD COLUMN IF NOT EXISTS is_public BOOLEAN DEFAULT true`);
       await client.query(`ALTER TABLE marketplace_agents ADD COLUMN IF NOT EXISTS max_runtime_hours INTEGER DEFAULT 0`);
+      await client.query(`ALTER TABLE marketplace_agents ADD COLUMN IF NOT EXISTS pricing JSONB NOT NULL DEFAULT '{"education":{"price":"free"},"individuals":{"price":"free"},"business":{"price":"free"}}'::jsonb`);
 
       /* User installed agents */
       await client.query(`

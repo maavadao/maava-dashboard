@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pool, { getUserId } from '@/lib/db';
+import { parseAgentPricing, pricingSummary, type Pricing } from '@/lib/pricing';
 
 const VALID_CATEGORIES = [
-  'customer-support', 'sales', 'writing', 'coding', 'data',
+  'education', 'customer-support', 'sales', 'writing', 'coding', 'data',
   'hr', 'finance', 'operations', 'legal', 'creative',
 ];
 
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, description, short_description, category, tags, integrations, capabilities, price } = body;
+    const { name, description, short_description, category, tags, integrations, capabilities, price, pricing: rawPricing } = body;
 
     if (!name || typeof name !== 'string' || name.trim().length < 2) {
       return NextResponse.json({ error: 'Name is required (min 2 chars)' }, { status: 400 });
@@ -44,15 +45,32 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'An agent with a similar name already exists' }, { status: 409 });
     }
 
-    const agentPrice = typeof price === 'number' && price >= 0 ? price : 0;
-    const priceLabel = agentPrice === 0 ? 'Free' : `$${agentPrice.toFixed(2)}/mo`;
+    // Price and usage per type of user; agents are always free for education.
+    // A bare `price` from older clients becomes the monthly business price.
+    let pricing: Pricing;
+    if (rawPricing !== undefined) {
+      const parsed = parseAgentPricing(rawPricing);
+      if ('error' in parsed) {
+        return NextResponse.json({ error: parsed.error }, { status: 400 });
+      }
+      pricing = parsed.pricing;
+    } else {
+      const legacy = typeof price === 'number' && price > 0 ? price : 0;
+      pricing = {
+        education: { price: 'free' },
+        individuals: { price: 'free' },
+        business: legacy > 0 ? { price: 'paid', amount: legacy, currency: 'USD', period: 'month' } : { price: 'free' },
+      };
+    }
+    const agentPrice = pricing.business.price === 'paid' ? pricing.business.amount ?? 0 : 0;
+    const priceLabel = pricingSummary(pricing);
 
     const { rows } = await pool.query(
       `INSERT INTO marketplace_agents
         (slug, name, description, short_description, category, developer,
          price, price_label, rating, review_count, total_installs, version,
-         verified, tags, integrations, capabilities)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,'1.0.0',false,$9,$10,$11)
+         verified, tags, integrations, capabilities, pricing)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,'1.0.0',false,$9,$10,$11,$12)
        RETURNING *`,
       [
         slug,
@@ -66,6 +84,7 @@ export async function POST(request: NextRequest) {
         Array.isArray(tags) ? tags : [],
         Array.isArray(integrations) ? integrations : [],
         Array.isArray(capabilities) ? capabilities : [],
+        JSON.stringify(pricing),
       ]
     );
 
@@ -115,7 +134,7 @@ export async function GET(request: NextRequest) {
 
     const query = `
       SELECT id, slug, name, short_description, description, category, developer,
-             price, price_label, rating, review_count, total_installs, version,
+             price, price_label, pricing, rating, review_count, total_installs, version,
              verified, tags, integrations, icon_url, created_at
       FROM marketplace_agents
       ${where}
