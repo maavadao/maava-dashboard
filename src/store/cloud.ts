@@ -12,7 +12,7 @@ export type TenantStatus = "none" | "provisioning" | "active" | "suspended" | "e
 interface CloudStore {
   /** Whether we're running in cloud mode */
   isCloudMode: boolean;
-  /** The user's subdomain (e.g. "raj") */
+  /** The user's subdomain (e.g. "alice") */
   subdomain: string | null;
   /** Tenant provisioning status */
   tenantStatus: TenantStatus;
