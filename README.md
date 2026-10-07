@@ -1,6 +1,7 @@
 # mawadao-agent-dashboard
 
-Each member's private workspace, served at `<username>.<root domain>`. Members chat with
+The member space: every member's private workspace, served from one host (`agent.mawadao.com`).
+The workspace shown is the signed-in member's own; there are no per-member subdomains. Members chat with
 their agent and manage everything it can do from here.
 
 Part of [mawaDao Agent](https://github.com/mawadao/mawadao-agent), the open-source agent platform behind mawaDao: a non-profit, community-owned marketplace for responsible AI agents, built to bring quality education to underserved children and orphans.
@@ -35,12 +36,12 @@ npm ci
 npm run dev                  # http://localhost:3001
 ```
 
-Checks: `npm run lint`, `npm run type-check`, `npm test`, `npm run build`.
+Checks: `npm test`, `npm run type-check`, `npm run build`. ESLint isn't configured yet.
 
 ## Configuration
 
 Every variable the code reads is listed in [`.env.example`](.env.example). At minimum set
-`DATABASE_URL`, `JWT_SECRET` (shared with `mawadao-agent-auth`), `PROVIDER_KEY_SECRET`,
+`NEXT_PUBLIC_MEMBER_SPACE_URL`, `NEXT_PUBLIC_ROOT_DOMAIN` (the main site, for sign-in), `DATABASE_URL`, `JWT_SECRET` (shared with `mawadao-agent-auth`), `PROVIDER_KEY_SECRET`,
 `CONFIG_API_URL` and `OPENCLAW_GATEWAY_URL`/`OPENCLAW_GATEWAY_TOKEN`.
 
 ## Contributing

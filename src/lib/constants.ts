@@ -6,12 +6,18 @@ export const APP_DESCRIPTION = "AI Agent Marketplace";
 // Domain
 export const MAWADAO_DOMAIN = process.env.NEXT_PUBLIC_MAWADAO_DOMAIN || "mawadao.com";
 
-/** Build a subdomain chat URL for a given username. */
+/** Where members' workspaces live (mawadao-agent-dashboard). One host for everyone. */
+export const MEMBER_SPACE_URL = (
+  process.env.NEXT_PUBLIC_MEMBER_SPACE_URL || "https://agent.mawadao.com"
+).replace(/\/+$/, "");
+export const MEMBER_SPACE_HOST = MEMBER_SPACE_URL.replace(/^https?:\/\//, "");
+
+/** Build the member-space chat URL for a given username. */
 export function getUserChatUrl(username: string | undefined | null): string {
   if (!username) return "/chat";
   const safe = username.toLowerCase().replace(/[^a-z0-9-]/g, "");
   if (!safe) return "/chat";
-  return `https://${safe}.${MAWADAO_DOMAIN}`;
+  return `${MEMBER_SPACE_URL}/chat/${safe}`;
 }
 
 // API

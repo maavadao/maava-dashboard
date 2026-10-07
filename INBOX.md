@@ -21,7 +21,7 @@ handling policy with safe defaults (`approval_required`).
 ### Gmail OAuth client
 - `GMAIL_OAUTH_CLIENT_ID`
 - `GMAIL_OAUTH_CLIENT_SECRET`
-- `GMAIL_OAUTH_REDIRECT_URI` *(default: `https://tenant-dashboard.mawadao.com/api/inbox/oauth/gmail/callback`)*
+- `GMAIL_OAUTH_REDIRECT_URI` *(default: `https://agent.mawadao.com/api/inbox/oauth/gmail/callback`)*
 
 Configure in Google Cloud Console → APIs & Services → Credentials → OAuth 2.0
 Client. Add the redirect URI verbatim. Required scopes are auto-requested by
@@ -32,7 +32,7 @@ the start route (`gmail.readonly`, `gmail.send`, `gmail.modify`, `openid`,
 - `MS_GRAPH_CLIENT_ID`
 - `MS_GRAPH_CLIENT_SECRET`
 - `MS_GRAPH_TENANT_ID` *(default: `common`)*
-- `MS_GRAPH_REDIRECT_URI` *(default: `https://tenant-dashboard.mawadao.com/api/inbox/oauth/outlook/callback`)*
+- `MS_GRAPH_REDIRECT_URI` *(default: `https://agent.mawadao.com/api/inbox/oauth/outlook/callback`)*
 
 Configure in Azure Portal → App registrations. Add the redirect URI as a
 **Web** platform redirect. Required delegated scopes: `offline_access`,

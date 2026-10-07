@@ -1,6 +1,5 @@
 // ─── OpenClaw proxy — forward Slack messages to per-user OpenClaw instances ───
 
-import { MAWADAO_DOMAIN } from '@/lib/constants';
 
 interface OpenClawProxyInput {
   mawadaoUserId: string;
@@ -29,22 +28,15 @@ interface OpenClawProxyOutput {
 
 /**
  * Resolve the OpenClaw runtime URL for a given mawaDao user.
- * Priority:
- *   1. Explicit openclawInstanceUrl if provided
- *   2. Subdomain-based URL: https://{subdomain}.mawadao.com/api/proxy/v1/chat/completions
- *   3. Throw if no resolvable URL
+ * Uses the tenant's runtime URL (tenants.backend_url); throws if there is none.
  */
 function resolveOpenClawUrl(input: OpenClawProxyInput): string {
   if (input.openclawInstanceUrl) {
     return input.openclawInstanceUrl.replace(/\/+$/, '') + '/v1/chat/completions';
   }
 
-  if (input.tenantSubdomain) {
-    return `https://${input.tenantSubdomain}.${MAWADAO_DOMAIN}/api/proxy/v1/chat/completions`;
-  }
-
   throw new Error(
-    `Cannot resolve OpenClaw URL for user ${input.mawadaoUserId}: no subdomain or instance URL`,
+    `Cannot resolve OpenClaw URL for user ${input.mawadaoUserId}: no runtime URL for the tenant`,
   );
 }
 

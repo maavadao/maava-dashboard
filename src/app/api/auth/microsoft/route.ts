@@ -10,6 +10,9 @@ function firstForwardedValue(value: string | null): string {
 }
 
 function resolveAuthBase(request: NextRequest): string {
+  // The member space is one host, so auth.<host> would be wrong there.
+  if (process.env.NEXT_PUBLIC_AUTH_URL) return process.env.NEXT_PUBLIC_AUTH_URL;
+
   const xfProto = firstForwardedValue(request.headers.get('x-forwarded-proto'));
   const xfHost = firstForwardedValue(request.headers.get('x-forwarded-host'));
   const hostHeader = firstForwardedValue(request.headers.get('host'));

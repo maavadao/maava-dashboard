@@ -9,12 +9,13 @@ import {
 } from '@/lib/inbox/providers';
 import { consumeOAuthState, upsertInboxAccount } from '@/lib/inbox/db';
 
-// Always send users back to the production tenant-dashboard, never to the
+// Always send users back to the member space, never to the
 // origin that handled the callback (which would be localhost in dev).
 const INBOX_APP_BASE_URL = (
   process.env.TENANT_DASHBOARD_URL ||
   process.env.NEXT_PUBLIC_TENANT_DASHBOARD_URL ||
-  'https://tenant-dashboard.mawadao.com'
+  process.env.NEXT_PUBLIC_MEMBER_SPACE_URL ||
+  'https://agent.mawadao.com'
 ).replace(/\/+$/, '');
 
 function inboxRedirect(_url: URL, params: Record<string, string>): NextResponse {

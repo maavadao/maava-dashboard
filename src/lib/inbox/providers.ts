@@ -64,7 +64,7 @@ export function getGmailConfig(): GmailConfig {
     clientSecret: process.env.GMAIL_OAUTH_CLIENT_SECRET || '',
     redirectUri:
       process.env.GMAIL_OAUTH_REDIRECT_URI ||
-      'https://tenant-dashboard.mawadao.com/api/inbox/oauth/gmail/callback',
+      'https://agent.mawadao.com/api/inbox/oauth/gmail/callback',
   };
 }
 
@@ -200,7 +200,7 @@ export function getOutlookConfig(): OutlookConfig {
     tenantId: process.env.MS_GRAPH_TENANT_ID || 'common',
     redirectUri:
       process.env.MS_GRAPH_REDIRECT_URI ||
-      'https://tenant-dashboard.mawadao.com/api/inbox/oauth/outlook/callback',
+      'https://agent.mawadao.com/api/inbox/oauth/outlook/callback',
   };
 }
 
