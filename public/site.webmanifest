@@ -1,0 +1,16 @@
+{
+  "name": "Barrsa Dashboard",
+  "short_name": "Barrsa",
+  "description": "Your AI chat dashboard — manage conversations, channels, and integrations.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

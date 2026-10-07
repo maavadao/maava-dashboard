@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Barrsa Light Theme — light mode only */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 13%;
+    --primary: 217 91% 53%;         /* #2563EB */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 258 90% 66%;       /* #8B5CF6 */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 220 14% 96%;           /* #F3F4F6 */
+    --muted-foreground: 220 9% 46%;  /* #6B7280 */
+    --accent: 220 14% 96%;
+    --accent-foreground: 220 13% 13%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --border: 220 13% 91%;          /* #E5E7EB */
+    --input: 220 13% 91%;
+    --ring: 217 91% 53%;
+    --radius: 0.75rem;
+
+    /* Barrsa surface tokens */
+    --surface-secondary: 210 20% 98%;  /* #F9FAFB */
+    --surface-tertiary: 220 14% 96%;   /* #F3F4F6 */
+
+    /* Mission Control design-system tokens */
+    --mc-bg: #f8fafc;
+    --mc-surface: #ffffff;
+    --mc-surface-muted: #f1f5f9;
+    --mc-surface-strong: #e2e8f0;
+    --mc-border: #e2e8f0;
+    --mc-border-strong: #cbd5e1;
+    --mc-text: #0f172a;
+    --mc-text-muted: #64748b;
+    --mc-text-quiet: #94a3b8;
+    --mc-accent: #2563eb;
+    --mc-accent-strong: #1d4ed8;
+    --mc-accent-soft: rgba(37, 99, 235, 0.12);
+    --mc-success: #0f766e;
+    --mc-warning: #b45309;
+    --mc-danger: #b42318;
+  }
+
+  .dark {
+    --background: 224 14% 10%;         /* #17191f */
+    --foreground: 210 20% 92%;         /* #e8ecf0 */
+    --card: 224 14% 13%;              /* #1e2028 */
+    --card-foreground: 210 20% 92%;
+    --popover: 224 14% 13%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 217 91% 60%;           /* #3b82f6 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 258 90% 66%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 224 14% 18%;             /* #282b33 */
+    --muted-foreground: 220 9% 60%;   /* #929aA5 */
+    --accent: 224 14% 18%;
+    --accent-foreground: 210 20% 92%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --border: 224 14% 20%;            /* #30333b */
+    --input: 224 14% 20%;
+    --ring: 217 91% 60%;
+
+    --surface-secondary: 224 14% 12%;
+    --surface-tertiary: 224 14% 15%;
+
+    /* Mission Control tokens — dark mode overrides */
+    --mc-bg: #17191f;
+    --mc-surface: #1e2028;
+    --mc-surface-muted: #23262e;
+    --mc-surface-strong: #2a2d36;
+    --mc-border: #30333b;
+    --mc-border-strong: #3b3f48;
+    --mc-text: #e8ecf0;
+    --mc-text-muted: #a0a6b0;
+    --mc-text-quiet: #6b7180;
+    --mc-accent: #60a5fa;
+    --mc-accent-strong: #3b82f6;
+    --mc-accent-soft: rgba(96, 165, 250, 0.18);
+  }
+
+  /* Mission Control: remap hardcoded slate/white utilities for dark mode.
+     Many MC pages use Tailwind slate-* classes that were authored for the
+     light palette; in dark mode these become unreadable (white-on-white,
+     dark-on-dark). Scope these overrides to MC routes only via .mc-root. */
+  .dark .mc-root .bg-white { background-color: hsl(var(--card)); }
+  .dark .mc-root .bg-slate-50 { background-color: hsl(var(--muted)); }
+  .dark .mc-root .bg-slate-100 { background-color: hsl(var(--muted)); }
+  .dark .mc-root .hover\:bg-slate-50:hover { background-color: hsl(var(--muted)); }
+  .dark .mc-root .hover\:bg-slate-100:hover { background-color: hsl(var(--accent)); }
+  .dark .mc-root .text-slate-900 { color: hsl(var(--foreground)); }
+  .dark .mc-root .text-slate-700 { color: hsl(var(--foreground) / 0.9); }
+  .dark .mc-root .text-slate-500 { color: hsl(var(--muted-foreground)); }
+  .dark .mc-root .text-slate-400 { color: hsl(var(--muted-foreground) / 0.85); }
+  .dark .mc-root .text-slate-300 { color: hsl(var(--muted-foreground) / 0.6); }
+  .dark .mc-root .border-slate-200 { border-color: hsl(var(--border)); }
+  .dark .mc-root .border-slate-100 { border-color: hsl(var(--border) / 0.6); }
+  .dark .mc-root .divide-slate-100 > :not([hidden]) ~ :not([hidden]) { border-color: hsl(var(--border) / 0.6); }
+  .dark .mc-root .divide-slate-200 > :not([hidden]) ~ :not([hidden]) { border-color: hsl(var(--border)); }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+  html { scroll-behavior: smooth; }
+}
+
+@layer components {
+  .container-main { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+
+  /* Card styles */
+  .card { @apply bg-card text-card-foreground rounded-xl border shadow-card; }
+  .card-hover { @apply hover:shadow-card-hover hover:border-barrsa-200 transition-all duration-200; }
+
+  /* Button styles */
+  .btn { @apply inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50; }
+  .btn-primary { @apply bg-primary text-primary-foreground hover:bg-barrsa-700 active:bg-barrsa-800; }
+  .btn-secondary { @apply bg-secondary text-secondary-foreground hover:bg-secondary/90; }
+  .btn-ghost { @apply hover:bg-accent hover:text-accent-foreground; }
+  .btn-outline { @apply border border-border bg-transparent hover:bg-accent hover:text-accent-foreground; }
+  .btn-destructive { @apply bg-destructive text-destructive-foreground hover:bg-destructive/90; }
+
+  /* Form elements */
+  .input { @apply flex h-10 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2; }
+  .label { @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70; }
+
+  /* Agent card in marketplace */
+  .agent-card { @apply card card-hover p-5 cursor-pointer; }
+  .agent-card-featured { @apply agent-card border-barrsa-200 bg-gradient-to-br from-barrsa-50/50 to-white; }
+
+  /* Status indicators */
+  .status-dot { @apply w-2 h-2 rounded-full; }
+  .status-connected { @apply status-dot bg-green-500; }
+  .status-disconnected { @apply status-dot bg-gray-300; }
+  .status-error { @apply status-dot bg-red-500; }
+
+  /* Chat message bubbles */
+  .chat-bubble-user { @apply bg-primary text-primary-foreground rounded-2xl rounded-br-md px-4 py-2.5; }
+  .chat-bubble-assistant { @apply bg-muted text-foreground rounded-2xl rounded-bl-md px-4 py-2.5; }
+
+  /* Interest pill (for onboarding) */
+  .interest-pill { @apply px-4 py-2 rounded-full border text-sm font-medium cursor-pointer transition-all duration-200; }
+  .interest-pill-inactive { @apply interest-pill border-border text-muted-foreground hover:border-barrsa-300 hover:text-foreground hover:bg-barrsa-50; }
+  .interest-pill-active { @apply interest-pill border-primary bg-primary text-primary-foreground; }
+
+  /* Skeleton loading */
+  .skeleton { @apply animate-pulse bg-muted rounded; }
+
+  /* Badge styles */
+  .badge { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium; }
+  .badge-primary { @apply badge bg-barrsa-100 text-barrsa-700; }
+  .badge-success { @apply badge bg-green-100 text-green-700; }
+  .badge-warning { @apply badge bg-amber-100 text-amber-700; }
+  .badge-neutral { @apply badge bg-gray-100 text-gray-600; }
+
+  /* Navigation */
+  .nav-link { @apply flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground rounded-lg transition-colors hover:text-foreground hover:bg-accent; }
+  .nav-link-active { @apply nav-link text-primary bg-barrsa-50; }
+
+  /* Mission Control surface card */
+  .mc-surface-card {
+    border: 1px solid var(--mc-border);
+    background: var(--mc-surface);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .gradient-text { @apply bg-clip-text text-transparent bg-gradient-to-r from-barrsa-600 to-barrsa-400; }
+  .surface-secondary { background-color: hsl(var(--surface-secondary)); }
+  .surface-tertiary { background-color: hsl(var(--surface-tertiary)); }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--muted-foreground) / 0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.4); }
+
+/* Selection */
+::selection { background: hsl(var(--primary) / 0.15); }
+
+/* Focus visible */
+:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
+
+/* ── Markdown prose (new) ─────────────────────────────────────────────── */
+.markdown-prose { @apply text-sm leading-relaxed; }
+.markdown-prose .md-p { @apply mb-3 last:mb-0; }
+.markdown-prose .md-h1 { @apply text-xl font-bold mt-4 mb-2; }
+.markdown-prose .md-h2 { @apply text-lg font-semibold mt-3 mb-2; }
+.markdown-prose .md-h3 { @apply text-base font-semibold mt-2.5 mb-1.5; }
+.markdown-prose .md-h4 { @apply text-sm font-semibold mt-2 mb-1; }
+.markdown-prose .md-h5 { @apply text-sm font-medium mt-1.5 mb-1; }
+.markdown-prose .md-h6 { @apply text-xs font-medium mt-1.5 mb-1 text-muted-foreground; }
+.markdown-prose .md-ul { @apply list-disc pl-5 mb-3 space-y-0.5; }
+.markdown-prose .md-ol { @apply list-decimal pl-5 mb-3 space-y-0.5; }
+.markdown-prose .md-uli { @apply leading-relaxed; }
+.markdown-prose .md-oli { @apply leading-relaxed; }
+.markdown-prose .md-link { @apply text-primary hover:underline underline-offset-2; }
+.markdown-prose .md-img { @apply rounded-lg max-w-full my-2 border border-border/50 shadow-sm; }
+.markdown-prose .md-blockquote { @apply border-l-4 border-primary/40 pl-3 py-1 italic text-muted-foreground my-2; }
+.markdown-prose .md-hr { @apply border-border my-4; }
+.markdown-prose .md-table-wrap { @apply overflow-x-auto my-3 rounded-lg border border-border/60; }
+.markdown-prose .md-table { @apply w-full text-xs border-collapse; }
+.markdown-prose .md-table th { @apply bg-muted/60 dark:bg-muted/30 px-3 py-2 font-semibold text-foreground border-b border-border/60 whitespace-nowrap; }
+.markdown-prose .md-table td { @apply px-3 py-2 border-b border-border/30 text-muted-foreground; }
+.markdown-prose .md-table tbody tr:last-child td { @apply border-b-0; }
+.markdown-prose .md-table tbody tr:hover { @apply bg-muted/30; }
+.markdown-prose .md-tasklist { @apply list-none pl-0; }
+.markdown-prose .md-task { @apply flex items-center gap-2; }
+.markdown-prose .md-checkbox { @apply text-muted-foreground; }
+.markdown-prose .md-checkbox.checked { @apply text-primary; }
+.markdown-prose .inline-code {
+  @apply bg-muted/80 dark:bg-muted/60 px-1.5 py-0.5 rounded font-mono text-[11px];
+  color: hsl(var(--primary));
+}
+
+/* Markdown content (legacy) */
+.prose-barrsa { @apply prose prose-slate max-w-none; }
+.prose-barrsa a { @apply text-primary hover:underline; }
+.prose-barrsa code { @apply bg-muted px-1 py-0.5 rounded text-sm; }
+.prose-barrsa pre { @apply bg-muted p-4 rounded-lg overflow-x-auto; }
+.prose-barrsa blockquote { @apply border-l-4 border-primary pl-4 italic; }
