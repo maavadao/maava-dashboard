@@ -16,8 +16,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - name: Build image
-        run: docker build -t ci .
 
   quality:
     runs-on: ubuntu-latest
