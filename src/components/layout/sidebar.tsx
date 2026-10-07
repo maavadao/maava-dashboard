@@ -106,7 +106,7 @@ function SidebarLogo({ collapsed, onToggleCollapse }: { collapsed?: boolean; onT
     <div className="flex items-center justify-between px-5 py-5">
       <Link href={ROUTES.HOME} className="flex items-center gap-2.5">
         <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
-          <span className="text-white font-bold text-sm">B</span>
+          <span className="text-white font-bold text-sm">m</span>
         </div>
         <span className="text-lg font-bold text-foreground">{APP_NAME}</span>
       </Link>
@@ -1764,7 +1764,7 @@ export function SidebarLayout({
         </button>
         <Link href={ROUTES.HOME} className="flex items-center gap-2 ml-2">
           <div className="h-7 w-7 rounded-lg bg-primary flex items-center justify-center shrink-0">
-            <span className="text-white font-bold text-xs">B</span>
+            <span className="text-white font-bold text-xs">m</span>
           </div>
           <span className="text-base font-bold text-foreground">{APP_NAME}</span>
         </Link>

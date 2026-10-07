@@ -21,7 +21,7 @@ export function MawadaoLogo({ className }: { className?: string }) {
   return (
     <Link href={ROUTES.HOME} className={cn('flex items-center gap-2.5', className)}>
       <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-        <span className="text-white font-bold text-sm">B</span>
+        <span className="text-white font-bold text-sm">m</span>
       </div>
       <span className="text-lg font-bold text-foreground hidden sm:block">{APP_NAME}</span>
     </Link>
