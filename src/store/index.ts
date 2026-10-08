@@ -424,7 +424,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
   clear: () => set({ notifications: [], unreadCount: 0 }),
 }));
 
-// mawaDao Agent Chat Store (gateway URL, token, config API URL, and optional AI key overrides)
+// mawa Chat Store (gateway URL, token, config API URL, and optional AI key overrides)
 interface GatewayChatStore {
   // Chat gateway (WebSocket + completions, port 19001)
   gatewayToken: string | null;

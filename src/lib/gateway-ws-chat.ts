@@ -1,9 +1,9 @@
 /**
- * mawaDao Agent chat via Gateway WebSocket.
+ * mawa chat via Gateway WebSocket.
  * Uses chat.send / chat events (same protocol as Control UI).
  */
 
-// Must match mawaDao Agent gateway PROTOCOL_VERSION (src/gateway/protocol/schema/protocol-schemas.ts)
+// Must match mawa gateway PROTOCOL_VERSION (src/gateway/protocol/schema/protocol-schemas.ts)
 const PROTOCOL_VERSION = 3;
 
 function httpToWs(url: string): string {
@@ -218,7 +218,7 @@ export class GatewayWsChat {
     onError: (err: string) => void
   ): Promise<void> {
     if (!this.isConnected) {
-      throw new Error("Not connected to mawaDao Agent");
+      throw new Error("Not connected to mawa");
     }
 
     const runId = crypto.randomUUID();

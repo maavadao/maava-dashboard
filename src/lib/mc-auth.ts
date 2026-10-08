@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 
 /**
  * Auth adapter — replaces @clerk/nextjs imports.
- * Users are already authenticated to reach the mawadao-agent-dashboard,
+ * Users are already authenticated to reach the mawa-dashboard,
  * so we always treat them as "signed in".
  */
 

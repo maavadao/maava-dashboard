@@ -6,7 +6,7 @@ import { resolveTenantBackendByUserId, type TenantInfo } from '@/lib/tenant-look
  * POST /api/mission-control/gateway-bootstrap
  *
  * Bootstraps the Mission Control org for the authenticated user and registers
- * the mawaDao Agent gateway pointing at THIS user's per-tenant `tenant-platform`
+ * the mawa gateway pointing at THIS user's per-tenant `tenant-platform`
  * Cloud Run service.
  *
  * Each user has their own tenant-platform Cloud Run instance (one container

@@ -1,4 +1,4 @@
-// ─── mawaDao Agent proxy — forward Slack messages to per-user mawaDao Agent instances ───
+// ─── mawa proxy — forward Slack messages to per-user mawa instances ───
 
 
 interface GatewayProxyInput {
@@ -27,7 +27,7 @@ interface GatewayProxyOutput {
 }
 
 /**
- * Resolve the mawaDao Agent runtime URL for a given mawaDao user.
+ * Resolve the mawa runtime URL for a given mawaDao user.
  * Uses the tenant's runtime URL (tenants.backend_url); throws if there is none.
  */
 function resolveGatewayUrl(input: GatewayProxyInput): string {
@@ -36,12 +36,12 @@ function resolveGatewayUrl(input: GatewayProxyInput): string {
   }
 
   throw new Error(
-    `Cannot resolve mawaDao Agent URL for user ${input.mawadaoUserId}: no runtime URL for the tenant`,
+    `Cannot resolve mawa URL for user ${input.mawadaoUserId}: no runtime URL for the tenant`,
   );
 }
 
 /**
- * Forward a Slack message to the user's mawaDao Agent instance and return the response.
+ * Forward a Slack message to the user's mawa instance and return the response.
  * Uses POST /v1/chat/completions (OpenAI-compatible API).
  */
 export async function forwardToGateway(input: GatewayProxyInput): Promise<GatewayProxyOutput> {
@@ -55,7 +55,7 @@ export async function forwardToGateway(input: GatewayProxyInput): Promise<Gatewa
         content: input.message,
       },
     ],
-    // Pass Slack context as metadata so mawaDao Agent skills can use it
+    // Pass Slack context as metadata so mawa skills can use it
     metadata: {
       session_key: input.sessionKey,
       channel: {
@@ -101,8 +101,8 @@ export async function forwardToGateway(input: GatewayProxyInput): Promise<Gatewa
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => 'unknown');
-    console.error(`[gateway-proxy] HTTP ${response.status} from mawaDao Agent: ${errorText}`);
-    throw new Error(`mawaDao Agent returned HTTP ${response.status}`);
+    console.error(`[gateway-proxy] HTTP ${response.status} from mawa: ${errorText}`);
+    throw new Error(`mawa returned HTTP ${response.status}`);
   }
 
   const data = await response.json();

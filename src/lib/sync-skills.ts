@@ -99,7 +99,7 @@ function buildGitHubCandidateUrls(skill: ActiveSkillRow): string[] {
       const base = `https://${ALLOWED_RAW_HOST}/${ownerRepo}/${branch}`;
       // Most common: skills/{slug}/SKILL.md (multi-skill repos)
       urls.push(`${base}/skills/${slug}/SKILL.md`);
-      // mawaDao Agent convention: .openclaw/skills/{slug}/SKILL.md
+      // mawa convention: .openclaw/skills/{slug}/SKILL.md
       urls.push(`${base}/.openclaw/skills/${slug}/SKILL.md`);
       // Flat: {slug}/SKILL.md
       urls.push(`${base}/${slug}/SKILL.md`);

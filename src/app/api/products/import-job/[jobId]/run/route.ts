@@ -292,9 +292,9 @@ async function updateJobStatus(
  * POST /api/products/import-job/[jobId]/run
  *
  * Internal-only endpoint that executes the import pipeline:
- * 1. Resolve tenant backend for mawaDao Agent gateway
+ * 1. Resolve tenant backend for mawa gateway
  * 1.5. Pre-scrape submitted links (Lightpanda → HTTP fallback)
- * 2. Call mawaDao Agent gateway (non-streaming) with scraped content + prompt
+ * 2. Call mawa gateway (non-streaming) with scraped content + prompt
  * 3. Parse structured JSON response
  * 4. Save raw JSON to bucket
  * 5. Ingest products into the products table
@@ -335,7 +335,7 @@ export async function POST(
   await updateJobStatus(jobId, 'running', { started_at: new Date().toISOString() });
 
   try {
-    // ── Step 1: Resolve tenant backend for mawaDao Agent gateway ──
+    // ── Step 1: Resolve tenant backend for mawa gateway ──
     const userRow = await pool.query(
       `SELECT t.subdomain FROM tenants t WHERE t.user_id = $1 AND t.status = 'active' LIMIT 1`,
       [job.user_id],
@@ -381,7 +381,7 @@ export async function POST(
       );
     }
 
-    // ── Step 2: Call mawaDao Agent gateway (non-streaming) ──
+    // ── Step 2: Call mawa gateway (non-streaming) ──
     const gatewayUrl = `${tenant.backendUrl.replace(/\/+$/, '')}/v1/chat/completions`;
     const messages = [
       { role: 'system', content: IMPORT_AGENT_SYSTEM_PROMPT },

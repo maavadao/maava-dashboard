@@ -41,7 +41,7 @@ const SELLER_API_BASE = (process.env.MAWADAO_API_URL || 'https://mawadao.com/api
 // ── Bucket-manager helpers (for workspace image discovery) ────────────────
 const STORAGE_URL = process.env.STORAGE_URL || '';
 const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || '';
-const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || 'mawadao-agent-data';
+const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || 'mawa-data';
 const IMAGE_EXTENSIONS = new Set(['png', 'jpg', 'jpeg', 'gif', 'webp']);
 
 async function bmHeaders(): Promise<Record<string, string>> {
@@ -63,7 +63,7 @@ async function bmHeaders(): Promise<Record<string, string>> {
 }
 
 /**
- * List all image files in a user's GCS workspace via mawadao-agent-storage.
+ * List all image files in a user's GCS workspace via mawa-storage.
  * Returns file names (e.g. ["deer.png", "giraffe.png"]).
  */
 async function listWorkspaceImages(userId: string): Promise<string[]> {
@@ -74,7 +74,7 @@ async function listWorkspaceImages(userId: string): Promise<string[]> {
     const headers = await bmHeaders();
     const res = await fetch(url, { headers, signal: AbortSignal.timeout(8000) });
     if (!res.ok) {
-      console.warn(`[user-media] mawadao-agent-storage list failed: ${res.status}`);
+      console.warn(`[user-media] mawa-storage list failed: ${res.status}`);
       return [];
     }
     const data = await res.json() as { files?: { name: string; size: number }[] };
@@ -871,7 +871,7 @@ async function persistDetectedMedia(fullText: string, userId: string): Promise<{
     }
   }
 
-  // Fallback: query GCS workspace via mawadao-agent-storage for images not found in text.
+  // Fallback: query GCS workspace via mawa-storage for images not found in text.
   // The gateway LLM doesn't always echo the MEDIA: path; this catches those cases.
   try {
     const workspaceFiles = await listWorkspaceImages(userId);
@@ -1967,7 +1967,7 @@ async function processUpdateTaskBlocks(
         console.warn('[task-action] MC sync failed on UPDATE_TASK:', err)
       );
 
-      // If task is being started (→ running), dispatch to mawaDao Agent gateway
+      // If task is being started (→ running), dispatch to mawa gateway
       if (block.newStatus === 'running' && gatewayUrl) {
         dispatchTaskToGateway(taskId, task.task_prompt as string, gatewayUrl, gatewayToken).catch(err =>
           console.error('[task-action] Gateway dispatch failed:', err)
@@ -1980,7 +1980,7 @@ async function processUpdateTaskBlocks(
 }
 
 /**
- * Dispatch a task to the mawaDao Agent gateway for execution.
+ * Dispatch a task to the mawa gateway for execution.
  * Sends the task prompt as a chat message — the gateway treats it as a new conversation.
  */
 async function dispatchTaskToGateway(
@@ -2352,7 +2352,7 @@ async function processCampaignPlanBlocks(
       const CONFIG_API_URL = (process.env.NEXT_PUBLIC_CONFIG_API_URL || process.env.CONFIG_API_URL || '').replace(/\/+$/, '');
       const INTERNAL_SECRET = process.env.INTERNAL_API_SECRET || '';
 
-      // mawadao-agent-api mounts the seller router under /api/v1
+      // mawa-api mounts the seller router under /api/v1
       const campaignsUrl = CONFIG_API_URL.endsWith('/api/v1')
         ? `${CONFIG_API_URL}/seller/campaigns`
         : `${CONFIG_API_URL}/api/v1/seller/campaigns`;
@@ -2836,12 +2836,12 @@ function buildAnthropicBody(messages: OpenAIMessage[], model: string): Record<st
 }
 
 /**
- * Proxy chat completions to mawaDao Agent gateway (or directly to an AI provider).
+ * Proxy chat completions to mawa gateway (or directly to an AI provider).
  * Accepts AI SDK v6 useChat format { messages: UIMessage[], model, conversationId, skills }.
  * Converts UIMessages to OpenAI-compatible format, persists to DB, streams response.
  *
  * Provider routing (in priority order):
- *   1. GATEWAY_URL → mawaDao Agent gateway  (full agent pipeline)
+ *   1. GATEWAY_URL → mawa gateway  (full agent pipeline)
  *   2. OPENAI_API_KEY  → direct OpenAI  (OpenAI-compatible SSE)
  *   3. ANTHROPIC_API_KEY → direct Anthropic  (Anthropic SSE format)
  */
@@ -3170,13 +3170,13 @@ export async function POST(request: NextRequest) {
           }
 
           // ── CRITICAL: Inject base system prompt into proxy path ─────────
-          // Detailed action-block specs live as built-in skills in the mawaDao Agent
+          // Detailed action-block specs live as built-in skills in the mawa
           // gateway (`skills/mawadao-seller/SKILL.md`, `skills/mawadao-inbox/SKILL.md`,
           // …). The gateway loads the relevant SKILL on demand. Here we only
           // remind the model the skills exist and surface the absolute hard rules.
           {
             const proxyBasePrompt = [
-              'You are an AI assistant powered by mawaDao Agent — the personal AI platform on mawaDao.',
+              'You are an AI assistant powered by mawa — the personal AI platform on mawaDao.',
               '',
               '## Built-in mawaDao skills (loaded on demand by the gateway)',
               '- **mawadao-seller** — products, publishing to social media (Zernio), marketing campaigns, channel delivery, seller-data SQL. Activate when the user mentions products, listings, publishing, posting, social media, sales, campaigns, marketing, channels, or seller data. Action blocks: [CREATE_PRODUCT], [UPDATE_PRODUCT], [PUBLISH_PRODUCT], [DELIVER], [SCHEDULE_DELIVERY], [SELLER_SQL], [ZERNIO_API], [CAMPAIGN_PLAN].',
@@ -3367,7 +3367,7 @@ export async function POST(request: NextRequest) {
             const errText = await backendRes.text().catch(() => '');
             console.error(`[chat] Tenant backend returned ${backendRes.status} for ${targetUrl}: ${errText}`);
             return NextResponse.json(
-              { error: `Your AI backend returned an error (${backendRes.status}). Please check that your mawaDao Agent instance is running correctly.` },
+              { error: `Your AI backend returned an error (${backendRes.status}). Please check that your mawa instance is running correctly.` },
               { status: 502 },
             );
           } else {
@@ -3723,21 +3723,21 @@ export async function POST(request: NextRequest) {
           return NextResponse.json(
             { error: isTimeout
                 ? 'Your AI backend is taking too long to respond. It may be starting up — please try again in a moment.'
-                : 'Failed to reach your AI backend. Please check that your mawaDao Agent instance is running.' },
+                : 'Failed to reach your AI backend. Please check that your mawa instance is running.' },
             { status: 504 },
           );
         }
       } else {
         console.error('[chat] No backend URL for tenant:', user.subdomain);
         return NextResponse.json(
-          { error: 'Your mawaDao Agent backend is not provisioned yet. Please contact support or re-provision your instance.' },
+          { error: 'Your mawa backend is not provisioned yet. Please contact support or re-provision your instance.' },
           { status: 503 },
         );
       }
     } else {
       console.error('[chat] Cloud user without subdomain, userId:', user.userId);
       return NextResponse.json(
-        { error: 'No mawaDao Agent instance is linked to your account. Please complete onboarding first.' },
+        { error: 'No mawa instance is linked to your account. Please complete onboarding first.' },
         { status: 503 },
       );
     }
@@ -3859,12 +3859,12 @@ export async function POST(request: NextRequest) {
 
   const lastUserTextForSkills = extractLastUserText(uiMessages);
 
-  // ── Base system prompt: mawaDao Agent platform context ──────────────────────
+  // ── Base system prompt: mawa platform context ──────────────────────
   const baseSystemPrompt = [
-    'You are an AI assistant powered by mawaDao Agent — the personal AI platform on mawaDao.',
+    'You are an AI assistant powered by mawa — the personal AI platform on mawaDao.',
     '',
     '## Platform Overview',
-    'mawaDao Agent is a self-hosted, multi-channel AI assistant that bridges messaging channels to AI agents.',
+    'mawa is a self-hosted, multi-channel AI assistant that bridges messaging channels to AI agents.',
     'Supported channels: WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, Matrix, Zalo, WebChat, and more.',
     'It runs a Gateway (control plane on port 18789) that manages agents, sessions, skills, and model routing.',
     '',
@@ -3919,7 +3919,7 @@ export async function POST(request: NextRequest) {
     '**Setup Steps (guide user through these):**',
     '1. Install the skill: `npx clawhub@latest install mikipalet/zernio-api`',
     '2. Add API key: `echo \'ZERNIO_API_KEY=sk_your_key_here\' >> ~/.openclaw/.env` (get key from https://zernio.com/dashboard/api-keys)',
-    '3. Restart mawaDao Agent: `openclaw restart`',
+    '3. Restart mawa: `openclaw restart`',
     '4. Connect social accounts via OAuth (the skill handles this — just say "connect my Twitter account")',
     '',
     '**Usage Examples (natural language):**',
@@ -3934,7 +3934,7 @@ export async function POST(request: NextRequest) {
     '**Troubleshooting:**',
     '- "Skill not found": Reinstall with `npx clawhub@latest install mikipalet/zernio-api`',
     '- "ZERNIO_API_KEY not set": Check ~/.openclaw/.env, ensure key starts with `sk_`',
-    '- Auth errors (401): Verify key at https://zernio.com/dashboard/api-keys, restart mawaDao Agent',
+    '- Auth errors (401): Verify key at https://zernio.com/dashboard/api-keys, restart mawa',
     '- Rate limits (429): Space out posts or upgrade Zernio plan',
     '',
     '### Other Social Media Skills (alternatives)',
@@ -3950,7 +3950,7 @@ export async function POST(request: NextRequest) {
     '- If a social media automation workflow needs posting, add `zernio-api` as a required skill and guide the user through setup.',
     '',
     '## Integration Modes (How to Connect External Services)',
-    'mawaDao Agent supports 5 integration modes in order of preference:',
+    'mawa supports 5 integration modes in order of preference:',
     '',
     '### A) Native Channel (inbound + outbound messaging)',
     'Built-in bidirectional adapters: Slack, Discord, Telegram, WhatsApp, Signal, iMessage, Teams, Matrix, Zalo, WebChat.',
@@ -4326,7 +4326,7 @@ export async function POST(request: NextRequest) {
     '- `status:` (required) The new status. Valid values: pending, running, completed, cancelled',
     '',
     'Valid Transitions:',
-    '- pending → running (starts execution via mawaDao Agent gateway)',
+    '- pending → running (starts execution via mawa gateway)',
     '- pending → cancelled',
     '- running → completed',
     '- running → cancelled',
@@ -4334,7 +4334,7 @@ export async function POST(request: NextRequest) {
     '- cancelled → pending (reactivate)',
     '',
     'Rules:',
-    '- When status is set to "running", the task will be dispatched to the mawaDao Agent gateway for actual execution by the assigned agent.',
+    '- When status is set to "running", the task will be dispatched to the mawa gateway for actual execution by the assigned agent.',
     '- NEVER guess task IDs — only use the ones from the [User\'s Agent Tasks] list.',
     '- If the user wants to start a task, set status to "running". If they want to stop it, set to "cancelled".',
     '',
@@ -4797,7 +4797,7 @@ export async function POST(request: NextRequest) {
 
   // ── Select provider ────────────────────────────────────────────────────────
   // Priority:
-  //   1. mawaDao Agent gateway — primary when configured.
+  //   1. mawa gateway — primary when configured.
   //      Routes through the gateway's agent pipeline (skills, context management, etc.)
   //      The model param selects a gateway agent ("openclaw:agentId"); unknown IDs default to agent "main".
   //   2. Direct OpenAI — when the model is an OpenAI model and OPENAI_API_KEY is set.
@@ -4811,7 +4811,7 @@ export async function POST(request: NextRequest) {
   const isAnthropicModel = aiModel.startsWith('anthropic/') || aiModel.startsWith('claude-');
 
   if (isLocalGateway) {
-    // mawaDao Agent gateway — primary AI backend (runs the full agent pipeline)
+    // mawa gateway — primary AI backend (runs the full agent pipeline)
     const base = EFF_GATEWAY_URL.replace(/\/+$/, '');
     aiEndpoint = `${base}/v1/chat/completions`;
     aiHeaders = {
@@ -4820,7 +4820,7 @@ export async function POST(request: NextRequest) {
       ...(conversationId ? { 'X-OpenClaw-Session-Key': conversationId } : {}),
     };
     useGateway = true;
-    console.log(`[chat] mawaDao Agent gateway → model=${aiModel}`);
+    console.log(`[chat] mawa gateway → model=${aiModel}`);
 
   } else if (isOpenAIModel && EFF_OPENAI) {
     aiEndpoint = 'https://api.openai.com/v1/chat/completions';
@@ -4868,7 +4868,7 @@ export async function POST(request: NextRequest) {
   } else {
     // No keys configured at all
     return NextResponse.json(
-      { error: 'No AI provider configured. Set OPENAI_API_KEY, ANTHROPIC_API_KEY, or MOONSHOT_API_KEY in your environment, or configure keys in Settings → mawaDao Agent Chat.' },
+      { error: 'No AI provider configured. Set OPENAI_API_KEY, ANTHROPIC_API_KEY, or MOONSHOT_API_KEY in your environment, or configure keys in Settings → mawa Chat.' },
       { status: 503 },
     );
   }
@@ -5266,7 +5266,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error: isNetwork
-          ? "Cannot reach the AI backend. Make sure the mawaDao Agent gateway is running or your API keys are set."
+          ? "Cannot reach the AI backend. Make sure the mawa gateway is running or your API keys are set."
           : "AI backend unreachable. Please try again later.",
       },
       { status: 502 }

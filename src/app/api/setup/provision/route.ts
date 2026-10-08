@@ -162,7 +162,7 @@ export async function POST(request: NextRequest) {
 
   // Update tenant with backend URL and mark active
   const serviceName = deployData?.serviceName || `mawadao-${subdomain}`;
-  const storageBucket = deployData?.gcsBucket || `mawadao-agent-data`;
+  const storageBucket = deployData?.gcsBucket || `mawa-data`;
   await pool.query(
     `UPDATE tenants SET
        backend_url = $1,

@@ -156,7 +156,7 @@ function InboxContent() {
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Inbox</h1>
             <p className="text-sm text-muted-foreground">
-              Connect your email accounts so mawaDao Agent can triage, draft, and (with your approval) act on messages.
+              Connect your email accounts so mawa can triage, draft, and (with your approval) act on messages.
             </p>
           </div>
         </div>
@@ -357,7 +357,7 @@ function InboxEmptyState() {
         <div>
           <p className="font-medium">No inboxes connected yet</p>
           <p className="text-sm text-muted-foreground mt-1">
-            Connect Gmail or Outlook above to let mawaDao Agent help with your email.
+            Connect Gmail or Outlook above to let mawa help with your email.
           </p>
         </div>
       </CardContent>
@@ -382,7 +382,7 @@ function DisconnectDialog({
         <DialogHeader>
           <DialogTitle>Disconnect this inbox?</DialogTitle>
           <DialogDescription>
-            mawaDao Agent will lose access to <strong>{account?.account_email}</strong>. Stored tokens will be
+            mawa will lose access to <strong>{account?.account_email}</strong>. Stored tokens will be
             revoked from this dashboard. You can reconnect at any time.
           </DialogDescription>
         </DialogHeader>

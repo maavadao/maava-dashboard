@@ -1,7 +1,7 @@
 /**
  * POST /api/whatsapp/status
  *
- * Resolves the tenant's mawaDao Agent gateway endpoint via DB (tenants.backend_url)
+ * Resolves the tenant's mawa gateway endpoint via DB (tenants.backend_url)
  * and returns the current WhatsApp channel connection status.
  * Forwards the user's auth-token JWT to the gateway for authentication.
  *

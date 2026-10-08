@@ -1,8 +1,8 @@
 {
-  "name": "mawadao-agent-dashboard",
+  "name": "mawa-dashboard",
   "version": "0.1.0",
   "private": true,
-  "description": "mawaDao Agent member space at agent.mawadao.com/<username>",
+  "description": "mawa member space at agent.mawadao.com/<username>",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",

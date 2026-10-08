@@ -1,6 +1,6 @@
 // ─── Slack event router ───
 // Parses inbound Slack events, resolves the target mawaDao tenant,
-// forwards to mawaDao Agent, and sends the reply back to Slack.
+// forwards to mawa, and sends the reply back to Slack.
 
 import type {
   SlackEventCallback,
@@ -156,7 +156,7 @@ async function handleEventAsync(ctx: SlackRoutingContext): Promise<void> {
   await addSlackReaction(botToken, channelId, messageTs, typingEmoji).catch(() => {});
 
   try {
-    // Resolve the tenant's mawaDao Agent backend URL
+    // Resolve the tenant's mawa backend URL
     let gatewayUrl: string | null = null;
 
     // Direct lookup by userId
@@ -173,7 +173,7 @@ async function handleEventAsync(ctx: SlackRoutingContext): Promise<void> {
       gatewayUrl = tenantRow.backend_url;
     }
 
-    // Forward to mawaDao Agent
+    // Forward to mawa
     const response = await forwardToGateway({
       mawadaoUserId: connection.mawadaoUserId,
       tenantId: tenantRow?.id ?? null,

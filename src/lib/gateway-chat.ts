@@ -1,5 +1,5 @@
 /**
- * mawaDao Agent chat client.
+ * mawa chat client.
  * Uses mawaDao API key for auth; requests go through /api/ai-chat proxy.
  */
 
@@ -62,9 +62,9 @@ export async function chatComplete(
         : res.status === 401
         ? "Please log in again. Your session may have expired."
         : res.status === 502 || res.status === 503
-        ? "mawaDao Agent gateway is unavailable. Please try again later."
+        ? "mawa gateway is unavailable. Please try again later."
         : res.status >= 500
-        ? "mawaDao Agent server error. Please try again later."
+        ? "mawa server error. Please try again later."
         : `Chat request failed (${res.status}). Please try again.`;
     throw new Error(message);
   }
@@ -75,7 +75,7 @@ export async function chatComplete(
     usage?: { prompt_tokens?: number; completion_tokens?: number };
   };
   const content =
-    data.choices?.[0]?.message?.content ?? "No response from mawaDao Agent.";
+    data.choices?.[0]?.message?.content ?? "No response from mawa.";
 
   return {
     id: data.id ?? `chat_${Date.now()}`,
@@ -130,9 +130,9 @@ export async function* chatCompleteStream(
         : res.status === 401
         ? "Please log in again. Your session may have expired."
         : res.status === 502 || res.status === 503
-        ? "mawaDao Agent gateway is unavailable. Please try again later."
+        ? "mawa gateway is unavailable. Please try again later."
         : res.status >= 500
-        ? "mawaDao Agent server error. Please try again later."
+        ? "mawa server error. Please try again later."
         : `Chat request failed (${res.status}). Please try again.`;
     throw new Error(message);
   }

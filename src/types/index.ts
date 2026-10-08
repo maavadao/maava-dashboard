@@ -307,7 +307,7 @@ export interface InstalledAgent {
 }
 
 // ============================================================================
-// mawaDao Agent Configuration API Types
+// mawa Configuration API Types
 // ============================================================================
 
 /** Config data returned by /config/get */
@@ -343,7 +343,7 @@ export interface GatewayAgentFile {
   size?: number;
 }
 
-/** A chat session managed by mawaDao Agent */
+/** A chat session managed by mawa */
 export interface GatewaySession {
   id: string;
   label?: string;

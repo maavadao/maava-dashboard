@@ -79,7 +79,7 @@ class ApiClient {
   /**
    * Call a Next.js API proxy route (e.g. /api/channels) using a relative path.
    * Must be used for routes that are proxied by Next.js to internal services
-   * (mawadao-agent-api etc.) because API_BASE_URL points to the mawaDao Agent gateway.
+   * (mawa-api etc.) because API_BASE_URL points to the mawa gateway.
    */
   private async requestProxy<T>(
     method: string,

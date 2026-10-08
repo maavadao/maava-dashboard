@@ -222,7 +222,7 @@ function extractServiceName(runtimeEndpoint: string): string | null {
 }
 
 /**
- * Trigger a Cloud Run service restart via the mawadao-agent-deployer API.
+ * Trigger a Cloud Run service restart via the mawa-deployer API.
  * This ensures the container re-reads the updated GCS config on startup.
  * Non-fatal — logs on failure.
  */

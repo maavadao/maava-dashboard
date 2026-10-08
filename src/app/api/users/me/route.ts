@@ -84,7 +84,7 @@ export async function DELETE(request: NextRequest) {
       }
     }
 
-    // 2. Clean up mawadao-agent-dashboard tables (TEXT user_id — no FK cascades)
+    // 2. Clean up mawa-dashboard tables (TEXT user_id — no FK cascades)
     await pool.query(
       `DELETE FROM messages
        WHERE conversation_id IN (SELECT id FROM conversations WHERE user_id = $1)`,

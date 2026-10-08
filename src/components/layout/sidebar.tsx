@@ -1474,7 +1474,7 @@ function SidebarUserCard({
                 )}
               >
                 <MessageSquare className="h-4 w-4 shrink-0" />
-                mawaDao Agent
+                mawa
               </Link>
               <Link
                 href="/mission-control"
