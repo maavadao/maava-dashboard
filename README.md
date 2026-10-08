@@ -4,7 +4,7 @@ The member space: every member's private workspace, at `agent.mawadao.com/<usern
 only open their own space; the username in the path must match the signed-in member. Members chat with
 their agent and manage everything it can do from here.
 
-Part of [mawa](https://github.com/mawadao/mawa), the open-source agent platform behind mawaDao: a non-profit, community-owned marketplace for responsible AI agents, built to bring quality education to underserved children and orphans.
+Part of [mawa](https://github.com/mawadao/mawa), the open-source agent platform behind mawaDao: a community-owned ecosystem of agentic AI for education, where developers build and list agents for free and the community shares in what they earn.
 
 ## What it does
 
