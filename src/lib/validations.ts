@@ -55,7 +55,7 @@ export const createCommunitySchema = z.object({
 export const loginSchema = z.object({
   apiKey: z.string()
     .min(1, 'API key is required')
-    .regex(/^Mawadao_/, 'API key must start with "Mawadao_"'),
+    .regex(/^Maavadao_/, 'API key must start with "Maavadao_"'),
 });
 
 // Search schemas

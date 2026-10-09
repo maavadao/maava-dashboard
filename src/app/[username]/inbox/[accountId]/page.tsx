@@ -223,7 +223,7 @@ function Mailbox() {
             className="gap-1.5"
           >
             <Bot className="h-4 w-4" />
-            mawaDao Bot
+            maavaDao Bot
           </Button>
           <Button
             variant="ghost"
@@ -474,7 +474,7 @@ function BotChatModal({
       setInput('');
       setLoading(true);
       setMessages((prev) => [...prev, { role: 'user', content: text }]);
-      const contextPrompt = `You are an AI assistant for the mawaDao inbox (${accountEmail}, account ${accountId}). Use the mawadao-inbox skill when needed.\n\n${text}`;
+      const contextPrompt = `You are an AI assistant for the maavaDao inbox (${accountEmail}, account ${accountId}). Use the maavadao-inbox skill when needed.\n\n${text}`;
       try {
         const res = await fetch('/api/ai-chat', {
           method: 'POST',
@@ -528,7 +528,7 @@ function BotChatModal({
               <Bot className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <DialogTitle className="text-base leading-none mb-0.5">mawaDao Bot</DialogTitle>
+              <DialogTitle className="text-base leading-none mb-0.5">maavaDao Bot</DialogTitle>
               <DialogDescription className="text-xs">
                 AI assistant for {accountEmail}
               </DialogDescription>

@@ -12,7 +12,7 @@ import { SettingsSidebar, SidebarLayout } from '@/components/layout/sidebar';
 import { useAuth, usePlatformLinks } from '@/hooks';
 import { api } from '@/lib/api';
 
-const BOT_USERNAME = process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || 'mawadao_bot';
+const BOT_USERNAME = process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || 'maavadao_bot';
 const POLL_INTERVAL_MS = 3000;
 const ENABLE_LOGIN_WIDGET = process.env.NEXT_PUBLIC_TELEGRAM_ENABLE_LOGIN_WIDGET === 'true';
 
@@ -104,7 +104,7 @@ function TelegramLinkPageContent() {
     if (!ENABLE_LOGIN_WIDGET || linkMethod !== 'widget' || existingLink || !widgetRef.current) return;
 
     // Expose the callback on window
-    (window as unknown as Record<string, unknown>).onMawadaoTelegramAuth = (user: Record<string, string>) => {
+    (window as unknown as Record<string, unknown>).onMaavadaoTelegramAuth = (user: Record<string, string>) => {
       handleTelegramWidgetAuth(user);
     };
 
@@ -112,7 +112,7 @@ function TelegramLinkPageContent() {
     script.src = 'https://telegram.org/js/telegram-widget.js?22';
     script.setAttribute('data-telegram-login', BOT_USERNAME);
     script.setAttribute('data-size', 'large');
-    script.setAttribute('data-onauth', 'onMawadaoTelegramAuth(user)');
+    script.setAttribute('data-onauth', 'onMaavadaoTelegramAuth(user)');
     script.setAttribute('data-request-access', 'write');
     script.async = true;
 
@@ -121,7 +121,7 @@ function TelegramLinkPageContent() {
     widgetRef.current.appendChild(script);
 
     return () => {
-      delete (window as unknown as Record<string, unknown>).onMawadaoTelegramAuth;
+      delete (window as unknown as Record<string, unknown>).onMaavadaoTelegramAuth;
     };
   }, [linkMethod, existingLink, handleTelegramWidgetAuth]);
 
@@ -212,7 +212,7 @@ function TelegramLinkPageContent() {
               <div className="space-y-3">
                 {[
                   { icon: <Zap className="h-4 w-4" />, title: 'Choose a linking method', desc: ENABLE_LOGIN_WIDGET ? 'Use the Telegram Login Widget for instant linking, or the deep-link flow' : 'Click "Link Telegram" to generate a one-time link' },
-                  { icon: <MessageSquare className="h-4 w-4" />, title: 'Connect your account', desc: 'Your Telegram identity is securely verified and linked to your mawaDao account' },
+                  { icon: <MessageSquare className="h-4 w-4" />, title: 'Connect your account', desc: 'Your Telegram identity is securely verified and linked to your maavaDao account' },
                   { icon: <Shield className="h-4 w-4" />, title: 'Secure & private', desc: 'We only store your Telegram user ID for routing — no messages are stored on our servers' },
                 ].map((step, i) => (
                   <div key={i} className="flex items-start gap-3">

@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     let deepLink: string | undefined;
     if (platform === "telegram") {
       const botUsername =
-        process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || "mawadao_bot";
+        process.env.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME || "maavadao_bot";
       deepLink = `https://t.me/${botUsername}?start=${token}`;
     }
 

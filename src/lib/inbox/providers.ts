@@ -6,7 +6,7 @@ import type { InboxProvider, OAuthTokenBundle } from './types';
 import { secretKey } from '@/lib/secrets';
 
 const stateSecret = () => secretKey('INBOX_OAUTH_STATE_SECRET', 'JWT_SECRET');
-const STATE_ISSUER = 'mawadao-inbox-oauth';
+const STATE_ISSUER = 'maavadao-inbox-oauth';
 const STATE_MAX_AGE_SEC = 600;
 
 export interface InboxOAuthState {
@@ -63,7 +63,7 @@ export function getGmailConfig(): GmailConfig {
     clientSecret: process.env.GMAIL_OAUTH_CLIENT_SECRET || '',
     redirectUri:
       process.env.GMAIL_OAUTH_REDIRECT_URI ||
-      'https://agent.mawadao.com/api/inbox/oauth/gmail/callback',
+      'https://agent.maavadao.com/api/inbox/oauth/gmail/callback',
   };
 }
 
@@ -199,7 +199,7 @@ export function getOutlookConfig(): OutlookConfig {
     tenantId: process.env.MS_GRAPH_TENANT_ID || 'common',
     redirectUri:
       process.env.MS_GRAPH_REDIRECT_URI ||
-      'https://agent.mawadao.com/api/inbox/oauth/outlook/callback',
+      'https://agent.maavadao.com/api/inbox/oauth/outlook/callback',
   };
 }
 

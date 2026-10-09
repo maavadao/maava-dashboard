@@ -30,9 +30,9 @@ const PROXY_FETCH_TIMEOUT_MS = 120_000;
  *
  * Cloud Run emits two hostname formats:
  *   - Legacy: `{service}-{hash}-{regionAbbr}.a.run.app`
- *             (e.g. `mawadao-foo-abc123-ew.a.run.app`)
+ *             (e.g. `maavadao-foo-abc123-ew.a.run.app`)
  *   - New:    `{service}-{projectNumber}.{region}.run.app`
- *             (e.g. `mawadao-foo-12345.europe-west1.run.app`)
+ *             (e.g. `maavadao-foo-12345.europe-west1.run.app`)
  *
  * The new format contains a dot in the subdomain (`.europe-west1.`) so the
  * previous `[a-z0-9-]+\.run\.app` pattern silently rejected every newly

@@ -121,7 +121,7 @@ export async function GET() {
       : 'down';
 
   const body = {
-    service: 'mawaDao Tenant Dashboard — mawa Health',
+    service: 'maavaDao Tenant Dashboard — maava Health',
     status: overall,
     timestamp,
     components,

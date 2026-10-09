@@ -3,7 +3,7 @@ import { authenticateRequest } from "@/lib/auth";
 import pool from "@/lib/db";
 import { createDecipheriv, scryptSync } from "crypto";
 
-const SALT = "mawadao-provider-keys";
+const SALT = "maavadao-provider-keys";
 let encKey: Buffer | undefined;
 function getEncKey(): Buffer {
   if (!encKey) {

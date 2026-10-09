@@ -1,8 +1,8 @@
 {
-  "name": "mawa-dashboard",
+  "name": "maava-dashboard",
   "version": "0.1.0",
   "private": true,
-  "description": "mawa member space at agent.mawadao.com/<username>",
+  "description": "maava member space at agent.maavadao.com/<username>",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",

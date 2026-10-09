@@ -1,8 +1,8 @@
-// ─── mawa proxy — forward Slack messages to per-user mawa instances ───
+// ─── maava proxy — forward Slack messages to per-user maava instances ───
 
 
 interface GatewayProxyInput {
-  mawadaoUserId: string;
+  maavadaoUserId: string;
   tenantId?: string | null;
   tenantSubdomain?: string | null;
   gatewayInstanceUrl?: string | null;
@@ -27,7 +27,7 @@ interface GatewayProxyOutput {
 }
 
 /**
- * Resolve the mawa runtime URL for a given mawaDao user.
+ * Resolve the maava runtime URL for a given maavaDao user.
  * Uses the tenant's runtime URL (tenants.backend_url); throws if there is none.
  */
 function resolveGatewayUrl(input: GatewayProxyInput): string {
@@ -36,12 +36,12 @@ function resolveGatewayUrl(input: GatewayProxyInput): string {
   }
 
   throw new Error(
-    `Cannot resolve mawa URL for user ${input.mawadaoUserId}: no runtime URL for the tenant`,
+    `Cannot resolve maava URL for user ${input.maavadaoUserId}: no runtime URL for the tenant`,
   );
 }
 
 /**
- * Forward a Slack message to the user's mawa instance and return the response.
+ * Forward a Slack message to the user's maava instance and return the response.
  * Uses POST /v1/chat/completions (OpenAI-compatible API).
  */
 export async function forwardToGateway(input: GatewayProxyInput): Promise<GatewayProxyOutput> {
@@ -55,7 +55,7 @@ export async function forwardToGateway(input: GatewayProxyInput): Promise<Gatewa
         content: input.message,
       },
     ],
-    // Pass Slack context as metadata so mawa skills can use it
+    // Pass Slack context as metadata so maava skills can use it
     metadata: {
       session_key: input.sessionKey,
       channel: {
@@ -71,7 +71,7 @@ export async function forwardToGateway(input: GatewayProxyInput): Promise<Gatewa
     },
   };
 
-  console.log(`[gateway-proxy] Forwarding to ${url} for user ${input.mawadaoUserId} (auth=${!!input.authToken}, tenant=${input.tenantId ?? 'none'})`);
+  console.log(`[gateway-proxy] Forwarding to ${url} for user ${input.maavadaoUserId} (auth=${!!input.authToken}, tenant=${input.tenantId ?? 'none'})`);
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -101,8 +101,8 @@ export async function forwardToGateway(input: GatewayProxyInput): Promise<Gatewa
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => 'unknown');
-    console.error(`[gateway-proxy] HTTP ${response.status} from mawa: ${errorText}`);
-    throw new Error(`mawa returned HTTP ${response.status}`);
+    console.error(`[gateway-proxy] HTTP ${response.status} from maava: ${errorText}`);
+    throw new Error(`maava returned HTTP ${response.status}`);
   }
 
   const data = await response.json();

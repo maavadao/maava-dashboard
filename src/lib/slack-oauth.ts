@@ -17,7 +17,7 @@ const SLACK_BOT_SCOPES =
 const SLACK_USER_SCOPES = process.env.SLACK_USER_SCOPES || '';
 
 const stateSecret = () => secretKey('SLACK_OAUTH_STATE_SECRET', 'JWT_SECRET');
-const STATE_ISSUER = 'mawadao-slack-oauth';
+const STATE_ISSUER = 'maavadao-slack-oauth';
 const STATE_MAX_AGE_SEC = 600; // 10 minutes
 
 // ── OAuth URL ──
@@ -96,12 +96,12 @@ export async function upsertSlackConnection(
 ): Promise<SlackConnection> {
   const result = await pool.query(
     `INSERT INTO slack_connections (
-      mawadao_user_id, slack_team_id, slack_team_name, slack_bot_token,
+      maavadao_user_id, slack_team_id, slack_team_name, slack_bot_token,
       slack_bot_user_id, slack_authed_user_id, slack_scope,
       slack_enterprise_id, slack_installed_by_user_id, slack_app_id,
       is_active, metadata
     ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, true, $11)
-    ON CONFLICT (slack_team_id, mawadao_user_id)
+    ON CONFLICT (slack_team_id, maavadao_user_id)
     DO UPDATE SET
       slack_team_name = EXCLUDED.slack_team_name,
       slack_bot_token = EXCLUDED.slack_bot_token,
@@ -143,7 +143,7 @@ export async function getSlackConnectionForUser(
 ): Promise<SlackConnection | null> {
   const result = await pool.query(
     `SELECT * FROM slack_connections
-     WHERE mawadao_user_id = $1 AND is_active = true
+     WHERE maavadao_user_id = $1 AND is_active = true
      ORDER BY updated_at DESC
      LIMIT 1`,
     [userId],
@@ -173,7 +173,7 @@ export async function getSlackConnectionByTeamAndUser(
   // Try identity link first (for shared workspaces)
   const identityResult = await pool.query(
     `SELECT sc.* FROM slack_connections sc
-     JOIN slack_identity_links sil ON sil.mawadao_user_id = sc.mawadao_user_id
+     JOIN slack_identity_links sil ON sil.maavadao_user_id = sc.maavadao_user_id
        AND sil.slack_team_id = sc.slack_team_id
      WHERE sil.slack_team_id = $1 AND sil.slack_user_id = $2
        AND sc.is_active = true
@@ -192,7 +192,7 @@ export async function deactivateSlackConnection(
   userId: string,
   teamId?: string,
 ): Promise<boolean> {
-  const conditions = ['mawadao_user_id = $1', 'is_active = true'];
+  const conditions = ['maavadao_user_id = $1', 'is_active = true'];
   const params: string[] = [userId];
 
   if (teamId) {
@@ -255,7 +255,7 @@ export async function cleanupEventLog(maxAgeHours = 24): Promise<number> {
 function formatConnection(row: Record<string, unknown>): SlackConnection {
   return {
     id: row.id as string,
-    mawadaoUserId: row.mawadao_user_id as string,
+    maavadaoUserId: row.maavadao_user_id as string,
     slackTeamId: row.slack_team_id as string,
     slackTeamName: (row.slack_team_name as string) ?? null,
     slackBotToken: row.slack_bot_token as string,

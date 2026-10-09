@@ -1,4 +1,4 @@
-// mawaDao API Client
+// maavaDao API Client
 
 import type {
   Agent,
@@ -57,14 +57,14 @@ class ApiClient {
   setApiKey(key: string | null) {
     this.apiKey = key;
     if (key && typeof window !== "undefined") {
-      localStorage.setItem("mawadao_api_key", key);
+      localStorage.setItem("maavadao_api_key", key);
     }
   }
 
   getApiKey(): string | null {
     if (this.apiKey) return this.apiKey;
     if (typeof window !== "undefined") {
-      this.apiKey = localStorage.getItem("mawadao_api_key");
+      this.apiKey = localStorage.getItem("maavadao_api_key");
     }
     return this.apiKey;
   }
@@ -72,14 +72,14 @@ class ApiClient {
   clearApiKey() {
     this.apiKey = null;
     if (typeof window !== "undefined") {
-      localStorage.removeItem("mawadao_api_key");
+      localStorage.removeItem("maavadao_api_key");
     }
   }
 
   /**
    * Call a Next.js API proxy route (e.g. /api/channels) using a relative path.
    * Must be used for routes that are proxied by Next.js to internal services
-   * (mawa-api etc.) because API_BASE_URL points to the mawa gateway.
+   * (maava-api etc.) because API_BASE_URL points to the maava gateway.
    */
   private async requestProxy<T>(
     method: string,

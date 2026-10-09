@@ -4,7 +4,7 @@ import pool from '@/lib/db';
 import { createCipheriv, createDecipheriv, scryptSync, randomBytes } from 'crypto';
 import { syncSkillEnvToGcs } from '@/lib/sync-skills';
 
-const SALT = 'mawadao-skill-connections';
+const SALT = 'maavadao-skill-connections';
 let encKey: Buffer | undefined;
 function getEncKey(): Buffer {
   if (!encKey) {

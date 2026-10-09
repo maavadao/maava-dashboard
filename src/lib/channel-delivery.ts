@@ -44,7 +44,7 @@ export async function getLinkedChannels(userId: string): Promise<LinkedChannelIn
   const slackResult = await pool.query(
     `SELECT slack_team_name, slack_bot_token, is_active
      FROM slack_connections
-     WHERE mawadao_user_id = $1
+     WHERE maavadao_user_id = $1
      ORDER BY created_at DESC`,
     [userId],
   );
@@ -61,7 +61,7 @@ export async function getLinkedChannels(userId: string): Promise<LinkedChannelIn
     const tgResult = await pool.query(
       `SELECT telegram_username, telegram_first_name, is_active, last_seen_at
        FROM telegram_channel_links
-       WHERE mawadao_user_id = $1
+       WHERE maavadao_user_id = $1
        ORDER BY created_at DESC`,
       [userId],
     );
@@ -115,7 +115,7 @@ async function deliverToSlack(userId: string, text: string, targetChannelId?: st
   const result = await pool.query(
     `SELECT slack_bot_token, slack_authed_user_id, slack_bot_user_id, slack_team_name
      FROM slack_connections
-     WHERE mawadao_user_id = $1 AND is_active = true
+     WHERE maavadao_user_id = $1 AND is_active = true
      ORDER BY created_at DESC LIMIT 1`,
     [userId],
   );
@@ -141,13 +141,13 @@ async function deliverToSlack(userId: string, text: string, targetChannelId?: st
   }
 }
 
-// ─── Send to Telegram (via mawa-channels outbound API) ────────────────
+// ─── Send to Telegram (via maava-channels outbound API) ────────────────
 
 async function deliverToTelegram(userId: string, text: string): Promise<DeliveryResult> {
   return deliverViaChannelRouter(userId, 'telegram', text);
 }
 
-// ─── Generic delivery via mawa-channels outbound API ──────────────────
+// ─── Generic delivery via maava-channels outbound API ──────────────────
 
 async function deliverViaChannelRouter(userId: string, platform: ChannelPlatform, text: string): Promise<DeliveryResult> {
   // Check if the user actually has this platform linked
@@ -158,7 +158,7 @@ async function deliverViaChannelRouter(userId: string, platform: ChannelPlatform
     try {
       const tgResult = await pool.query(
         `SELECT telegram_chat_id FROM telegram_channel_links
-         WHERE mawadao_user_id = $1 AND is_active = true
+         WHERE maavadao_user_id = $1 AND is_active = true
          LIMIT 1`,
         [userId],
       );
@@ -183,7 +183,7 @@ async function deliverViaChannelRouter(userId: string, platform: ChannelPlatform
     return { platform, status: 'skipped', reason: 'not linked' };
   }
 
-  // Call the mawa-channels outbound API
+  // Call the maava-channels outbound API
   const channelsUrl = process.env.CHANNELS_URL || 'http://localhost:8090';
   const outboundSecret = process.env.OUTBOUND_SECRET || '';
 

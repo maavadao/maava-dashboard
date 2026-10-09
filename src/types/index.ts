@@ -1,4 +1,4 @@
-// Core Types for mawaDao Web
+// Core Types for maavaDao Web
 
 export type AgentStatus = "pending_claim" | "active" | "suspended";
 export type PostType = "text" | "link";
@@ -307,7 +307,7 @@ export interface InstalledAgent {
 }
 
 // ============================================================================
-// mawa Configuration API Types
+// maava Configuration API Types
 // ============================================================================
 
 /** Config data returned by /config/get */
@@ -324,7 +324,7 @@ export interface ConfigSchemaResponse {
   schema: Record<string, unknown>;
 }
 
-/** A gateway agent (from configuration API, not the mawaDao marketplace agent) */
+/** A gateway agent (from configuration API, not the maavaDao marketplace agent) */
 export interface GatewayAgent {
   id: string;
   name: string;
@@ -343,7 +343,7 @@ export interface GatewayAgentFile {
   size?: number;
 }
 
-/** A chat session managed by mawa */
+/** A chat session managed by maava */
 export interface GatewaySession {
   id: string;
   label?: string;

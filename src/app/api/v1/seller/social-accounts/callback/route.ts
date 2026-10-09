@@ -1,14 +1,14 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
 const CONFIGURATION_API = (
-  process.env.MAWADAO_API_URL || 'https://mawadao.com/api/v1'
+  process.env.MAAVADAO_API_URL || 'https://maavadao.com/api/v1'
 ).replace(/\/+$/, '');
 
 /**
  * GET /api/v1/seller/social-accounts/callback
  *
  * Zernio redirects the user's browser here after OAuth.
- * We proxy the request to mawa-api which saves the connection and
+ * We proxy the request to maava-api which saves the connection and
  * returns an HTML page that postMessages the result back to the opener popup.
  *
  * No auth required — the user identity is resolved server-side via profileId.

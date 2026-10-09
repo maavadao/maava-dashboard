@@ -98,7 +98,7 @@ function WhatsAppLinkPageContent() {
               <div className="flex-1">
                 <h2 className="text-lg font-semibold text-foreground">WhatsApp Linked</h2>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Your WhatsApp number is connected. Send a message to the mawaDao number and your AI agent will respond.
+                  Your WhatsApp number is connected. Send a message to the maavaDao number and your AI agent will respond.
                 </p>
                 {existingLink?.platformMeta && (
                   <div className="mt-3 text-sm text-muted-foreground space-y-1">
@@ -131,7 +131,7 @@ function WhatsAppLinkPageContent() {
               <div className="space-y-3">
                 {[
                   { icon: <Phone className="h-4 w-4" />, title: 'Enter your phone number', desc: 'Include your country code (e.g. +994 for Azerbaijan, +1 for US)' },
-                  { icon: <Send className="h-4 w-4" />, title: 'Send a message to mawaDao', desc: 'Message our WhatsApp number and your AI agent will reply' },
+                  { icon: <Send className="h-4 w-4" />, title: 'Send a message to maavaDao', desc: 'Message our WhatsApp number and your AI agent will reply' },
                   { icon: <Shield className="h-4 w-4" />, title: 'Secure & private', desc: 'We only store your phone number for routing — messages are not stored' },
                 ].map((step, i) => (
                   <div key={i} className="flex items-start gap-3">

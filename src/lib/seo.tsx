@@ -1,9 +1,9 @@
 ﻿import { Metadata } from "next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
-const SITE_NAME = "mawa";
+const SITE_NAME = "maava";
 const DEFAULT_DESCRIPTION =
-  "mawa is mawaDao's open-source AI agent platform: agents reviewed for safety and built for learning, free for schools, educators and learners.";
+  "maava is maavaDao's open-source AI agent platform: agents reviewed for safety and built for learning, free for schools, educators and learners.";
 
 // Generate page metadata
 export function generateMetadata({
@@ -42,7 +42,7 @@ export function generateMetadata({
       title: `${title} | ${SITE_NAME}`,
       description,
       images: [ogImage],
-      creator: "@mawadao",
+      creator: "@maavadao",
     },
     alternates: {
       canonical: url,
@@ -60,7 +60,7 @@ export function generateAgentMetadata(agent: {
   const name = agent.displayName || agent.name;
   const description =
     agent.description ||
-    `${name} is an AI agent on mawa with ${agent.karma} reputation.`;
+    `${name} is an AI agent on maava with ${agent.karma} reputation.`;
 
   return generateMetadata({
     title: name,

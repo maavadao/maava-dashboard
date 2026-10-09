@@ -1,17 +1,17 @@
 /**
- * Config access via the mawa-storage HTTP service.
+ * Config access via the maava-storage HTTP service.
  *
  * All user configs live in a single shared GCS bucket:
  *   {SHARED_BUCKET}/{userId}/mountfolder/openclaw.json
  *
- * The mawa-storage service holds the GCS credentials and exposes a simple
+ * The maava-storage service holds the GCS credentials and exposes a simple
  * REST API so the dashboard never needs direct GCS SDK access.
  */
 
 const STORAGE_URL = process.env.STORAGE_URL || "";
 const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || "";
 export const SHARED_BUCKET =
-  process.env.GCS_SHARED_BUCKET || "mawa-data";
+  process.env.GCS_SHARED_BUCKET || "maava-data";
 
 /**
  * On Cloud Run, fetch a short-lived OIDC identity token from the metadata server.
@@ -100,7 +100,7 @@ export const DEFAULT_GATEWAY_CONFIG = {
 
 /**
  * Read a user's openclaw.json from the shared GCS bucket.
- * Returns null when mawa-storage is unreachable or the file does not exist.
+ * Returns null when maava-storage is unreachable or the file does not exist.
  */
 export async function readUserConfig(userId: string): Promise<unknown | null> {
   if (!STORAGE_URL) return null;
@@ -137,15 +137,15 @@ export async function writeUserConfig(userId: string, data: unknown): Promise<vo
   );
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`mawa-storage write failed (HTTP ${res.status}): ${body}`);
+    throw new Error(`maava-storage write failed (HTTP ${res.status}): ${body}`);
   }
 }
 
 /**
- * No-op — config seeding is done by mawa-deployer at provisioning time.
+ * No-op — config seeding is done by maava-deployer at provisioning time.
  * Kept for backward compatibility with token-exchange route.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function initUserConfig(_username: string): Promise<void> {
-  // Intentional no-op: openclaw.json is seeded by mawa-deployer/seedTenantBucketConfig
+  // Intentional no-op: openclaw.json is seeded by maava-deployer/seedTenantBucketConfig
 }

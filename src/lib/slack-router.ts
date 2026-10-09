@@ -1,13 +1,13 @@
 // ─── Slack event router ───
-// Parses inbound Slack events, resolves the target mawaDao tenant,
-// forwards to mawa, and sends the reply back to Slack.
+// Parses inbound Slack events, resolves the target maavaDao tenant,
+// forwards to maava, and sends the reply back to Slack.
 
 import type {
   SlackEventCallback,
   SlackEvent,
   SlackRoutingContext,
 } from '@/types/slack';
-import { DEFAULT_MAWADAO_SLACK_CONFIG } from '@/lib/slack-config';
+import { DEFAULT_MAAVADAO_SLACK_CONFIG } from '@/lib/slack-config';
 import {
   getSlackConnectionByTeamAndUser,
   isEventProcessed,
@@ -16,7 +16,7 @@ import {
 import { sendSlackReply, addSlackReaction, removeSlackReaction } from '@/lib/slack-client';
 import { forwardToGateway, buildSessionKey } from '@/lib/gateway-proxy';
 
-const config = DEFAULT_MAWADAO_SLACK_CONFIG;
+const config = DEFAULT_MAAVADAO_SLACK_CONFIG;
 
 // Event subtypes to always ignore (system / bot-generated)
 const IGNORED_SUBTYPES = new Set([
@@ -71,7 +71,7 @@ export async function routeSlackEvent(payload: SlackEventCallback): Promise<bool
   const threadTs = event.thread_ts || null;
   const text = event.text || '';
 
-  // Resolve the owning mawaDao user via team_id (+ optional slack user)
+  // Resolve the owning maavaDao user via team_id (+ optional slack user)
   const connection = await getSlackConnectionByTeamAndUser(team_id, slackUserId);
   if (!connection) {
     console.warn(`[slack-router] No active connection for team=${team_id} user=${slackUserId}`);
@@ -156,7 +156,7 @@ async function handleEventAsync(ctx: SlackRoutingContext): Promise<void> {
   await addSlackReaction(botToken, channelId, messageTs, typingEmoji).catch(() => {});
 
   try {
-    // Resolve the tenant's mawa backend URL
+    // Resolve the tenant's maava backend URL
     let gatewayUrl: string | null = null;
 
     // Direct lookup by userId
@@ -165,7 +165,7 @@ async function handleEventAsync(ctx: SlackRoutingContext): Promise<void> {
       `SELECT id, subdomain, backend_url, gateway_token FROM tenants
        WHERE user_id = $1 AND status = 'active'
        LIMIT 1`,
-      [connection.mawadaoUserId],
+      [connection.maavadaoUserId],
     );
 
     const tenantRow = tenantResult.rows[0];
@@ -173,9 +173,9 @@ async function handleEventAsync(ctx: SlackRoutingContext): Promise<void> {
       gatewayUrl = tenantRow.backend_url;
     }
 
-    // Forward to mawa
+    // Forward to maava
     const response = await forwardToGateway({
-      mawadaoUserId: connection.mawadaoUserId,
+      maavadaoUserId: connection.maavadaoUserId,
       tenantId: tenantRow?.id ?? null,
       tenantSubdomain: tenantRow?.subdomain ?? null,
       gatewayInstanceUrl: gatewayUrl,

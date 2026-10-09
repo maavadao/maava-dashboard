@@ -1,5 +1,5 @@
 // GET /api/channels/slack/callback
-// Handles the Slack OAuth redirect after user authorizes the mawaDao Slack app.
+// Handles the Slack OAuth redirect after user authorizes the maavaDao Slack app.
 
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyOAuthState, exchangeSlackCode, upsertSlackConnection } from '@/lib/slack-oauth';

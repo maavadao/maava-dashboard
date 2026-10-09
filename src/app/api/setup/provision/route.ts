@@ -30,7 +30,7 @@ const DEPLOYER_API_SECRET = process.env.DEPLOYER_API_SECRET || "";
  */
 export function GET() {
   return NextResponse.redirect(
-    new URL("/?step=subdomain", process.env.NEXT_PUBLIC_AUTH_URL || "https://mawadao.com"),
+    new URL("/?step=subdomain", process.env.NEXT_PUBLIC_AUTH_URL || "https://maavadao.com"),
     { status: 302 }
   );
 }
@@ -161,8 +161,8 @@ export async function POST(request: NextRequest) {
   }
 
   // Update tenant with backend URL and mark active
-  const serviceName = deployData?.serviceName || `mawadao-${subdomain}`;
-  const storageBucket = deployData?.gcsBucket || `mawa-data`;
+  const serviceName = deployData?.serviceName || `maavadao-${subdomain}`;
+  const storageBucket = deployData?.gcsBucket || `maava-data`;
   await pool.query(
     `UPDATE tenants SET
        backend_url = $1,
@@ -239,7 +239,7 @@ export async function POST(request: NextRequest) {
     sameSite: "lax",
     path: "/",
     maxAge: 7 * 24 * 60 * 60,
-    domain: process.env.NODE_ENV === "production" ? ".mawadao.com" : undefined,
+    domain: process.env.NODE_ENV === "production" ? ".maavadao.com" : undefined,
   });
 
   return response;

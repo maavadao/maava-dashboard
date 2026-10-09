@@ -127,7 +127,7 @@ function LivePreview({ channelName }: { channelName: string }) {
           </div>
           <div>
             <div className="flex items-baseline gap-2">
-              <span className="text-sm font-medium text-primary">mawa</span>
+              <span className="text-sm font-medium text-primary">maava</span>
               <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-primary/20 text-primary">BOT</span>
               <span className="text-[11px] text-gray-500">Today at 2:14 PM</span>
             </div>
@@ -325,7 +325,7 @@ export default function IntegrationSetupPage() {
 
   const steps: SetupStep[] = [
     { number: 1, title: 'Enter Credentials', description: `Provide your ${channelName} bot credentials`, state: hasCredentials ? 'completed' : 'active' },
-    { number: 2, title: 'Deploy Channel', description: `Connect ${channelName} to your mawa gateway`, state: deployed ? 'completed' : hasCredentials ? 'active' : 'pending' },
+    { number: 2, title: 'Deploy Channel', description: `Connect ${channelName} to your maava gateway`, state: deployed ? 'completed' : hasCredentials ? 'active' : 'pending' },
     { number: 3, title: 'Verify Connection', description: 'Confirm your channel is live', state: deployed ? 'completed' : 'pending' },
   ];
 
@@ -355,7 +355,7 @@ export default function IntegrationSetupPage() {
         channelType: channelId, credentials: credsTrimmed, channelName,
         agentId: agent?.id, metadata: { deployedAt: new Date().toISOString() },
       });
-      // Push to local mawa gateway for live reload — silently skip if unreachable
+      // Push to local maava gateway for live reload — silently skip if unreachable
       try {
         const currentConfig = await configApi.configGet();
         const baseHash = (currentConfig as unknown as Record<string, unknown>)?.hash as string | undefined;
@@ -550,7 +550,7 @@ export default function IntegrationSetupPage() {
                             secret={field.secret} helpUrl={field.helpUrl} />
                         ))}
                         <p className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Shield className="h-3 w-3" /> Credentials are sent directly to your mawa gateway
+                          <Shield className="h-3 w-3" /> Credentials are sent directly to your maava gateway
                         </p>
                       </div>
                     )}
@@ -606,7 +606,7 @@ export default function IntegrationSetupPage() {
               </Avatar>
               <div>
                 <p className="text-sm font-medium text-foreground">{displayName}</p>
-                <p className="text-xs text-muted-foreground">{user?.email || 'agent@mawadao.com'}</p>
+                <p className="text-xs text-muted-foreground">{user?.email || 'agent@maavadao.com'}</p>
               </div>
             </div>
           </div>

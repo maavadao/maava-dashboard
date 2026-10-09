@@ -2,15 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { authenticateRequestOrApiKey } from "@/lib/auth";
 
 const CONFIGURATION_API = (
-  process.env.MAWADAO_API_URL || "https://mawadao.com/api/v1"
+  process.env.MAAVADAO_API_URL || "https://maavadao.com/api/v1"
 ).replace(/\/+$/, "");
 
 /**
- * Catch-all proxy for /api/seller/* → mawa-api /api/v1/seller/*
+ * Catch-all proxy for /api/seller/* → maava-api /api/v1/seller/*
  *
  * Authenticates the request, then forwards the ORIGINAL bearer token
- * so the mawa-api can validate it natively (supports both
- * mawadao_ API keys and Go-auth JWTs).
+ * so the maava-api can validate it natively (supports both
+ * maavadao_ API keys and Go-auth JWTs).
  */
 
 function buildHeaders(
@@ -25,7 +25,7 @@ function buildHeaders(
   );
   headers.set("X-User-ID", userId);
 
-  // Forward the original token so mawa-api can authenticate natively
+  // Forward the original token so maava-api can authenticate natively
   if (rawToken) {
     headers.set("Authorization", `Bearer ${rawToken}`);
   }
@@ -64,9 +64,9 @@ async function handleRequest(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     userId = auth.user.userId;
-    // Prefer the explicit Authorization header (mawadao_ API key or manual JWT).
+    // Prefer the explicit Authorization header (maavadao_ API key or manual JWT).
     // Fall back to auth.authToken which covers cookie-authenticated sessions
-    // (the JWT from the auth-token cookie, forwarded so mawa-api can
+    // (the JWT from the auth-token cookie, forwarded so maava-api can
     // authenticate natively without needing to read cookies itself).
     const authHeader = request.headers.get("authorization");
     rawToken = authHeader?.startsWith("Bearer ")

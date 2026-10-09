@@ -1,6 +1,6 @@
 /**
- * mawa chat client.
- * Uses mawaDao API key for auth; requests go through /api/ai-chat proxy.
+ * maava chat client.
+ * Uses maavaDao API key for auth; requests go through /api/ai-chat proxy.
  */
 
 export type ChatMessage = {
@@ -62,9 +62,9 @@ export async function chatComplete(
         : res.status === 401
         ? "Please log in again. Your session may have expired."
         : res.status === 502 || res.status === 503
-        ? "mawa gateway is unavailable. Please try again later."
+        ? "maava gateway is unavailable. Please try again later."
         : res.status >= 500
-        ? "mawa server error. Please try again later."
+        ? "maava server error. Please try again later."
         : `Chat request failed (${res.status}). Please try again.`;
     throw new Error(message);
   }
@@ -75,7 +75,7 @@ export async function chatComplete(
     usage?: { prompt_tokens?: number; completion_tokens?: number };
   };
   const content =
-    data.choices?.[0]?.message?.content ?? "No response from mawa.";
+    data.choices?.[0]?.message?.content ?? "No response from maava.";
 
   return {
     id: data.id ?? `chat_${Date.now()}`,
@@ -130,9 +130,9 @@ export async function* chatCompleteStream(
         : res.status === 401
         ? "Please log in again. Your session may have expired."
         : res.status === 502 || res.status === 503
-        ? "mawa gateway is unavailable. Please try again later."
+        ? "maava gateway is unavailable. Please try again later."
         : res.status >= 500
-        ? "mawa server error. Please try again later."
+        ? "maava server error. Please try again later."
         : `Chat request failed (${res.status}). Please try again.`;
     throw new Error(message);
   }

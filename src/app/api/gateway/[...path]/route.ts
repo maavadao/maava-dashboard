@@ -39,7 +39,7 @@ export async function POST(
   } catch {
     // Config API not running — return structured 503 instead of ERR_CONNECTION_REFUSED
     return NextResponse.json(
-      { success: false, message: "mawa config API unreachable", error: "connection_refused" },
+      { success: false, message: "maava config API unreachable", error: "connection_refused" },
       { status: 503 }
     );
   }
@@ -53,7 +53,7 @@ export async function GET(
   const targetPath = path.join("/");
 
   // Return a graceful empty payload for status/health endpoints when the
-  // local mawa gateway is not running (cloud mode).
+  // local maava gateway is not running (cloud mode).
   const GRACEFUL_FALLBACKS: Record<string, unknown> = {
     "channels/status": { success: true, data: [], message: "Gateway not running" },
     "health": { success: true, status: "degraded", message: "Gateway not running" },
@@ -75,7 +75,7 @@ export async function GET(
       return NextResponse.json(GRACEFUL_FALLBACKS[targetPath]);
     }
     return NextResponse.json(
-      { success: false, message: "mawa config API unreachable", error: "connection_refused" },
+      { success: false, message: "maava config API unreachable", error: "connection_refused" },
       { status: 503 }
     );
   }

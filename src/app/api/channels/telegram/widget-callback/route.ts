@@ -7,7 +7,7 @@ import crypto from "crypto";
  * POST /api/channels/telegram/widget-callback
  *
  * Verifies Telegram Login Widget data and creates a link between
- * the authenticated mawaDao user and their Telegram identity.
+ * the authenticated maavaDao user and their Telegram identity.
  *
  * Body: { id, first_name, last_name?, username?, photo_url?, auth_date, hash }
  *
@@ -94,12 +94,12 @@ export async function POST(request: NextRequest) {
     // 1. Upsert into telegram_channel_links (dedicated table)
     await pool.query(
       `INSERT INTO telegram_channel_links
-         (mawadao_user_id, telegram_user_id, telegram_chat_id, telegram_username,
+         (maavadao_user_id, telegram_user_id, telegram_chat_id, telegram_username,
           telegram_first_name, telegram_last_name, linked_via, is_active, last_seen_at)
        VALUES ($1, $2, $2, $3, $4, $5, 'widget', true, NOW())
        ON CONFLICT (telegram_user_id)
        DO UPDATE SET
-         mawadao_user_id      = EXCLUDED.mawadao_user_id,
+         maavadao_user_id      = EXCLUDED.maavadao_user_id,
          telegram_username   = COALESCE(EXCLUDED.telegram_username, telegram_channel_links.telegram_username),
          telegram_first_name = COALESCE(EXCLUDED.telegram_first_name, telegram_channel_links.telegram_first_name),
          telegram_last_name  = COALESCE(EXCLUDED.telegram_last_name, telegram_channel_links.telegram_last_name),

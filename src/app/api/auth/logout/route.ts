@@ -10,12 +10,12 @@ export async function POST() {
   const res = NextResponse.json({ success: true });
 
   // Clear the httpOnly session cookie.
-  // Domain `.mawadao.com` covers both mawadao.com and *.mawadao.com subdomains.
+  // Domain `.maavadao.com` covers both maavadao.com and *.maavadao.com subdomains.
   res.cookies.set('auth-token', '', {
     httpOnly: true,
     secure: true,
     sameSite: 'lax',
-    domain: '.mawadao.com',
+    domain: '.maavadao.com',
     path: '/',
     maxAge: 0,
   });

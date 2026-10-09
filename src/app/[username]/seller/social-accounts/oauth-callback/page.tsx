@@ -10,7 +10,7 @@ import { useSearchParams } from 'next/navigation';
  * URL: /seller/social-accounts/oauth-callback?connected=<platform>&profileId=...&accountId=...&username=...&connect_token=...
  *
  * This page:
- *  1. Sends the params to the mawa-api backend to save the connection
+ *  1. Sends the params to the maava-api backend to save the connection
  *  2. PostMessages the result to the opener window (the dashboard)
  *  3. Closes itself automatically
  */

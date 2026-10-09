@@ -149,7 +149,7 @@ function SidebarItem({
     'flex items-center rounded-lg text-sm font-medium transition-colors w-full',
     collapsed ? 'justify-center px-2 py-2.5' : 'justify-start text-left gap-3 px-3 py-2.5',
     isActive
-      ? 'bg-mawadao-50 dark:bg-primary/10 text-primary'
+      ? 'bg-maavadao-50 dark:bg-primary/10 text-primary'
       : 'text-muted-foreground hover:text-foreground hover:bg-muted'
   );
 
@@ -1078,7 +1078,7 @@ export function ChatSidebar({
           className={cn(
             'flex items-center gap-2 flex-1 min-w-0 px-3 py-2 rounded-lg text-sm transition-colors text-left',
             activeThreadId === t.id
-              ? 'bg-mawadao-50 dark:bg-primary/10 text-primary font-medium'
+              ? 'bg-maavadao-50 dark:bg-primary/10 text-primary font-medium'
               : 'text-muted-foreground hover:bg-muted'
           )}
         >
@@ -1446,7 +1446,7 @@ function SidebarUserCard({
       >
         <Avatar className="h-8 w-8 shrink-0">
           <AvatarImage src={avatarUrl} />
-          <AvatarFallback className="bg-mawadao-100 text-mawadao-700 text-xs font-medium">
+          <AvatarFallback className="bg-maavadao-100 text-maavadao-700 text-xs font-medium">
             {initials}
           </AvatarFallback>
         </Avatar>
@@ -1470,18 +1470,18 @@ function SidebarUserCard({
                 onClick={() => setOpen(false)}
                 className={cn(
                   'flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors',
-                  pathname === '/' ? 'bg-mawadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
+                  pathname === '/' ? 'bg-maavadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
                 )}
               >
                 <MessageSquare className="h-4 w-4 shrink-0" />
-                mawa
+                maava
               </Link>
               <Link
                 href="/mission-control"
                 onClick={() => setOpen(false)}
                 className={cn(
                   'flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors',
-                  pathname.startsWith('/mission-control') ? 'bg-mawadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
+                  pathname.startsWith('/mission-control') ? 'bg-maavadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
                 )}
               >
                 <Rocket className="h-4 w-4 shrink-0" />
@@ -1492,7 +1492,7 @@ function SidebarUserCard({
                 onClick={() => setOpen(false)}
                 className={cn(
                   'flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors',
-                  pathname.startsWith('/inbox') ? 'bg-mawadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
+                  pathname.startsWith('/inbox') ? 'bg-maavadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
                 )}
               >
                 <Inbox className="h-4 w-4 shrink-0" />
@@ -1511,7 +1511,7 @@ function SidebarUserCard({
                 onClick={() => setOpen(false)}
                 className={cn(
                   'flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors',
-                  pathname === '/marketplace' ? 'bg-mawadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
+                  pathname === '/marketplace' ? 'bg-maavadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
                 )}
               >
                 <Store className="h-4 w-4 shrink-0" />
@@ -1522,7 +1522,7 @@ function SidebarUserCard({
                 onClick={() => setOpen(false)}
                 className={cn(
                   'flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors',
-                  pathname.startsWith('/seller') ? 'bg-mawadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
+                  pathname.startsWith('/seller') ? 'bg-maavadao-50 dark:bg-primary/10 text-primary' : 'hover:bg-muted text-foreground'
                 )}
               >
                 <ShoppingBag className="h-4 w-4 shrink-0" />

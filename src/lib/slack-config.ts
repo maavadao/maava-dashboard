@@ -1,7 +1,7 @@
-// ─── mawaDao Slack channel configuration model ───
+// ─── maavaDao Slack channel configuration model ───
 // Platform-managed config; no user-managed bot credentials or pairing flows.
 
-export type MawadaoSlackChannelConfig = {
+export type MaavadaoSlackChannelConfig = {
   enabled: boolean;
   mode: 'events_api' | 'socket_mode';
 
@@ -83,7 +83,7 @@ export type MawadaoSlackChannelConfig = {
   };
 };
 
-export const DEFAULT_MAWADAO_SLACK_CONFIG: MawadaoSlackChannelConfig = {
+export const DEFAULT_MAAVADAO_SLACK_CONFIG: MaavadaoSlackChannelConfig = {
   enabled: true,
   mode: 'events_api',
   dm: {
@@ -111,7 +111,7 @@ export const DEFAULT_MAWADAO_SLACK_CONFIG: MawadaoSlackChannelConfig = {
   },
   slashCommand: {
     enabled: false,
-    name: 'mawadao',
+    name: 'maavadao',
     sessionPrefix: 'slack:slash',
     ephemeral: true,
   },

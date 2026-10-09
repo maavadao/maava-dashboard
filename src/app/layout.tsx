@@ -8,21 +8,21 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
-  title: { default: 'mawa Chat', template: '%s | mawa Chat' },
+  title: { default: 'maava Chat', template: '%s | maava Chat' },
   description: 'Your AI chat dashboard — manage conversations, channels, and integrations.',
-  keywords: ['AI', 'chat', 'mawaDao', 'agents', 'education', 'channels'],
-  authors: [{ name: 'mawaDao' }],
-  creator: 'mawaDao',
-  metadataBase: new URL('https://www.mawadao.com'),
+  keywords: ['AI', 'chat', 'maavaDao', 'agents', 'education', 'channels'],
+  authors: [{ name: 'maavaDao' }],
+  creator: 'maavaDao',
+  metadataBase: new URL('https://www.maavadao.com'),
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    siteName: 'mawa Chat',
-    title: 'mawa Chat',
+    siteName: 'maava Chat',
+    title: 'maava Chat',
     description: 'Your AI chat dashboard — manage conversations, channels, and integrations.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'mawa Chat' }],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'maava Chat' }],
   },
-  twitter: { card: 'summary_large_image', title: 'mawa Chat', description: 'AI Chat Dashboard' },
+  twitter: { card: 'summary_large_image', title: 'maava Chat', description: 'AI Chat Dashboard' },
   icons: {
     icon: '/favicon.svg',
   },

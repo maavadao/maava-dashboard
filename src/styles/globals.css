@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* mawaDao Light Theme — light mode only */
+    /* maavaDao Light Theme — light mode only */
     --background: 0 0% 100%;
     --foreground: 220 13% 13%;
     --card: 0 0% 100%;
@@ -30,7 +30,7 @@
     --ring: 217 91% 53%;
     --radius: 0.75rem;
 
-    /* mawaDao surface tokens */
+    /* maavaDao surface tokens */
     --surface-secondary: 210 20% 98%;  /* #F9FAFB */
     --surface-tertiary: 220 14% 96%;   /* #F3F4F6 */
 
@@ -126,11 +126,11 @@
 
   /* Card styles */
   .card { @apply bg-card text-card-foreground rounded-xl border shadow-card; }
-  .card-hover { @apply hover:shadow-card-hover hover:border-mawadao-200 transition-all duration-200; }
+  .card-hover { @apply hover:shadow-card-hover hover:border-maavadao-200 transition-all duration-200; }
 
   /* Button styles */
   .btn { @apply inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50; }
-  .btn-primary { @apply bg-primary text-primary-foreground hover:bg-mawadao-700 active:bg-mawadao-800; }
+  .btn-primary { @apply bg-primary text-primary-foreground hover:bg-maavadao-700 active:bg-maavadao-800; }
   .btn-secondary { @apply bg-secondary text-secondary-foreground hover:bg-secondary/90; }
   .btn-ghost { @apply hover:bg-accent hover:text-accent-foreground; }
   .btn-outline { @apply border border-border bg-transparent hover:bg-accent hover:text-accent-foreground; }
@@ -142,7 +142,7 @@
 
   /* Agent card in marketplace */
   .agent-card { @apply card card-hover p-5 cursor-pointer; }
-  .agent-card-featured { @apply agent-card border-mawadao-200 bg-gradient-to-br from-mawadao-50/50 to-white; }
+  .agent-card-featured { @apply agent-card border-maavadao-200 bg-gradient-to-br from-maavadao-50/50 to-white; }
 
   /* Status indicators */
   .status-dot { @apply w-2 h-2 rounded-full; }
@@ -156,7 +156,7 @@
 
   /* Interest pill (for onboarding) */
   .interest-pill { @apply px-4 py-2 rounded-full border text-sm font-medium cursor-pointer transition-all duration-200; }
-  .interest-pill-inactive { @apply interest-pill border-border text-muted-foreground hover:border-mawadao-300 hover:text-foreground hover:bg-mawadao-50; }
+  .interest-pill-inactive { @apply interest-pill border-border text-muted-foreground hover:border-maavadao-300 hover:text-foreground hover:bg-maavadao-50; }
   .interest-pill-active { @apply interest-pill border-primary bg-primary text-primary-foreground; }
 
   /* Skeleton loading */
@@ -164,14 +164,14 @@
 
   /* Badge styles */
   .badge { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium; }
-  .badge-primary { @apply badge bg-mawadao-100 text-mawadao-700; }
+  .badge-primary { @apply badge bg-maavadao-100 text-maavadao-700; }
   .badge-success { @apply badge bg-green-100 text-green-700; }
   .badge-warning { @apply badge bg-amber-100 text-amber-700; }
   .badge-neutral { @apply badge bg-gray-100 text-gray-600; }
 
   /* Navigation */
   .nav-link { @apply flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground rounded-lg transition-colors hover:text-foreground hover:bg-accent; }
-  .nav-link-active { @apply nav-link text-primary bg-mawadao-50; }
+  .nav-link-active { @apply nav-link text-primary bg-maavadao-50; }
 
   /* Mission Control surface card */
   .mc-surface-card {
@@ -185,7 +185,7 @@
   .text-balance { text-wrap: balance; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   .scrollbar-hide::-webkit-scrollbar { display: none; }
-  .gradient-text { @apply bg-clip-text text-transparent bg-gradient-to-r from-mawadao-600 to-mawadao-400; }
+  .gradient-text { @apply bg-clip-text text-transparent bg-gradient-to-r from-maavadao-600 to-maavadao-400; }
   .surface-secondary { background-color: hsl(var(--surface-secondary)); }
   .surface-tertiary { background-color: hsl(var(--surface-tertiary)); }
 }
@@ -235,8 +235,8 @@
 }
 
 /* Markdown content (legacy) */
-.prose-mawadao { @apply prose prose-slate max-w-none; }
-.prose-mawadao a { @apply text-primary hover:underline; }
-.prose-mawadao code { @apply bg-muted px-1 py-0.5 rounded text-sm; }
-.prose-mawadao pre { @apply bg-muted p-4 rounded-lg overflow-x-auto; }
-.prose-mawadao blockquote { @apply border-l-4 border-primary pl-4 italic; }
+.prose-maavadao { @apply prose prose-slate max-w-none; }
+.prose-maavadao a { @apply text-primary hover:underline; }
+.prose-maavadao code { @apply bg-muted px-1 py-0.5 rounded text-sm; }
+.prose-maavadao pre { @apply bg-muted p-4 rounded-lg overflow-x-auto; }
+.prose-maavadao blockquote { @apply border-l-4 border-primary pl-4 italic; }

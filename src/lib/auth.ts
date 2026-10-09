@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 import pool from '@/lib/db';
 import { secretKey } from '@/lib/secrets';
 
-const JWT_ISSUER = 'mawadao-auth';
+const JWT_ISSUER = 'maavadao-auth';
 const AUTH_DEBUG = process.env.AUTH_DEBUG === 'true';
 
 
@@ -75,7 +75,7 @@ export async function authenticateRequest(request: NextRequest): Promise<JWTPayl
 }
 
 /**
- * Resolve auth from either a signed JWT session or a mawaDao API key.
+ * Resolve auth from either a signed JWT session or a maavaDao API key.
  * API-key auth is used by non-OAuth dashboard sessions.
  */
 export async function authenticateRequestOrApiKey(

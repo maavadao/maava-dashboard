@@ -5,7 +5,7 @@ import { createCipheriv, createDecipheriv, randomBytes, scryptSync } from "crypt
 
 const ALLOWED_PROVIDERS = ["openai", "anthropic", "google", "moonshot"];
 
-const SALT = "mawadao-provider-keys";
+const SALT = "maavadao-provider-keys";
 let encKey: Buffer | undefined;
 function getEncKey(): Buffer {
   if (!encKey) {

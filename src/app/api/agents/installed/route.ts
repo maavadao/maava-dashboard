@@ -7,7 +7,7 @@ import { createJWT, getRequestUserId } from '@/lib/auth';
 const STORAGE_URL = process.env.STORAGE_URL || '';
 const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || '';
 const GCS_BUCKET =
-  process.env.GCS_SHARED_BUCKET || process.env.GCS_BUCKET || 'mawa-data';
+  process.env.GCS_SHARED_BUCKET || process.env.GCS_BUCKET || 'maava-data';
 
 function stripApiV1(url: string): string {
   return url.replace(/\/api\/v1\/?$/, '').replace(/\/$/, '');
@@ -77,7 +77,7 @@ function buildAgentsMd(a: MarketplaceAgentFull): string {
     '', '## Capabilities',
     `This agent specializes in ${a.category || 'general'} tasks.`,
     '', '## Notes',
-    '- Installed from the mawaDao marketplace',
+    '- Installed from the maavaDao marketplace',
     `- Developer: ${a.developer || 'Unknown'}`,
   ].join('\n');
 }
@@ -88,7 +88,7 @@ function buildMemoryMd(): string {
 
 /**
  * When the REST API is unavailable (older backend), add the agent directly
- * to the gateway config (openclaw.json) via the GCS mawa-storage.
+ * to the gateway config (openclaw.json) via the GCS maava-storage.
  */
 async function addAgentToGcsConfig(
   userId: string,
@@ -213,7 +213,7 @@ async function seedAgentWorkspaceFiles(
       console.log('[seed] files.set SKIP —', file.name, '(REST API unavailable)');
     }
 
-    // Mirror to GCS via mawa-storage (fallback if GCSFuse is not mounted)
+    // Mirror to GCS via maava-storage (fallback if GCSFuse is not mounted)
     if (STORAGE_URL) {
       const gcsPath = `${userId}/mountfolder/workspace-${agent.slug}/${file.name}`;
       const gcsUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(GCS_BUCKET)}/files/${gcsPath}`;

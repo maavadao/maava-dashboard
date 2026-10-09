@@ -272,7 +272,7 @@ pool.connect()
       await client.query(`
         CREATE TABLE IF NOT EXISTS slack_connections (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-          mawadao_user_id TEXT NOT NULL,
+          maavadao_user_id TEXT NOT NULL,
           slack_team_id VARCHAR(64) NOT NULL,
           slack_team_name VARCHAR(255),
           slack_bot_token TEXT NOT NULL,
@@ -286,17 +286,17 @@ pool.connect()
           metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
           created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-          UNIQUE (slack_team_id, mawadao_user_id)
+          UNIQUE (slack_team_id, maavadao_user_id)
         )
       `);
-      await client.query(`CREATE INDEX IF NOT EXISTS idx_slack_connections_mawadao_user_id ON slack_connections(mawadao_user_id) WHERE is_active = true`);
+      await client.query(`CREATE INDEX IF NOT EXISTS idx_slack_connections_maavadao_user_id ON slack_connections(maavadao_user_id) WHERE is_active = true`);
       await client.query(`CREATE INDEX IF NOT EXISTS idx_slack_connections_slack_team_id ON slack_connections(slack_team_id) WHERE is_active = true`);
 
-      /* Slack identity links — bind individual Slack users to mawaDao users for shared workspaces */
+      /* Slack identity links — bind individual Slack users to maavaDao users for shared workspaces */
       await client.query(`
         CREATE TABLE IF NOT EXISTS slack_identity_links (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-          mawadao_user_id TEXT NOT NULL,
+          maavadao_user_id TEXT NOT NULL,
           slack_team_id VARCHAR(64) NOT NULL,
           slack_user_id VARCHAR(64) NOT NULL,
           slack_channel_id VARCHAR(64),

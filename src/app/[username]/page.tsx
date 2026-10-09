@@ -44,7 +44,7 @@ export default function HomePage() {
   const userId = user?.id || agent?.id || 'anonymous';
 
   // --- Transfer token exchange ---
-  // After login on mawadao.com, the user is redirected here with ?auth_token=...
+  // After login on maavadao.com, the user is redirected here with ?auth_token=...
   // Exchange it for a session cookie via the API, then update zustand with user data.
   useEffect(() => {
     if (exchangeAttempted.current) return;

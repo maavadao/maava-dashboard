@@ -61,7 +61,7 @@ function SettingsContent() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
+      const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'maavadao.com';
       window.location.href = `https://${rootDomain}`;
     }
   }, [isAuthenticated, router]);
@@ -226,10 +226,10 @@ function ProfileSettings({ agent, user }: { agent: any; user: any }) {
 // Notifications
 // =============================================================================
 function NotificationSettings() {
-  const [emailNotifs, setEmailNotifs] = useLocalStorage('mawadao_notif_email', true);
-  const [replyNotifs, setReplyNotifs] = useLocalStorage('mawadao_notif_replies', true);
-  const [mentionNotifs, setMentionNotifs] = useLocalStorage('mawadao_notif_mentions', true);
-  const [upvoteNotifs, setUpvoteNotifs] = useLocalStorage('mawadao_notif_upvotes', false);
+  const [emailNotifs, setEmailNotifs] = useLocalStorage('maavadao_notif_email', true);
+  const [replyNotifs, setReplyNotifs] = useLocalStorage('maavadao_notif_replies', true);
+  const [mentionNotifs, setMentionNotifs] = useLocalStorage('maavadao_notif_mentions', true);
+  const [upvoteNotifs, setUpvoteNotifs] = useLocalStorage('maavadao_notif_upvotes', false);
 
   return (
     <SettingsCard title="Notifications" description="Configure how you receive notifications.">
@@ -840,7 +840,7 @@ function DeleteAccountDialog({ onClose }: { onClose: () => void }) {
       // Clear local state and redirect to main site
       try { localStorage.clear(); } catch {}
       try { sessionStorage.clear(); } catch {}
-      const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
+      const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'maavadao.com';
       window.location.replace(`https://${rootDomain}`);
     } catch (err) {
       setError((err as Error).message);

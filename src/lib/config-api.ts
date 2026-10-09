@@ -1,4 +1,4 @@
-// mawa Configuration API Client
+// maava Configuration API Client
 // All endpoints are POST-based RPC calls via the gateway bridge.
 // Auth uses X-Tenant-ID header (mapped from the logged-in agent's ID).
 // Response envelope: { success: boolean; data: T | null; message: string; error?: unknown }
@@ -179,7 +179,7 @@ class ConfigApiClient {
       if (winHost !== 'localhost' && winHost !== '127.0.0.1') {
         throw new ConfigApiError(
           0,
-          "mawa gateway URL is not configured. Go to Settings → mawa Gateway to set it."
+          "maava gateway URL is not configured. Go to Settings → maava Gateway to set it."
         );
       }
     }
@@ -210,7 +210,7 @@ class ConfigApiClient {
     } catch (networkErr) {
       // Network-level error (ERR_CONNECTION_REFUSED, offline, etc.) — mark as down
       this.markNetworkDown();
-      throw new ConfigApiError(0, "mawa gateway is unreachable");
+      throw new ConfigApiError(0, "maava gateway is unreachable");
     }
 
     if (!response.ok) {

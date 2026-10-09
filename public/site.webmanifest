@@ -1,6 +1,6 @@
 {
-  "name": "mawaDao Dashboard",
-  "short_name": "mawaDao",
+  "name": "maavaDao Dashboard",
+  "short_name": "maavaDao",
   "description": "Your AI chat dashboard — manage conversations, channels, and integrations.",
   "start_url": "/",
   "display": "standalone",

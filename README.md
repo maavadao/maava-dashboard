@@ -1,17 +1,17 @@
-# mawa-dashboard
+# maava-dashboard
 
-The member space: every member's private workspace, at `agent.mawadao.com/<username>`. Members can
+The member space: every member's private workspace, at `agent.maavadao.com/<username>`. Members can
 only open their own space; the username in the path must match the signed-in member. Members chat with
 their agent and manage everything it can do from here.
 
-Part of [mawa](https://github.com/mawadao/mawa), the open-source agent platform behind mawaDao: a community-owned ecosystem of agentic AI for education, where developers build and list agents for free and the community shares in what they earn.
+Part of [maava](https://github.com/maavadao/maava), the open-source agent platform behind maavaDao: a community-owned ecosystem of agentic AI for education, where developers build and list agents for free and the community shares in what they earn.
 
 ## What it does
 
-- **Chat:** streaming conversations with the member's own agent (`mawa-gateway`).
+- **Chat:** streaming conversations with the member's own agent (`maava-gateway`).
 - **Channels:** connect Slack, Discord, Telegram and WhatsApp.
 - **Skills and keys:** install skills, store model-provider keys (encrypted at rest).
-- **Mission Control:** boards, tasks, approvals and activity for teams of agents (`mawa-mission-control`).
+- **Mission Control:** boards, tasks, approvals and activity for teams of agents (`maava-mission-control`).
 - **Inbox:** Gmail and Outlook accounts with AI-drafted replies the member approves.
 - **Seller tools:** products, campaigns, social accounts and wallet.
 
@@ -27,12 +27,12 @@ that would collide with these paths are listed in `RESERVED_USERNAMES` (`src/lib
 
 | Talks to | For |
 | --- | --- |
-| `mawa-gateway` | The member's running agent (chat, config, skills) |
-| `mawa-api` | Agents, marketplace, seller data |
-| `mawa-mission-control` | Boards, tasks and approvals |
-| `mawa-channels` | Sending messages out through platform bots |
-| `mawa-deployer`, `mawa-storage` | Workspace provisioning and files |
-| Postgres (`mawa-db`) | Conversations, inbox, Slack links, preferences |
+| `maava-gateway` | The member's running agent (chat, config, skills) |
+| `maava-api` | Agents, marketplace, seller data |
+| `maava-mission-control` | Boards, tasks and approvals |
+| `maava-channels` | Sending messages out through platform bots |
+| `maava-deployer`, `maava-storage` | Workspace provisioning and files |
+| Postgres (`maava-db`) | Conversations, inbox, Slack links, preferences |
 
 ## Run it locally
 
@@ -49,13 +49,13 @@ Checks: `npm test`, `npm run type-check`, `npm run build`. ESLint isn't configur
 ## Configuration
 
 Every variable the code reads is listed in [`.env.example`](.env.example). At minimum set
-`NEXT_PUBLIC_MEMBER_SPACE_URL`, `NEXT_PUBLIC_ROOT_DOMAIN` (the main site, for sign-in), `DATABASE_URL`, `JWT_SECRET` (shared with `mawa-auth`), `PROVIDER_KEY_SECRET`,
+`NEXT_PUBLIC_MEMBER_SPACE_URL`, `NEXT_PUBLIC_ROOT_DOMAIN` (the main site, for sign-in), `DATABASE_URL`, `JWT_SECRET` (shared with `maava-auth`), `PROVIDER_KEY_SECRET`,
 `CONFIG_API_URL` and `GATEWAY_URL`/`OPENCLAW_GATEWAY_TOKEN`.
 
 ## Contributing
 
-Read the [contributing guide](https://github.com/mawadao/mawa/blob/main/CONTRIBUTING.md) before opening a pull request.
-Work lands on `main`; releases are tagged `vX.Y.Z` as described in [RELEASING.md](https://github.com/mawadao/mawa/blob/main/RELEASING.md).
+Read the [contributing guide](https://github.com/maavadao/maava/blob/main/CONTRIBUTING.md) before opening a pull request.
+Work lands on `main`; releases are tagged `vX.Y.Z` as described in [RELEASING.md](https://github.com/maavadao/maava/blob/main/RELEASING.md).
 
 ## Licence
 

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const CONFIGURATION_API = (process.env.MAWADAO_API_URL || 'https://mawadao.com/api/v1').replace(/\/+$/, '');
+const CONFIGURATION_API = (process.env.MAAVADAO_API_URL || 'https://maavadao.com/api/v1').replace(/\/+$/, '');
 
 /**
- * POST /api/users/login → proxies to mawa-api POST /users/login
+ * POST /api/users/login → proxies to maava-api POST /users/login
  * Returns: { success: true, user: { id, username, email, displayName, isVerified, createdAt }, apiKey }
  */
 export async function POST(request: NextRequest) {
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    console.log('[/api/users/login] Forwarding login to mawa-api');
+    console.log('[/api/users/login] Forwarding login to maava-api');
     const res = await fetch(`${CONFIGURATION_API}/users/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

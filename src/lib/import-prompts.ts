@@ -1,13 +1,13 @@
 /**
- * mawa prompt templates for the Marketplace Product Import Agent.
+ * maava prompt templates for the Marketplace Product Import Agent.
  *
  * These are the system and user prompts sent to the gateway when importing
  * products from public marketplace links.
  */
 
-export const IMPORT_AGENT_SYSTEM_PROMPT = `You are mawaDao Marketplace Import Agent.
+export const IMPORT_AGENT_SYSTEM_PROMPT = `You are maavaDao Marketplace Import Agent.
 
-Your job is to extract a seller's own publicly available products from marketplace links provided by the user, normalize the product data, and return a strict JSON response that our backend can write into the mawaDao products database.
+Your job is to extract a seller's own publicly available products from marketplace links provided by the user, normalize the product data, and return a strict JSON response that our backend can write into the maavaDao products database.
 
 ## Core Mission
 Given one or more marketplace/shop/product URLs, identify the platform, discover all reachable products that appear to belong to the same seller/store, extract structured product information, and return valid JSON only.
@@ -174,7 +174,7 @@ Return exactly this top-level shape:
 - If you find the same product on multiple pages, keep the richest version.
 
 ## Goal
-Maximize safe extraction of the seller's own products from the provided public marketplace URLs and return clean JSON for mawaDao DB ingestion.`;
+Maximize safe extraction of the seller's own products from the provided public marketplace URLs and return clean JSON for maavaDao DB ingestion.`;
 
 export function buildImportUserPrompt(params: {
   userId: string;
@@ -200,7 +200,7 @@ The following page content was already fetched for you. Parse and structure the 
 ${pages}`;
   }
 
-  return `Import products for this mawaDao user.
+  return `Import products for this maavaDao user.
 
 User ID: ${params.userId}
 Seller Profile ID: ${params.sellerProfileId ?? 'N/A'}

@@ -1,20 +1,20 @@
 // Application constants
 
-export const APP_NAME = "mawaDao";
+export const APP_NAME = "maavaDao";
 export const APP_DESCRIPTION = "AI Agent Marketplace";
 
 // Domain
-export const MAWADAO_DOMAIN = process.env.NEXT_PUBLIC_MAWADAO_DOMAIN || "mawadao.com";
+export const MAAVADAO_DOMAIN = process.env.NEXT_PUBLIC_MAAVADAO_DOMAIN || "maavadao.com";
 
-/** Where members' workspaces live (mawa-dashboard). One host for everyone. */
+/** Where members' workspaces live (maava-dashboard). One host for everyone. */
 export const MEMBER_SPACE_URL = (
-  process.env.NEXT_PUBLIC_MEMBER_SPACE_URL || "https://agent.mawadao.com"
+  process.env.NEXT_PUBLIC_MEMBER_SPACE_URL || "https://agent.maavadao.com"
 ).replace(/\/+$/, "");
 export const MEMBER_SPACE_HOST = MEMBER_SPACE_URL.replace(/^https?:\/\//, "");
 
 /**
  * Names that can't be claimed as a username: infrastructure names, plus paths the
- * member space serves itself (agent.mawadao.com/<username> shares the URL space).
+ * member space serves itself (agent.maavadao.com/<username> shares the URL space).
  */
 export const RESERVED_USERNAMES: ReadonlySet<string> = new Set([
   "_next",
@@ -72,19 +72,19 @@ export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
  * Auth microservice base URL.
  * In the browser the URL is derived entirely from window.location so that no
  * build-time env var or .env.local file can accidentally bake in localhost.
- * Convention: auth service lives at  auth.<frontend-host>  (e.g. auth.mawadao.com).
+ * Convention: auth service lives at  auth.<frontend-host>  (e.g. auth.maavadao.com).
  */
 export function getAuthApiBaseUrl(): string {
   if (typeof window !== 'undefined') {
     const { protocol, hostname } = window.location;
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
-      return process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.mawadao.com';
+      return process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.maavadao.com';
     }
     const authHost = hostname.startsWith('auth.') ? hostname : `auth.${hostname}`;
     return `${protocol}//${authHost}`;
   }
   // Server-side only (API routes, SSR) — fall back to env var
-  return (process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.mawadao.com').replace(/\/+$/, '');
+  return (process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.maavadao.com').replace(/\/+$/, '');
 }
 
 /** Build an auth URL pointing to the Go auth microservice. */
@@ -162,7 +162,7 @@ export const SHORTCUTS = {
 export const GATEWAY_UI_URL =
   process.env.NEXT_PUBLIC_GATEWAY_UI_URL || "";
 
-/** mawa redirect URL for user/agent: https://{name}.run.app */
+/** maava redirect URL for user/agent: https://{name}.run.app */
 export const GATEWAY_REDIRECT_BASE = "https://{name}.run.app";
 
 export function getGatewayRedirectUrl(name: string): string {
@@ -172,13 +172,13 @@ export function getGatewayRedirectUrl(name: string): string {
   return GATEWAY_REDIRECT_BASE.replace("{name}", safe);
 }
 
-// mawa gateway URL (for WebSocket chat; http/https auto-converted to ws/wss)
+// maava gateway URL (for WebSocket chat; http/https auto-converted to ws/wss)
 export const GATEWAY_URL =
   process.env.NEXT_PUBLIC_GATEWAY_URL ||
   process.env.NEXT_PUBLIC_GATEWAY_UI_URL ||
   "";
 
-// mawa Configuration API URL — proxied through Next.js to avoid browser ERR_CONNECTION_REFUSED
+// maava Configuration API URL — proxied through Next.js to avoid browser ERR_CONNECTION_REFUSED
 // Browser always uses the relative proxy path; server-side uses GATEWAY_CONFIG_API_URL directly
 export const CONFIG_API_URL =
   typeof window !== "undefined"
@@ -198,7 +198,7 @@ export const GCP_REGION = process.env.GCP_REGION || "europe-west1";
 export const PROXY_API_URL = "/api/proxy/v1";
 
 // Routes — Login lives on the main domain, not the member space
-const _ROOT = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
+const _ROOT = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'maavadao.com';
 
 export const ROUTES = {
   HOME: "/",
@@ -222,11 +222,11 @@ export const ERRORS = {
 
 // Local storage keys
 export const STORAGE_KEYS = {
-  API_KEY: "mawadao_api_key",
-  THEME: "mawadao_theme",
-  ONBOARDING_COMPLETE: "mawadao_onboarding_complete",
-  INTERESTS: "mawadao_interests",
-  RECENT_SEARCHES: "mawadao_recent_searches",
+  API_KEY: "maavadao_api_key",
+  THEME: "maavadao_theme",
+  ONBOARDING_COMPLETE: "maavadao_onboarding_complete",
+  INTERESTS: "maavadao_interests",
+  RECENT_SEARCHES: "maavadao_recent_searches",
 } as const;
 
 // Channel types supported

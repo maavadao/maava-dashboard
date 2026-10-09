@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
 
     const response: Record<string, unknown> = { success: true, data: formatChannel(result.rows[0]) };
     if (!gcsOk) {
-      response.gcsSyncWarning = 'Channel saved to DB but GCS sync failed. Ensure STORAGE_URL and STORAGE_API_SECRET are set correctly in the mawa-dashboard service.';
+      response.gcsSyncWarning = 'Channel saved to DB but GCS sync failed. Ensure STORAGE_URL and STORAGE_API_SECRET are set correctly in the maava-dashboard service.';
     }
     return NextResponse.json(response, { status: 201 });
   } catch (err) {

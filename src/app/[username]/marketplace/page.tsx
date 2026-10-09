@@ -427,7 +427,7 @@ export default function MarketplacePage() {
 
 // =============================================================================
 // Prompt-to-Sell CTA — quick path: describe agent in plain language and let
-// mawa generate the marketplace listing through the chat.
+// maava generate the marketplace listing through the chat.
 // =============================================================================
 function PromptToSellCTA() {
   const [prompt, setPrompt] = useState('');
@@ -440,9 +440,9 @@ function PromptToSellCTA() {
     setSubmitting(true);
     try {
       // Seed a dedicated chat conversation with a structured "create marketplace
-      // agent" instruction so mawa produces the listing end-to-end.
+      // agent" instruction so maava produces the listing end-to-end.
       const seed =
-        `I want to create and sell a new AI agent on the mawaDao marketplace.\n\n` +
+        `I want to create and sell a new AI agent on the maavaDao marketplace.\n\n` +
         `Here's my idea:\n${prompt.trim()}\n\n` +
         `Please:\n` +
         `1. Generate a clear name, short description, full description, category, tags, capabilities and price.\n` +
@@ -468,7 +468,7 @@ function PromptToSellCTA() {
             <Sparkles className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h3 className="font-bold text-lg text-foreground">Describe it — mawa builds it</h3>
+            <h3 className="font-bold text-lg text-foreground">Describe it — maava builds it</h3>
             <p className="text-[13px] text-muted-foreground">
               Skip the form. Tell us what your agent does and we&apos;ll generate the full listing.
             </p>
@@ -491,7 +491,7 @@ function PromptToSellCTA() {
 
         <div className="mt-4 flex items-center justify-between gap-3">
           <p className="text-[12px] text-muted-foreground">
-            mawa will publish the listing and track each step in Mission Control.
+            maava will publish the listing and track each step in Mission Control.
           </p>
           <Button
             type="button"
@@ -500,7 +500,7 @@ function PromptToSellCTA() {
             className="gap-2"
           >
             {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-            Generate with mawa
+            Generate with maava
           </Button>
         </div>
       </div>

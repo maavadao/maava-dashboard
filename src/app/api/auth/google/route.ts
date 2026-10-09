@@ -19,10 +19,10 @@ function resolveAuthBase(request: NextRequest): string {
   const urlHost = request.nextUrl.hostname?.trim();
 
   const protocol = xfProto || request.nextUrl.protocol.replace(':', '') || 'https';
-  const host = toHostOnly(xfHost || urlHost || hostHeader || 'mawadao.com');
+  const host = toHostOnly(xfHost || urlHost || hostHeader || 'maavadao.com');
 
   if (host === 'localhost' || host === '127.0.0.1') {
-    return process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.mawadao.com';
+    return process.env.NEXT_PUBLIC_AUTH_URL || 'https://auth.maavadao.com';
   }
 
   if (host.startsWith('auth.')) {

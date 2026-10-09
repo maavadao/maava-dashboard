@@ -1,7 +1,7 @@
 /**
  * GET /api/debug/gcs
  *
- * Diagnostic endpoint — tests the full mawa-storage / GCS write path.
+ * Diagnostic endpoint — tests the full maava-storage / GCS write path.
  * Returns step-by-step results so you can pinpoint exactly where the failure is.
  *
  * Requires a valid user JWT (same as all other /api routes).
@@ -11,7 +11,7 @@ import { authenticateRequest } from "@/lib/auth";
 
 const STORAGE_URL = process.env.STORAGE_URL || "";
 const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || "";
-const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || "mawa-data";
+const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || "maava-data";
 
 async function fetchOidcToken(audience: string): Promise<{ token: string | null; error: string | null }> {
   if (!process.env.K_SERVICE) return { token: null, error: "K_SERVICE not set (not on Cloud Run)" };
@@ -126,8 +126,8 @@ export async function GET(request: NextRequest) {
   results.conclusion = writeOk
     ? "✅ Bucket-manager is reachable and GCS writes work correctly"
     : readOk
-    ? `❌ Read works but WRITE failed (HTTP ${(results.writeTest as { status: number }).status}) — check mawa-storage GCS credentials or IAM`
-    : `❌ Cannot reach mawa-storage — check STORAGE_URL and Cloud Run IAM`;
+    ? `❌ Read works but WRITE failed (HTTP ${(results.writeTest as { status: number }).status}) — check maava-storage GCS credentials or IAM`
+    : `❌ Cannot reach maava-storage — check STORAGE_URL and Cloud Run IAM`;
 
   return NextResponse.json(results, { status: 200 });
 }

@@ -349,7 +349,7 @@ function ChannelsContent() {
               <div>
                 <h3 className="font-semibold text-foreground text-sm">Looking for API Keys?</h3>
                 <p className="text-xs text-muted-foreground">
-                  Manage your API keys for programmatic access to mawaDao integrations
+                  Manage your API keys for programmatic access to maavaDao integrations
                 </p>
               </div>
             </div>

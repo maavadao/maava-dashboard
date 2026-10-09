@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_BASE = process.env.MAWADAO_API_URL;
+const API_BASE = process.env.MAAVADAO_API_URL;
 
 export async function GET(request: NextRequest) {
   try {

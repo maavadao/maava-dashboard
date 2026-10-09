@@ -1,7 +1,7 @@
 /**
  * POST /api/whatsapp/qr
  *
- * Resolves the tenant's mawa gateway endpoint via DB (tenants.backend_url),
+ * Resolves the tenant's maava gateway endpoint via DB (tenants.backend_url),
  * then calls the gateway's /api/v1/channels/login to obtain the WhatsApp QR code.
  * Forwards the user's auth-token JWT to the gateway for authentication.
  *
@@ -33,7 +33,7 @@ async function resolveGateway(subdomain: string): Promise<GatewayInfo | null> {
   const safe = subdomain.toLowerCase().replace(/[^a-z0-9-]/g, '');
   if (safe) {
     return {
-      url: `https://mawadao-${safe}-${GCP_PROJECT_NUMBER}.${GCP_REGION}.run.app`,
+      url: `https://maavadao-${safe}-${GCP_PROJECT_NUMBER}.${GCP_REGION}.run.app`,
       tenantId: '',
     };
   }
@@ -42,7 +42,7 @@ async function resolveGateway(subdomain: string): Promise<GatewayInfo | null> {
 }
 
 export async function POST(request: NextRequest) {
-  // 1. Resolve auth from session JWT or mawaDao API key
+  // 1. Resolve auth from session JWT or maavaDao API key
   const auth = await authenticateRequestOrApiKey(request);
   if (!auth) {
     return NextResponse.json(

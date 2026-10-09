@@ -11,7 +11,7 @@ function CloudModeInit() {
   useEffect(() => {
     const isCloud =
       process.env.NEXT_PUBLIC_CLOUD_MODE === 'true' ||
-      (typeof window !== 'undefined' && window.location.hostname.endsWith('.mawadao.com'));
+      (typeof window !== 'undefined' && window.location.hostname.endsWith('.maavadao.com'));
     if (isCloud) {
       configApi.setCloudMode(true);
     }

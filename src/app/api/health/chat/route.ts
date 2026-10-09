@@ -194,7 +194,7 @@ export async function GET() {
   };
 
   const body = {
-    service: 'mawaDao Chat Health Check',
+    service: 'maavaDao Chat Health Check',
     status: overall,
     timestamp,
     checks,

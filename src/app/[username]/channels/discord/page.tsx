@@ -145,7 +145,7 @@ function DiscordLinkPageContent() {
               <div className="space-y-3">
                 {[
                   { icon: <Zap className="h-4 w-4" />, title: 'Authorize with Discord', desc: 'Click the button below to link your Discord identity' },
-                  { icon: <MessageSquare className="h-4 w-4" />, title: 'DM the mawaDao bot', desc: 'Send a direct message — it routes to your AI agent' },
+                  { icon: <MessageSquare className="h-4 w-4" />, title: 'DM the maavaDao bot', desc: 'Send a direct message — it routes to your AI agent' },
                   { icon: <Users className="h-4 w-4" />, title: 'Works in servers too', desc: '@mention the bot in any shared server and it will reply' },
                   { icon: <Shield className="h-4 w-4" />, title: 'Privacy first', desc: 'We only store your Discord user ID — no message history is kept' },
                 ].map((step, i) => (

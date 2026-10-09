@@ -224,7 +224,7 @@ async function preScrapeUrl(rawUrl: string): Promise<string | null> {
       `&fl=timestamp,statuscode&filter=statuscode:200&sort=reverse`;
     const cdxRes = await fetch(cdxUrl, {
       signal: AbortSignal.timeout(60_000),
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; MawadaoBot/1.0)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; MaavadaoBot/1.0)' },
     });
     if (cdxRes.ok) {
       const cdxData = await cdxRes.json() as string[][];
@@ -292,9 +292,9 @@ async function updateJobStatus(
  * POST /api/products/import-job/[jobId]/run
  *
  * Internal-only endpoint that executes the import pipeline:
- * 1. Resolve tenant backend for mawa gateway
+ * 1. Resolve tenant backend for maava gateway
  * 1.5. Pre-scrape submitted links (Lightpanda → HTTP fallback)
- * 2. Call mawa gateway (non-streaming) with scraped content + prompt
+ * 2. Call maava gateway (non-streaming) with scraped content + prompt
  * 3. Parse structured JSON response
  * 4. Save raw JSON to bucket
  * 5. Ingest products into the products table
@@ -335,7 +335,7 @@ export async function POST(
   await updateJobStatus(jobId, 'running', { started_at: new Date().toISOString() });
 
   try {
-    // ── Step 1: Resolve tenant backend for mawa gateway ──
+    // ── Step 1: Resolve tenant backend for maava gateway ──
     const userRow = await pool.query(
       `SELECT t.subdomain FROM tenants t WHERE t.user_id = $1 AND t.status = 'active' LIMIT 1`,
       [job.user_id],
@@ -381,7 +381,7 @@ export async function POST(
       );
     }
 
-    // ── Step 2: Call mawa gateway (non-streaming) ──
+    // ── Step 2: Call maava gateway (non-streaming) ──
     const gatewayUrl = `${tenant.backendUrl.replace(/\/+$/, '')}/v1/chat/completions`;
     const messages = [
       { role: 'system', content: IMPORT_AGENT_SYSTEM_PROMPT },

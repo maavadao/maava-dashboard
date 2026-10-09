@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { validateJWT } from "@/lib/auth";
 import pool from "@/lib/db";
 
-const API_BASE = process.env.MAWADAO_API_URL;
+const API_BASE = process.env.MAAVADAO_API_URL;
 const DEPLOYER_URL = process.env.DEPLOYER_URL || "";
 const DEPLOYER_API_SECRET = process.env.DEPLOYER_API_SECRET || "";
 
@@ -84,7 +84,7 @@ export async function DELETE(request: NextRequest) {
       }
     }
 
-    // 2. Clean up mawa-dashboard tables (TEXT user_id — no FK cascades)
+    // 2. Clean up maava-dashboard tables (TEXT user_id — no FK cascades)
     await pool.query(
       `DELETE FROM messages
        WHERE conversation_id IN (SELECT id FROM conversations WHERE user_id = $1)`,
@@ -120,7 +120,7 @@ export async function DELETE(request: NextRequest) {
     sameSite: "lax",
     path: "/",
     maxAge: 0,
-    domain: process.env.NODE_ENV === "production" ? ".mawadao.com" : undefined,
+    domain: process.env.NODE_ENV === "production" ? ".maavadao.com" : undefined,
   });
   return response;
 }

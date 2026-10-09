@@ -143,14 +143,14 @@ export const useAuthStore = create<AuthStore>()(
           try { sessionStorage.clear(); } catch {}
         }
         // Await cookie clear before redirect to prevent race condition:
-        // without waiting, mawadao.com may still see the stale cookie,
+        // without waiting, maavadao.com may still see the stale cookie,
         // bounce back to subdomain, which then redirects to login?redirect=…
         (async () => {
           try {
             await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
           } catch { /* best-effort */ }
           if (typeof window !== 'undefined') {
-            window.location.href = 'https://mawadao.com';
+            window.location.href = 'https://maavadao.com';
           }
         })();
       },
@@ -188,7 +188,7 @@ export const useAuthStore = create<AuthStore>()(
       },
     }),
     {
-      name: "mawadao-auth",
+      name: "maavadao-auth",
       partialize: (state) => ({
         apiKey: state.apiKey,
         token: state.token,
@@ -254,7 +254,7 @@ export const useSetupStore = create<SetupStore>()(
         }),
     }),
     {
-      name: 'mawadao-setup',
+      name: 'maavadao-setup',
       partialize: (state) => ({
         setupStep: state.setupStep,
         setupComplete: state.setupComplete,
@@ -424,7 +424,7 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
   clear: () => set({ notifications: [], unreadCount: 0 }),
 }));
 
-// mawa Chat Store (gateway URL, token, config API URL, and optional AI key overrides)
+// maava Chat Store (gateway URL, token, config API URL, and optional AI key overrides)
 interface GatewayChatStore {
   // Chat gateway (WebSocket + completions, port 19001)
   gatewayToken: string | null;
@@ -467,7 +467,7 @@ export const useGatewayChatStore = create<GatewayChatStore>()(
       setAnthropicKey: (anthropicKey) => set({ anthropicKey }),
     }),
     {
-      name: "mawadao-gateway-chat",
+      name: "maavadao-gateway-chat",
       partialize: (s) => ({
         gatewayToken: s.gatewayToken,
         gatewayUrl: s.gatewayUrl,
@@ -583,6 +583,6 @@ export const useSubscriptionStore = create<SubscriptionStore>()(
 
       isSubscribed: (name) => get().subscribedCommunities.includes(name),
     }),
-    { name: "mawadao-subscriptions" }
+    { name: "maavadao-subscriptions" }
   )
 );

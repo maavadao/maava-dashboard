@@ -1,9 +1,9 @@
 /**
- * mawa chat via Gateway WebSocket.
+ * maava chat via Gateway WebSocket.
  * Uses chat.send / chat events (same protocol as Control UI).
  */
 
-// Must match mawa gateway PROTOCOL_VERSION (src/gateway/protocol/schema/protocol-schemas.ts)
+// Must match maava gateway PROTOCOL_VERSION (src/gateway/protocol/schema/protocol-schemas.ts)
 const PROTOCOL_VERSION = 3;
 
 function httpToWs(url: string): string {
@@ -218,7 +218,7 @@ export class GatewayWsChat {
     onError: (err: string) => void
   ): Promise<void> {
     if (!this.isConnected) {
-      throw new Error("Not connected to mawa");
+      throw new Error("Not connected to maava");
     }
 
     const runId = crypto.randomUUID();

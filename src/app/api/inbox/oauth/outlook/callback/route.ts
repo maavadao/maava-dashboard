@@ -15,7 +15,7 @@ const INBOX_APP_BASE_URL = (
   process.env.MEMBER_SPACE_URL ||
   process.env.NEXT_PUBLIC_MEMBER_SPACE_URL ||
   process.env.NEXT_PUBLIC_MEMBER_SPACE_URL ||
-  'https://agent.mawadao.com'
+  'https://agent.maavadao.com'
 ).replace(/\/+$/, '');
 
 function inboxRedirect(_url: URL, params: Record<string, string>): NextResponse {

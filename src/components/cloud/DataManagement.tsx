@@ -93,7 +93,7 @@ export function DataManagement({ hasWorkspace }: DataManagementProps) {
       a.href = url;
       a.download =
         res.headers.get('Content-Disposition')?.match(/filename="(.+)"/)?.[1] ||
-        `mawadao-export-${Date.now()}.zip`;
+        `maavadao-export-${Date.now()}.zip`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -126,7 +126,7 @@ export function DataManagement({ hasWorkspace }: DataManagementProps) {
         <div>
           <h3 className="text-[13px] font-semibold text-foreground/80">Import Data</h3>
           <p className="text-[12px] text-muted-foreground mt-0.5">
-            Upload a ZIP file from your local mawa installation to migrate your
+            Upload a ZIP file from your local maava installation to migrate your
             configuration, agents, and conversations to the cloud.
           </p>
         </div>

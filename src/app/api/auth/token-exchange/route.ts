@@ -6,7 +6,7 @@
  *
  * Flow:
  *   1. User logs in on the main site → gets a transfer token
- *   2. Redirect: https://agent.mawadao.com?auth_token=TRANSFER_TOKEN&state=RANDOM
+ *   2. Redirect: https://agent.maavadao.com?auth_token=TRANSFER_TOKEN&state=RANDOM
  *   3. Member-space JS calls POST /api/auth/token-exchange { token: TRANSFER_TOKEN }
  *   4. This route validates the transfer token and sets the session cookie
  */
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
     sameSite: 'lax',
     path: '/',
     maxAge: 7 * 24 * 60 * 60, // 7 days
-    domain: process.env.NODE_ENV === 'production' ? '.mawadao.com' : undefined,
+    domain: process.env.NODE_ENV === 'production' ? '.maavadao.com' : undefined,
   });
 
   return response;

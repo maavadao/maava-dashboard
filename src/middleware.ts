@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { validateJWT, validateTransferToken } from '@/lib/jwt';
 
-// The dashboard is the member space: agent.mawadao.com/<username>. Each member
+// The dashboard is the member space: agent.maavadao.com/<username>. Each member
 // can only open their own space; the tenant comes from their JWT, and the
 // username in the path must match it. Sign-in and onboarding happen on the main site.
 
@@ -42,7 +42,7 @@ function resolveExternalProtocol(request: NextRequest): string {
   const proto = firstForwardedValue(request.headers.get('x-forwarded-proto')) || request.nextUrl.protocol.replace(':', '') || 'https';
   const host = stripPort(resolveExternalHost(request)).toLowerCase();
   // Reverse proxies can show internal http while the public domain is https.
-  if (host === 'mawadao.com' || host.endsWith('.mawadao.com')) {
+  if (host === 'maavadao.com' || host.endsWith('.maavadao.com')) {
     return 'https';
   }
   return proto;
@@ -86,7 +86,7 @@ export async function middleware(request: NextRequest) {
     return securityHeaders(NextResponse.next());
   }
 
-  const mainSite = `${proto}://${(process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com').replace(/:\d+$/, '')}`;
+  const mainSite = `${proto}://${(process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'maavadao.com').replace(/:\d+$/, '')}`;
   const token = request.cookies.get('auth-token')?.value;
   const user = token ? await validateJWT(token) : null;
 

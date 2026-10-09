@@ -6,8 +6,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // mawaDao brand palette
-        mawadao: {
+        // maavaDao brand palette
+        maavadao: {
           50: "#eff6ff",
           100: "#dbeafe",
           200: "#bfdbfe",

@@ -9,7 +9,7 @@ import { jwtVerify, SignJWT } from 'jose';
 import type { NextRequest } from 'next/server';
 import { secretKey } from '@/lib/secrets';
 
-const JWT_ISSUER = 'mawadao-auth';
+const JWT_ISSUER = 'maavadao-auth';
 
 export interface JWTPayload {
   userId: string;

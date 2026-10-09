@@ -136,7 +136,7 @@ const SKILL_CONNECTIONS_MAP: Record<string, ConnectionRequirement[]> = {
     },
   ],
   // Note: Telegram is a channel (connected via /channels/telegram), NOT a skill.
-  // Users connect to the mawaDao Telegram bot — no bot token needed from the user.
+  // Users connect to the maavaDao Telegram bot — no bot token needed from the user.
   twilio: [
     {
       envKey: 'TWILIO_ACCOUNT_SID',

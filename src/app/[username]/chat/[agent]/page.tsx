@@ -112,7 +112,7 @@ export default function AgentChatPage() {
             )}
             {agent && (
               <a
-                href={`https://mawadao.com/agent/${encodeURIComponent(username)}`}
+                href={`https://maavadao.com/agent/${encodeURIComponent(username)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-medium text-muted-foreground bg-muted hover:bg-muted/80 rounded-lg transition-colors"

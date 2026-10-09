@@ -15,10 +15,10 @@ async function ensureBundledSkillsInCatalog(): Promise<void> {
     `INSERT INTO skills (skill_id, name, description, category, installs, source, source_url)
      SELECT v.skill_id, v.name, v.description, v.category, v.installs, v.source, v.source_url
      FROM (VALUES
-       ('seller_data_manager', 'Seller Data Manager', 'Direct SQL access to seller tables — products, assets, listings, social accounts, publishing targets, and analytics. Use [SELLER_SQL] blocks for full CRUD on your storefront data.', 'productivity', 5000, 'openclaw-bundled', 'https://mawadao.com'),
-       ('zernio_social', 'Zernio Social Media', 'Manage social media accounts and publish content via Zernio — list accounts, create posts, check status, and delete posts on Instagram, Facebook, LinkedIn, Twitter, and TikTok.', 'productivity', 4000, 'openclaw-bundled', 'https://mawadao.com'),
-       ('seller_agent', 'Seller Agent', 'AI selling strategist — plans monthly selling strategies, builds marketing campaigns, creates automated promotion schedules with cron jobs for market research and auto-posting.', 'productivity', 4500, 'openclaw-bundled', 'https://mawadao.com'),
-       ('marketing_psychology', 'Marketing Psychology', 'Apply psychological principles, mental models, and behavioral science to marketing — anchoring, social proof, scarcity, loss aversion, framing, persuasion, and pricing psychology.', 'ai-ml', 4200, 'openclaw-bundled', 'https://mawadao.com')
+       ('seller_data_manager', 'Seller Data Manager', 'Direct SQL access to seller tables — products, assets, listings, social accounts, publishing targets, and analytics. Use [SELLER_SQL] blocks for full CRUD on your storefront data.', 'productivity', 5000, 'openclaw-bundled', 'https://maavadao.com'),
+       ('zernio_social', 'Zernio Social Media', 'Manage social media accounts and publish content via Zernio — list accounts, create posts, check status, and delete posts on Instagram, Facebook, LinkedIn, Twitter, and TikTok.', 'productivity', 4000, 'openclaw-bundled', 'https://maavadao.com'),
+       ('seller_agent', 'Seller Agent', 'AI selling strategist — plans monthly selling strategies, builds marketing campaigns, creates automated promotion schedules with cron jobs for market research and auto-posting.', 'productivity', 4500, 'openclaw-bundled', 'https://maavadao.com'),
+       ('marketing_psychology', 'Marketing Psychology', 'Apply psychological principles, mental models, and behavioral science to marketing — anchoring, social proof, scarcity, loss aversion, framing, persuasion, and pricing psychology.', 'ai-ml', 4200, 'openclaw-bundled', 'https://maavadao.com')
      ) AS v(skill_id, name, description, category, installs, source, source_url)
      WHERE NOT EXISTS (
        SELECT 1 FROM skills s

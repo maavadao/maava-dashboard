@@ -4,7 +4,7 @@ import { authenticateRequest } from '@/lib/auth';
 /**
  * GET /api/media/workspace/:path*
  *
- * Proxy that serves workspace files (images, media) from the mawa-storage.
+ * Proxy that serves workspace files (images, media) from the maava-storage.
  * Maps: /api/media/workspace/filename.png
  *   →  STORAGE/api/v1/buckets/{SHARED_BUCKET}/files/{tenantId}/mountfolder/workspace/filename.png
  *
@@ -13,7 +13,7 @@ import { authenticateRequest } from '@/lib/auth';
 
 const STORAGE_URL = process.env.STORAGE_URL || '';
 const STORAGE_API_SECRET = process.env.STORAGE_API_SECRET || '';
-const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || 'mawa-data';
+const SHARED_BUCKET = process.env.GCS_SHARED_BUCKET || 'maava-data';
 
 async function bmHeaders(): Promise<Record<string, string>> {
   const h: Record<string, string> = {};
@@ -73,7 +73,7 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid path' }, { status: 400 });
   }
 
-  // Build mawa-storage URL:
+  // Build maava-storage URL:
   // {tenantId}/mountfolder/workspace/{filePath}
   const gcsPath = `${userId}/mountfolder/workspace/${filePath}`;
   const bmUrl = `${STORAGE_URL}/api/v1/buckets/${encodeURIComponent(SHARED_BUCKET)}/files/${gcsPath}`;

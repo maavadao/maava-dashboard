@@ -80,7 +80,7 @@ export default function HealthDashboard() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'mawadao.com';
+      const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'maavadao.com';
       window.location.href = `https://${rootDomain}/auth/login`;
       return;
     }
@@ -113,7 +113,7 @@ export default function HealthDashboard() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-foreground">System Health</h1>
-            <p className="text-[15px] text-muted-foreground mt-1">Real-time monitoring of mawa platform services.</p>
+            <p className="text-[15px] text-muted-foreground mt-1">Real-time monitoring of maava platform services.</p>
           </div>
           <div className="flex items-center gap-3">
             <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
@@ -178,7 +178,7 @@ export default function HealthDashboard() {
             {data.components.gateway ? (
               <ComponentCard
                 icon={Wifi}
-                label="mawa Gateway"
+                label="maava Gateway"
                 component={data.components.gateway}
                 details={[
                   { label: 'URL', value: data.env.gateway_url || 'Not configured' },

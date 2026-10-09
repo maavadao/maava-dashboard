@@ -104,7 +104,7 @@ function resolveModelCompany(model: ModelOption): string {
   const label = model.label.toLowerCase();
   const haystack = `${provider} ${id} ${label}`;
 
-  if (haystack.includes('openclaw')) return 'mawa';
+  if (haystack.includes('openclaw')) return 'maava';
   if (haystack.includes('anthropic') || haystack.includes('claude')) return 'Anthropic';
   if (haystack.includes('openai') || /(^|\W)(gpt|o1|o3|o4)(\W|$)/.test(haystack)) return 'OpenAI';
   if (haystack.includes('google') || haystack.includes('gemini')) return 'Google';
@@ -697,8 +697,8 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: E-Commerce Automation Agent — Guided Onboarding',
       '',
-      'You are mawaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
-      'Your job is to turn the user\'s e-commerce automation idea into a safe, fully configured, ready-to-run mawa workflow.',
+      'You are maavaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
+      'Your job is to turn the user\'s e-commerce automation idea into a safe, fully configured, ready-to-run maava workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
       '### Primary Goal',
@@ -784,7 +784,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       '- "Send me a daily price comparison report"',
       '',
       '### D) Skill Discovery and Vetting Policy',
-      'Preferred order: 1) Official mawa/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
+      'Preferred order: 1) Official maava/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
       'Before installing any non-official skill: check source reputation, inspect permissions, classify risk (LOW/MEDIUM/HIGH).',
       'For MEDIUM or HIGH risk: explain risk, ask confirmation, prefer read-only first.',
       '',
@@ -851,8 +851,8 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: Social Media Content & Publishing Agent — Guided Onboarding',
       '',
-      'You are mawaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
-      'Your job is to turn the user\'s idea into a safe, fully configured, ready-to-run mawa workflow.',
+      'You are maavaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
+      'Your job is to turn the user\'s idea into a safe, fully configured, ready-to-run maava workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
       '### Primary Goal',
@@ -885,9 +885,9 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       'Ask only what is missing. Typical questions:',
       '1. What is the topic, content idea, or source material?',
       '2. Which platforms? (X, LinkedIn, both, others)',
-      '3. Do you want mawaDao to: only draft, draft and wait for approval, or draft and post after approval?',
+      '3. Do you want maavaDao to: only draft, draft and wait for approval, or draft and post after approval?',
       '4. Writing style: use my previous style, professional, thought leadership, casual, bold/opinionated, technical, founder-style, or custom?',
-      '5. Should mawaDao research the internet first and pull supporting sources? What kind of sources?',
+      '5. Should maavaDao research the internet first and pull supporting sources? What kind of sources?',
       '6. Should the post include: a CTA, hashtags, links, emojis, a thread, a strong hook, a soft professional tone?',
       '7. Run once or on a schedule?',
       '8. If scheduled: one-time or recurring? What time? Timezone? Which days? Approval every time or auto-post approved formats?',
@@ -913,7 +913,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       '',
       '### E) Skill Discovery and Selection Policy',
       'Preferred order:',
-      '1. Official mawa / trusted native skill',
+      '1. Official maava / trusted native skill',
       '2. Verified ClawHub skill with clear documentation',
       '3. Reputable GitHub-hosted CLI or integration with AI-agent support',
       '4. Custom fallback workflow if no trustworthy skill exists',
@@ -1030,7 +1030,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       '2. Which platforms? (X, LinkedIn, both, others)',
       '3. Draft only, draft + approval, or draft + approval + publish?',
       '4. Writing style (professional, casual, founder-style, custom, etc.)',
-      '5. Should mawaDao research the internet first?',
+      '5. Should maavaDao research the internet first?',
       '6. Post elements: CTA, hashtags, links, emojis, thread, hook?',
       '7. One-time or scheduled? If scheduled: time, timezone, days, approval policy',
       '8. Which social account(s) to use?',
@@ -1081,8 +1081,8 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: Lead Qualification & Sales Agent — Guided Onboarding',
       '',
-      'You are mawaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
-      'Your job is to turn the user\'s lead qualification or sales automation idea into a safe, fully configured, ready-to-run mawa workflow.',
+      'You are maavaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
+      'Your job is to turn the user\'s lead qualification or sales automation idea into a safe, fully configured, ready-to-run maava workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
       '### Primary Goal',
@@ -1167,7 +1167,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       '- "Alert me on Slack when a high-budget lead comes in"',
       '',
       '### D) Skill Vetting Policy',
-      'Preferred order: 1) Official mawa/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
+      'Preferred order: 1) Official maava/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
       'Before installing non-official skills: check source, permissions, classify risk.',
       'For MEDIUM or HIGH risk: explain, ask confirmation, prefer read-only first.',
       '',
@@ -1229,8 +1229,8 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: Appointment & Scheduling Agent — Guided Onboarding',
       '',
-      'You are mawaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
-      'Your job is to turn the user\'s scheduling and appointment automation idea into a safe, fully configured, ready-to-run mawa workflow.',
+      'You are maavaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
+      'Your job is to turn the user\'s scheduling and appointment automation idea into a safe, fully configured, ready-to-run maava workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
       '### Primary Goal',
@@ -1314,7 +1314,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       '- "Draft a review request for clients seen this week"',
       '',
       '### D) Skill Vetting Policy',
-      'Preferred order: 1) Official mawa/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
+      'Preferred order: 1) Official maava/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
       'Before installing non-official skills: check source, permissions, classify risk.',
       '',
       '### E) Safety and Approval Policy',
@@ -1375,8 +1375,8 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: Automated Analytics & Reporting Agent — Guided Onboarding',
       '',
-      'You are mawaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
-      'Your job is to turn the user\'s reporting and analytics automation idea into a safe, fully configured, ready-to-run mawa workflow.',
+      'You are maavaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
+      'Your job is to turn the user\'s reporting and analytics automation idea into a safe, fully configured, ready-to-run maava workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
       '### Primary Goal',
@@ -1460,7 +1460,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       '- "Alert me if conversion rate drops below 2%"',
       '',
       '### D) Skill Vetting Policy',
-      'Preferred order: 1) Official mawa/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
+      'Preferred order: 1) Official maava/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
       'Before installing non-official skills: check source, permissions, classify risk.',
       '',
       '### E) Safety and Approval Policy',
@@ -1520,8 +1520,8 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: 24/7 Monitoring & Alerts Agent — Guided Onboarding',
       '',
-      'You are mawaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
-      'Your job is to turn the user\'s monitoring and alerting idea into a safe, fully configured, ready-to-run mawa workflow.',
+      'You are maavaDao\'s Use-Case Setup Assistant for AI-powered user workspaces.',
+      'Your job is to turn the user\'s monitoring and alerting idea into a safe, fully configured, ready-to-run maava workflow.',
       'This is a guided onboarding and setup workflow, NOT a one-shot answer task.',
       '',
       '### Primary Goal',
@@ -1608,7 +1608,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       '- "Send me a daily competitor digest at 9 AM"',
       '',
       '### D) Skill Vetting Policy',
-      'Preferred order: 1) Official mawa/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
+      'Preferred order: 1) Official maava/ClawHub skill, 2) Verified ClawHub skill, 3) Reputable GitHub integration, 4) Fallback workflow.',
       'Before installing non-official skills: check source, permissions, classify risk.',
       '',
       '### E) Safety and Approval Policy',
@@ -1666,11 +1666,11 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
   {
     label: 'HubSpot CRM Agent',
     icon: CircleDot,
-    prompt: 'I want to connect HubSpot to my mawa assistant — help me set up CRM lookup, deal pipeline management, meeting briefings, or activity logging.',
+    prompt: 'I want to connect HubSpot to my maava assistant — help me set up CRM lookup, deal pipeline management, meeting briefings, or activity logging.',
     guide: [
       '## Use-Case Guide: HubSpot CRM Agent — Guided Onboarding',
       '',
-      'Your job is to help the user successfully activate and configure a HubSpot use case inside their personal mawa environment.',
+      'Your job is to help the user successfully activate and configure a HubSpot use case inside their personal maava environment.',
       'This is NOT a one-shot answer task. This is a guided onboarding and setup workflow.',
       '',
       '### Your responsibilities',
@@ -1726,7 +1726,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       '**STAGE 3 — Guided HubSpot Setup**',
       'Walk through Private App creation one step at a time:',
       '1. Go to HubSpot Settings → Integrations → Private Apps',
-      '2. Create new app, name it "mawa Personal Assistant"',
+      '2. Create new app, name it "maava Personal Assistant"',
       '3. Enable the scopes needed for selected use case',
       '4. Generate the access token, copy it securely',
       'Wait until user finishes each milestone before proceeding.',
@@ -1735,7 +1735,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
       'Gather: access token, desired objects, read-only vs write, default pipeline name, default deal stages, sample contact/deal for testing, automation preferences.',
       'For write use cases: ask which pipeline, stage labels, confirmation-every-time preference.',
       '',
-      '**STAGE 5 — Install and Configure mawa Skills**',
+      '**STAGE 5 — Install and Configure maava Skills**',
       'Install/enable HubSpot-related skills, configure secrets/tokens/env vars, set defaults.',
       'Use the [API_KEYS_NEEDED] block format when requesting the HubSpot access token.',
       '',
@@ -1806,7 +1806,7 @@ const SUGGESTIONS: { label: string; icon: LucideIcon; prompt: string; guide: str
     guide: [
       '## Use-Case Guide: Fresh Crypto Intelligence, Trade Planning & Bankr Execution Agent — Guided Onboarding',
       '',
-      'You are a specialized crypto intelligence, trade planning, and execution agent inside a per-user mawa environment.',
+      'You are a specialized crypto intelligence, trade planning, and execution agent inside a per-user maava environment.',
       'Your mission: help the user build and run a daily crypto workflow that monitors only fresh information, filters and validates market-moving signals, builds a high-confidence daily trade plan, and converts approved plans into orders via Bankr.',
       'This is a guided onboarding + ongoing execution workflow, NOT a one-shot answer task.',
       '',
@@ -2066,7 +2066,7 @@ function ChatPanelInner({ apiKey, conversationId, initialMessages, userId, onCon
 
   const PROV_MESSAGES: string[][] = [
     ['Initializing workspace…', 'Reserving your namespace…', 'Allocating cloud resources…'],
-    ['Pulling AI runtime image…', 'Deploying backend container…', 'Booting mawa engine…', 'Wiring up WebSocket gateway…'],
+    ['Pulling AI runtime image…', 'Deploying backend container…', 'Booting maava engine…', 'Wiring up WebSocket gateway…'],
     ['Mounting persistent storage…', 'Configuring environment…', 'Applying preferences…', 'Running health checks…'],
     ['Almost there…', 'Finalizing deployment…'],
   ];
@@ -2854,7 +2854,7 @@ function ChatPanelInner({ apiKey, conversationId, initialMessages, userId, onCon
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-semibold text-sm text-foreground leading-tight">
-              {selectedAgent ? selectedAgent.name : 'mawaDao Assistant'}
+              {selectedAgent ? selectedAgent.name : 'maavaDao Assistant'}
             </p>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className={cn('h-1.5 w-1.5 rounded-full', isLoading ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400')} />
@@ -3225,7 +3225,7 @@ function ChatPanelInner({ apiKey, conversationId, initialMessages, userId, onCon
                           {!selectedAgentId && <Check className="h-3.5 w-3.5" />}
                         </div>
                         <div className="flex flex-col min-w-0 flex-1">
-                          <span className="text-sm">Default mawa</span>
+                          <span className="text-sm">Default maava</span>
                           <span className="text-[10px] text-muted-foreground">No agent personality</span>
                         </div>
                       </button>
@@ -3362,7 +3362,7 @@ function ChatPanelInner({ apiKey, conversationId, initialMessages, userId, onCon
                 onPaste={handlePaste}
                 rows={1}
                 disabled={isLoading || recovering || !backendReady}
-                placeholder={!backendReady ? (tenantStatus === 'provisioning' ? 'Your AI backend is still launching…' : 'Backend not ready yet…') : recovering ? 'Still generating…' : 'Message mawa…'}
+                placeholder={!backendReady ? (tenantStatus === 'provisioning' ? 'Your AI backend is still launching…' : 'Backend not ready yet…') : recovering ? 'Still generating…' : 'Message maava…'}
                 className="flex-1 min-w-0 bg-transparent text-sm placeholder:text-muted-foreground focus:outline-none resize-none leading-relaxed min-h-[28px] max-h-32 disabled:opacity-50"
                 style={{ paddingTop: '2px', paddingBottom: '2px' }}
                 aria-label="Chat message input"

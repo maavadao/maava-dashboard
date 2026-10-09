@@ -9,8 +9,8 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "avatars.mawadao.com" },
-      { protocol: "https", hostname: "images.mawadao.com" },
+      { protocol: "https", hostname: "avatars.maavadao.com" },
+      { protocol: "https", hostname: "images.maavadao.com" },
       { protocol: "https", hostname: "*.githubusercontent.com" },
       { protocol: "https", hostname: "*.googleusercontent.com" },
     ],
@@ -32,9 +32,9 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://avatars.mawadao.com https://images.mawadao.com https://*.githubusercontent.com https://*.googleusercontent.com",
+              "img-src 'self' data: blob: https://avatars.maavadao.com https://images.maavadao.com https://*.githubusercontent.com https://*.googleusercontent.com",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.mawadao.com wss://*.mawadao.com https://*.run.app wss://*.run.app https://accounts.google.com https://cloudflareinsights.com http://localhost:19001 http://localhost:19002 http://localhost:3001 ws://localhost:19001 ws://localhost:19002",
+              "connect-src 'self' https://*.maavadao.com wss://*.maavadao.com https://*.run.app wss://*.run.app https://accounts.google.com https://cloudflareinsights.com http://localhost:19001 http://localhost:19002 http://localhost:3001 ws://localhost:19001 ws://localhost:19002",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

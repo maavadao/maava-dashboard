@@ -48,7 +48,7 @@ export default function OAuthCallbackPage() {
       setTimeout(() => window.close(), 1500);
     } else {
       setStatus('error');
-      setErrorMsg('This page must be opened as a popup from the mawaDao dashboard.');
+      setErrorMsg('This page must be opened as a popup from the maavaDao dashboard.');
     }
   }, [searchParams]);
 
